@@ -50,13 +50,14 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  
+
   environment.variables = { EDITOR = "vim"; };
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages =
-    [ pkgs.oh-my-zsh
+    [
+      pkgs.oh-my-zsh
       pkgs.zsh-z
       pkgs.git
       pkgs.fzf # add ZSH shortcuts by following https://nixos.wiki/wiki/Fzf
@@ -112,22 +113,22 @@
       #
       #From https://github.com/a-h/dotfiles/blob/master/.nixpkgs/darwin-configuration.nix
       (
-	pkgs.neovim.override {
-	  vimAlias = true;
-	  configure = {
-	    packages.myPlugins = with pkgs.vimPlugins; {
-	      start = [
-		fzf-vim
+        pkgs.neovim.override {
+          vimAlias = true;
+          configure = {
+            packages.myPlugins = with pkgs.vimPlugins; {
+              start = [
+                fzf-vim
                 vim-commentary # https://github.com/tpope/vim-commentary TLDR: gcc for quick un/commenting
                 bufferline-nvim
                 nvim-lspconfig
-		vim-nix
+                vim-nix
                 kotlin-vim
                 dhall-vim
                 ansible-vim
                 vim-terraform # Alternative would be vim-terraform-completion
-	      ];
-	      opt = [];
+              ];
+              opt = [ ];
             };
             customRC = ''
               set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
@@ -186,8 +187,8 @@
               end
               EOF
             '';
-	  };
-	}
+          };
+        }
       )
     ];
 
