@@ -5,7 +5,7 @@
 
 # Inspiration
 # https://github.com/a-h/dotfiles/blob/master/.nixpkgs/darwin-configuration.nix
-# https://github.com/kubukoz/nix-config
+# AWESOME: https://github.com/kubukoz/nix-config
 # https://www.nmattia.com/posts/2018-03-21-nix-reproducible-setup-linux-macos.html
 # https://markhudnall.com/2021/01/27/first-impressions-of-nix/
 
@@ -23,30 +23,22 @@
 
 {
   imports = [ <home-manager/nix-darwin> ];
-  
-  home-manager.useGlobalPkgs = true;
+
 
   users.users.fzieger = {
-  name = "fzieger";
-  home = "/Users/fzieger";
-  shell = pkgs.zsh;
+    name = "fzieger";
+    home = "/Users/fzieger";
+    shell = pkgs.zsh;
   };
 
   users.users.xilef = {
-  name = "xilef";
-  home = "/Users/xilef";
-  shell = pkgs.zsh;
+    name = "xilef";
+    home = "/Users/xilef";
+    shell = pkgs.zsh;
   };
-  home-manager.users.fzieger = { pkgs, ... }: {
-    home.packages = [
-      pkgs.kubectl
-    ];
-  };
-  home-manager.users.xilef = { pkgs, ... }: {
-    home.packages = [
-      pkgs.python39
-      pkgs.python39Packages.tkinter
-    ];
+
+  home-manager = {
+    useGlobalPkgs = true;
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -57,28 +49,35 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages =
     [
-      pkgs.oh-my-zsh
-      pkgs.zsh-z
       pkgs.git
+      pkgs.tree
+      pkgs.wget
+      pkgs.oh-my-zsh
+      pkgs.starship
+      pkgs.zsh-z
       pkgs.fzf # add ZSH shortcuts by following https://nixos.wiki/wiki/Fzf
+      pkgs.silver-searcher
       pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
       pkgs.nerdfonts
-      pkgs.pass
-      pkgs.tree
-      pkgs.silver-searcher
-      pkgs.starship
-      pkgs.fly
-      # pkgs.dhall # todo: fix version
-      # pkgs.dhall-lsp-server
-      # pkgs.dhall-json
-      pkgs.terraform
-      pkgs.terraform-lsp
-      pkgs.rnix-lsp
-      pkgs.wget
-      pkgs.k9s
-      pkgs.nodejs
       pkgs.tmux
       pkgs.mycli
+      pkgs.vscode
+
+      # Language Servers
+      # pkgs.dhall-lsp-server # todo: fix version
+      pkgs.terraform-lsp
+      pkgs.rnix-lsp
+      pkgs.nodePackages.vscode-langservers-extracted
+
+      # pkgs.dhall # todo: fix version
+      # pkgs.dhall-json # todo: fix version
+      pkgs.terraform
+      pkgs.pass
+      pkgs.fly
+      pkgs.parallel
+      pkgs.kubectl
+      pkgs.k9s
+      pkgs.nodejs
       pkgs.vault
       pkgs.jq
       pkgs.yarn
@@ -87,9 +86,9 @@
       pkgs.google-cloud-sdk
       # pkgs.azure-cli
       # pkgs.awscli2
-      pkgs.vscode
       pkgs.deno
-      pkgs.parallel
+      pkgs.python39
+      pkgs.python39Packages.tkinter
       # Still making problems...
       # pkgs.firefox # maybe https://github.com/cmacrae/config/tree/b33ccb041861b56c97e1744b0fd8c606e343164c/overlays/firefox
       # pkgs.slack # hash mismatch
@@ -130,63 +129,7 @@
               ];
               opt = [ ];
             };
-            customRC = ''
-              set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
-              set scrolloff=6
-
-              " activate bufferline plugin
-              set termguicolors
-              lua << EOF
-              require("bufferline").setup{}
-              EOF
-
-              " activate LSP (followed https://neovim.io/doc/user/lsp.html)
-              lua << EOF
-              -- Mappings.
-              -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-              local opts = { noremap=true, silent=true }
-              vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-              -- vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-              -- vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-              -- vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-              
-              -- Use an on_attach function to only map the following keys
-              -- after the language server attaches to the current buffer
-              local on_attach = function(client, bufnr)
-                -- Enable completion triggered by <c-x><c-o>
-                vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-              
-                -- Mappings.
-                -- See `:help vim.lsp.*` for documentation on any of the below functions
-                -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-                -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-                -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-                -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-                -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-                -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-                -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-                -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-                -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-                -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-                -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-              end
-              
-              -- Use a loop to conveniently call 'setup' on multiple servers and
-              -- map buffer local keybindings when the language server attaches
-              local servers = { 'dhall_lsp_server', 'terraform_lsp', 'yamlls', 'jsonls', 'rnix'}
-              for _, lsp in pairs(servers) do
-                require('lspconfig')[lsp].setup {
-                  on_attach = on_attach,
-                  flags = {
-                    -- This will be the default in neovim 0.7+
-                    debounce_text_changes = 150,
-                  }
-                }
-              end
-              EOF
-            '';
+            customRC = builtins.readFile ./neovim.vim;
           };
         }
       )
