@@ -1,11 +1,18 @@
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 set scrolloff=6
 
-" activate bufferline plugin
-set termguicolors
-lua << EOF
-require("bufferline").setup{}
-EOF
+" No more arrow keys
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
+let mapleader="ö"
+map <leader>a :Ag<CR>
+map <leader>f :FZF<CR>
+map <leader>b :Buffers<CR>
+
+map <leader>ö :e#<CR>
 
 " activate LSP (followed https://neovim.io/doc/user/lsp.html)
 lua << EOF
@@ -42,13 +49,37 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'dhall_lsp_server', 'terraform_lsp', 'yamlls', 'jsonls', 'rnix'}
+local servers = { 'dhall_lsp_server', 'terraformls', 'yamlls', 'jsonls', 'rnix', 'bashls' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      -- This will be the default in neovim 0.7+
-      debounce_text_changes = 150,
-    }
+    on_attach = on_attach
   }
 end
+EOF
+
+" Activate lualine
+lua << EOF
+vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
+vim.g.gitblame_date_format = '%r'
+
+
+local git_blame = require('gitblame')
+
+require('lualine').setup({
+    sections = {
+            lualine_c = {
+                { git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available }
+            },
+            lualine_x = {'filename'}
+    }
+})
+EOF
+
+" Activate null-ls for usage with vale
+lua << EOF
+require("null-ls").setup({
+    sources = {
+        require("null-ls").builtins.diagnostics.vale,
+    },
+})
+EOF

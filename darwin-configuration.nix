@@ -11,10 +11,8 @@
 
 # Search packages at https://search.nixos.org/packages
 
-
 # Home manager <-> nix-darwin integration
 # https://nix-community.github.io/home-manager/index.html#sec-install-nix-darwin-module
-
 
 # Configuration collection
 # AWESOME: https://github.com/biosan/dotfiles
@@ -24,13 +22,11 @@
 {
   imports = [ <home-manager/nix-darwin> ];
 
-
   users.users.fzieger = {
     name = "fzieger";
     home = "/Users/fzieger";
     shell = pkgs.zsh;
   };
-
   users.users.xilef = {
     name = "xilef";
     home = "/Users/xilef";
@@ -62,12 +58,16 @@
       pkgs.tmux
       pkgs.mycli
       pkgs.vscode
+      pkgs.shellcheck
+      pkgs.vale
 
       # Language Servers
       # pkgs.dhall-lsp-server # todo: fix version
-      pkgs.terraform-lsp
+      pkgs.terraform-ls
       pkgs.rnix-lsp
       pkgs.nodePackages.vscode-langservers-extracted
+      pkgs.nodePackages.bash-language-server
+      pkgs.nodePackages.yaml-language-server
 
       # pkgs.dhall # todo: fix version
       # pkgs.dhall-json # todo: fix version
@@ -83,10 +83,12 @@
       pkgs.yarn
       pkgs.kotlin
       pkgs.jdk
-      pkgs.google-cloud-sdk
+      # pkgs.google-cloud-sdk # Managed externally, because of plugin gke-gcloud-auth-plugin
       # pkgs.azure-cli
       # pkgs.awscli2
       pkgs.deno
+
+      pkgs.php
       pkgs.python39
       pkgs.python39Packages.tkinter
       # Still making problems...
@@ -117,15 +119,20 @@
           configure = {
             packages.myPlugins = with pkgs.vimPlugins; {
               start = [
+                nvim-lspconfig
                 fzf-vim
                 vim-commentary # https://github.com/tpope/vim-commentary TLDR: gcc for quick un/commenting
-                bufferline-nvim
-                nvim-lspconfig
+                git-blame-nvim
+                lualine-nvim
+                vim-fugitive
+
                 vim-nix
                 kotlin-vim
                 dhall-vim
                 ansible-vim
                 vim-terraform # Alternative would be vim-terraform-completion
+
+                null-ls-nvim # Needed for vale, see https://bhupesh.me/writing-like-a-pro-with-vale-and-neovim/
               ];
               opt = [ ];
             };
