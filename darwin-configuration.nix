@@ -39,7 +39,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.variables = { EDITOR = "vim"; };
+  environment.variables.EDITOR = "vim";
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -115,6 +115,7 @@
       #From https://github.com/a-h/dotfiles/blob/master/.nixpkgs/darwin-configuration.nix
       (
         pkgs.neovim.override {
+          viAlias = true;
           vimAlias = true;
           configure = {
             packages.myPlugins = with pkgs.vimPlugins; {
