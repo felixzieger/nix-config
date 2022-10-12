@@ -1,5 +1,6 @@
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 set scrolloff=6
+set mouse=a
 
 " No more arrow keys
 noremap <Up> <Nop>
@@ -11,8 +12,13 @@ let mapleader="ö"
 map <leader>a :Ag<CR>
 map <leader>f :FZF<CR>
 map <leader>b :Buffers<CR>
-
+" map <leader>n :NERDTree<CR>
+map <leader>n :NvimTreeToggle<CR>
 map <leader>ö :e#<CR>
+vmap <leader>y "+y
+nmap <leader>p "+p
+
+" let g:minimap_auto_start = 1
 
 " activate LSP (followed https://neovim.io/doc/user/lsp.html)
 lua << EOF
@@ -66,12 +72,15 @@ vim.g.gitblame_date_format = '%r'
 local git_blame = require('gitblame')
 
 require('lualine').setup({
+    options = {
+        theme = 'PaperColor'
+    },
     sections = {
             lualine_c = {
                 { git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available }
             },
-            lualine_x = {'filename'}
-    }
+            lualine_x = {'filename'},
+    },
 })
 EOF
 
@@ -81,5 +90,20 @@ require("null-ls").setup({
     sources = {
         require("null-ls").builtins.diagnostics.vale,
     },
+})
+EOF
+
+
+lua << EOF
+require("nvim-tree").setup({
+  renderer = {
+    group_empty = true,
+    indent_markers = {
+        enable = true,
+    },
+  },
+  live_filter = {
+    always_show_folders = false,
+  },
 })
 EOF

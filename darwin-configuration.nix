@@ -61,17 +61,22 @@
       pkgs.shellcheck
       pkgs.vale
 
+      # Vim Stuff
+      pkgs.code-minimap
+
       # Language Servers
-      # pkgs.dhall-lsp-server # todo: fix version
       pkgs.terraform-ls
       pkgs.rnix-lsp
       pkgs.nodePackages.vscode-langservers-extracted
       pkgs.nodePackages.bash-language-server
       pkgs.nodePackages.yaml-language-server
+      # pkgs.dhall-lsp-server # todo: fix version
 
       # pkgs.dhall # todo: fix version
       # pkgs.dhall-json # todo: fix version
       pkgs.terraform
+      pkgs.terraform-docs
+      pkgs.terragrunt
       pkgs.pass
       pkgs.fly
       pkgs.parallel
@@ -84,9 +89,11 @@
       pkgs.kotlin
       pkgs.jdk
       # pkgs.google-cloud-sdk # Managed externally, because of plugin gke-gcloud-auth-plugin
-      # pkgs.azure-cli
+      # pkgs.azure-cli # Managed externally because it failed to build in the past, currently installed via pip
       # pkgs.awscli2
       pkgs.deno
+      pkgs.pre-commit
+      pkgs.tldr
 
       pkgs.php
       pkgs.python39
@@ -123,17 +130,22 @@
                 nvim-lspconfig
                 fzf-vim
                 vim-commentary # https://github.com/tpope/vim-commentary TLDR: gcc for quick un/commenting
-                git-blame-nvim
-                lualine-nvim
-                vim-fugitive
+                git-blame-nvim # Git blame with lualine-nvim integration
+                lualine-nvim # Statusline
+                vim-fugitive # Git command
+                minimap-vim # https://github.com/wfxr/minimap.vim
 
+                # nerdtree # Alternative: nvim-tree.lua or neo-tree.nvim
+                nvim-tree-lua
+
+                # Languages
                 vim-nix
                 kotlin-vim
                 dhall-vim
                 ansible-vim
-                vim-terraform # Alternative would be vim-terraform-completion
+                vim-terraform # Alternative: vim-terraform-completion
 
-                null-ls-nvim # Needed for vale, see https://bhupesh.me/writing-like-a-pro-with-vale-and-neovim/
+                null-ls-nvim # Part of vale setup, see https://bhupesh.me/writing-like-a-pro-with-vale-and-neovim/
               ];
               opt = [ ];
             };
