@@ -20,22 +20,23 @@
 # https://nixos.wiki/wiki/Configuration_Collection
 
 {
-  imports = [ <home-manager/nix-darwin> ];
+  # Do not use home-manager as it gives errors with runCommand
+  # imports = [ <home-manager/nix-darwin> ];
 
-  users.users.fzieger = {
-    name = "fzieger";
-    home = "/Users/fzieger";
-    shell = pkgs.zsh;
-  };
-  users.users.xilef = {
-    name = "xilef";
-    home = "/Users/xilef";
-    shell = pkgs.zsh;
-  };
+  # users.users.fzieger = {
+  #   name = "fzieger";
+  #   home = "/Users/fzieger";
+  #   shell = pkgs.zsh;
+  # };
+  # users.users.xilef = {
+  #   name = "xilef";
+  #   home = "/Users/xilef";
+  #   shell = pkgs.zsh;
+  # };
 
-  home-manager = {
-    useGlobalPkgs = true;
-  };
+  # home-manager = {
+  #   useGlobalPkgs = true;
+  # };
 
   nixpkgs.config.allowUnfree = true;
 
@@ -54,15 +55,16 @@
       pkgs.fzf # add ZSH shortcuts by following https://nixos.wiki/wiki/Fzf
       pkgs.silver-searcher
       pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
-      pkgs.nerdfonts
+      # pkgs.nerdfonts
       pkgs.tmux
       pkgs.mycli
       pkgs.vscode
       pkgs.shellcheck
       pkgs.vale
+      pkgs.ipcalc
 
       # Vim Stuff
-      pkgs.code-minimap
+      pkgs.code-minimap # Used by minimap-vim
 
       # Language Servers
       pkgs.terraform-ls
@@ -77,7 +79,7 @@
       pkgs.terraform
       pkgs.terraform-docs
       pkgs.terragrunt
-      pkgs.pass
+      # pkgs.pass # fails to build
       pkgs.fly
       pkgs.parallel
       pkgs.kubectl
@@ -89,18 +91,22 @@
       pkgs.kotlin
       pkgs.jdk
       # pkgs.google-cloud-sdk # Managed externally, because of plugin gke-gcloud-auth-plugin
-      # pkgs.azure-cli # Managed externally because it failed to build in the past, currently installed via pip
+      pkgs.azure-cli
       # pkgs.awscli2
       pkgs.deno
       pkgs.pre-commit
       pkgs.tldr
 
+      # pkgs.zoom-us # Now has darwin support, but i am too lazy to switch from the package right now
+      # pkgs.teams # Now has darwin support, but i am too lazy to switch from the package right now
+      # pkgs.alacritty # Too lazy to switch
+      # pkgs.slack # Too lazy to switch
+
+
       pkgs.php
       pkgs.python39
-      pkgs.python39Packages.tkinter
       # Still making problems...
       # pkgs.firefox # maybe https://github.com/cmacrae/config/tree/b33ccb041861b56c97e1744b0fd8c606e343164c/overlays/firefox
-      # pkgs.slack # hash mismatch
       # pkgs.autoconf # needed for idea-community as of 2021-11-13?
       # pkgs.jetbrains.idea-community
       # pkgs.keepassxc # Install went through but did not show up when I wanted to use it. 
@@ -109,9 +115,7 @@
       # Linux support
       # pkgs.flameshot # https://github.com/flameshot-org/flameshot
       # pkgs.nextcloud-client
-      # pkgs.teams
       # pkgs.sublime-merge
-      # pkgs.zoom-us
       # pkgs.spotify
       #
       # Find out how to install
@@ -128,15 +132,14 @@
             packages.myPlugins = with pkgs.vimPlugins; {
               start = [
                 nvim-lspconfig
-                fzf-vim
-                vim-commentary # https://github.com/tpope/vim-commentary TLDR: gcc for quick un/commenting
+                fzf-vim # <leader>f/b/a; Alternative: telescope
+                vim-commentary # TLDR: gcc for quick un/commenting
                 git-blame-nvim # Git blame with lualine-nvim integration
-                lualine-nvim # Statusline
-                vim-fugitive # Git command
-                minimap-vim # https://github.com/wfxr/minimap.vim
+                lualine-nvim
+                vim-fugitive # :Git
+                minimap-vim # <leader>m
+                nvim-tree-lua # <leader>n
 
-                # nerdtree # Alternative: nvim-tree.lua or neo-tree.nvim
-                nvim-tree-lua
 
                 # Languages
                 vim-nix
