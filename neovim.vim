@@ -13,9 +13,18 @@ noremap <Right> <Nop>
 
 let mapleader="ö"
 
+" Keep Ag around, because live_grep does not fuzzy search.
+" Look into https://github.com/kelly-lin/telescope-ag
 map <leader>a :Ag<CR>
-map <leader>f :FZF<CR>
+" map <leader>f :FZF<CR>
+map <leader>f :Files<CR>
 map <leader>b :Buffers<CR>
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fa <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
 
 nmap <leader>l :set number!<CR>
 nmap <leader>m :MinimapToggle<CR>
@@ -69,12 +78,17 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'dhall_lsp_server', 'terraformls', 'yamlls', 'jsonls', 'rnix', 'bashls' }
+local servers = { 'dhall_lsp_server', 'denols', 'terraformls', 'yamlls', 'jsonls', 'rnix', 'bashls' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach
   }
 end
+
+-- highlighting codefences for deno requires the following
+vim.g.markdown_fenced_languages = {
+  "ts=typescript"
+}
 
 -- Activate lualine
 vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
@@ -112,4 +126,15 @@ require("nvim-tree").setup({
     always_show_folders = false,
   },
 })
+
+require('telescope').load_extension('fzf')
+
+-- FIX for Telescope/FZF colorscheme since nvim 0.8
+-- see https://github.com/nvim-telescope/telescope.nvim/issues/2145
+-- see https://neovim.discourse.group/t/how-to-configure-floating-window-colors-highlighting-in-0-8/3193/2
+
+vim.api.nvim_set_hl(0, 'FloatBorder', {bg='#3B4252', fg='#5E81AC'})
+vim.api.nvim_set_hl(0, 'NormalFloat', {bg='#3B4252'})
+vim.api.nvim_set_hl(0, 'TelescopeNormal', {bg='#3B4252'})
+vim.api.nvim_set_hl(0, 'TelescopeBorder', {bg='#3B4252'})
 EOF

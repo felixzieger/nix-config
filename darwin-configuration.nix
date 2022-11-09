@@ -19,27 +19,21 @@
 # Has LOGITECH and other brew stuff as file: https://github.com/biosan/dotfiles/blob/master/config/macos/Brewfile
 # https://nixos.wiki/wiki/Configuration_Collection
 
+
+
+#
+# Fix packages via https://lazamar.co.uk/nix-versions/
+#
+let
+  fix_deno = (import
+    (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/bf972dc380f36a3bf83db052380e55f0eaa7dcb6.tar.gz";
+    })
+    { }).deno;
+
+in
 {
-  # Do not use home-manager as it gives errors with runCommand
-  # imports = [ <home-manager/nix-darwin> ];
-
-  # users.users.fzieger = {
-  #   name = "fzieger";
-  #   home = "/Users/fzieger";
-  #   shell = pkgs.zsh;
-  # };
-  # users.users.xilef = {
-  #   name = "xilef";
-  #   home = "/Users/xilef";
-  #   shell = pkgs.zsh;
-  # };
-
-  # home-manager = {
-  #   useGlobalPkgs = true;
-  # };
-
   nixpkgs.config.allowUnfree = true;
-
   environment.variables.EDITOR = "vim";
 
   # List packages installed in system profile. To search by name, run:
@@ -54,6 +48,7 @@
       pkgs.zsh-z
       pkgs.fzf # add ZSH shortcuts by following https://nixos.wiki/wiki/Fzf
       pkgs.silver-searcher
+      pkgs.ripgrep
       pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
       # pkgs.nerdfonts
       pkgs.tmux
@@ -62,6 +57,12 @@
       pkgs.shellcheck
       pkgs.vale
       pkgs.ipcalc
+      pkgs.asciinema
+      pkgs.asciinema-scenario
+
+      # Azure IPAM deployment
+      pkgs.powershell
+      pkgs.clang
 
       # Vim Stuff
       pkgs.code-minimap # Used by minimap-vim
@@ -93,9 +94,11 @@
       # pkgs.google-cloud-sdk # Managed externally, because of plugin gke-gcloud-auth-plugin
       pkgs.azure-cli
       # pkgs.awscli2
-      pkgs.deno
+      # pkgs.deno
+      fix_deno
       pkgs.pre-commit
       pkgs.tldr
+      pkgs.bat # Used for FZF preview in vim
 
       # pkgs.zoom-us # Now has darwin support, but i am too lazy to switch from the package right now
       # pkgs.teams # Now has darwin support, but i am too lazy to switch from the package right now
@@ -109,8 +112,6 @@
       # pkgs.firefox # maybe https://github.com/cmacrae/config/tree/b33ccb041861b56c97e1744b0fd8c606e343164c/overlays/firefox
       # pkgs.autoconf # needed for idea-community as of 2021-11-13?
       # pkgs.jetbrains.idea-community
-      # pkgs.keepassxc # Install went through but did not show up when I wanted to use it. 
-      # pkgs.iterm2 # Code signing stuff
       #
       # Linux support
       # pkgs.flameshot # https://github.com/flameshot-org/flameshot
@@ -132,6 +133,7 @@
             packages.myPlugins = with pkgs.vimPlugins; {
               start = [
                 nvim-lspconfig
+                telescope-nvim
                 fzf-vim # <leader>f/b/a; Alternative: telescope
                 vim-commentary # TLDR: gcc for quick un/commenting
                 git-blame-nvim # Git blame with lualine-nvim integration
@@ -140,13 +142,17 @@
                 minimap-vim # <leader>m
                 nvim-tree-lua # <leader>n
 
+                plenary-nvim
+                telescope-nvim
+                nvim-web-devicons
+                telescope-fzf-native-nvim
 
                 # Languages
                 vim-nix
                 kotlin-vim
                 dhall-vim
                 ansible-vim
-                vim-terraform # Alternative: vim-terraform-completion
+                vim-terraform
 
                 null-ls-nvim # Part of vale setup, see https://bhupesh.me/writing-like-a-pro-with-vale-and-neovim/
               ];
