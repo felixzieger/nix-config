@@ -28,13 +28,16 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 nmap <leader>l :set number!<CR>
 nmap <leader>m :MinimapToggle<CR>
-map <leader>n :NvimTreeToggle<CR>
+map <leader>n :NvimTreeFindFileToggle<CR>
 
 map <leader>ö :e#<CR>
 vmap <leader>y "+y
 nmap <leader>p "+p
 
 nmap <leader>w :w<CR>
+
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
 
 let minimap_highlight_range=1
 let minimap_highlight_search=1
@@ -115,6 +118,7 @@ require("null-ls").setup({
 })
 
 -- Activate nvim-tree
+-- g? opens help
 require("nvim-tree").setup({
   renderer = {
     group_empty = true,

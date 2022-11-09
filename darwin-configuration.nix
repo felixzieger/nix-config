@@ -133,19 +133,22 @@ in
             packages.myPlugins = with pkgs.vimPlugins; {
               start = [
                 nvim-lspconfig
-                telescope-nvim
-                fzf-vim # <leader>f/b/a; Alternative: telescope
-                vim-commentary # TLDR: gcc for quick un/commenting
-                git-blame-nvim # Git blame with lualine-nvim integration
+
                 lualine-nvim
+                nvim-web-devicons
+                git-blame-nvim # Git blame with lualine-nvim integration
+
+                vim-commentary # gcc
                 vim-fugitive # :Git
+
+                fzf-vim # <leader>f/b/a
                 minimap-vim # <leader>m
                 nvim-tree-lua # <leader>n
+                vim-easymotion # <leader><leader>w/b/f/F AND <leader>j/k
 
-                plenary-nvim
-                telescope-nvim
-                nvim-web-devicons
+                telescope-nvim # <leader>ff/fb/fa
                 telescope-fzf-native-nvim
+                plenary-nvim
 
                 # Languages
                 vim-nix
