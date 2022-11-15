@@ -1,25 +1,5 @@
 { config, pkgs, ... }:
 
-# For setup I followed
-# https://wickedchicken.github.io/post/macos-nix-setup/
-
-# Inspiration
-# https://github.com/a-h/dotfiles/blob/master/.nixpkgs/darwin-configuration.nix
-# AWESOME: https://github.com/kubukoz/nix-config
-# https://www.nmattia.com/posts/2018-03-21-nix-reproducible-setup-linux-macos.html
-# https://markhudnall.com/2021/01/27/first-impressions-of-nix/
-
-# Search packages at https://search.nixos.org/packages
-
-# Home manager <-> nix-darwin integration
-# https://nix-community.github.io/home-manager/index.html#sec-install-nix-darwin-module
-
-# Configuration collection
-# AWESOME: https://github.com/biosan/dotfiles
-# Has LOGITECH and other brew stuff as file: https://github.com/biosan/dotfiles/blob/master/config/macos/Brewfile
-# https://nixos.wiki/wiki/Configuration_Collection
-
-
 
 # Fixing packages
 # 1. Find out which package is needed under https://search.nixos.org/packages
@@ -55,8 +35,7 @@ in
   nixpkgs.config.allowUnfree = true;
   environment.variables.EDITOR = "vim";
 
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
+  # To find packages use https://search.nixos.org/packages
   environment.systemPackages =
     [
       pkgs.git
@@ -114,7 +93,6 @@ in
       # pkgs.google-cloud-sdk # Managed externally, because of plugin gke-gcloud-auth-plugin
       pkgs.azure-cli
       # pkgs.awscli2
-      # pkgs.deno
       fix_deno
       pkgs.pre-commit
       pkgs.tldr
