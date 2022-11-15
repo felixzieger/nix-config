@@ -25,23 +25,33 @@ nnoremap <leader>fa <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-
-nmap <leader>l :set number!<CR>
-nmap <leader>m :MinimapToggle<CR>
-map <leader>n :NvimTreeFindFileToggle<CR>
-
-map <leader>ö :e#<CR>
-vmap <leader>y "+y
-nmap <leader>p "+p
-
-nmap <leader>w :w<CR>
-
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-
 let minimap_highlight_range=1
 let minimap_highlight_search=1
+nmap <leader>m :MinimapToggle<CR>
 
+map <leader>n :NvimTreeFindFileToggle<CR>
+
+let g:EasyMotion_do_mapping = 0
+map <Leader> <Plug>(easymotion-prefix)
+let g:EasyMotion_smartcase = 1
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>s <Plug>(easymotion-s)
+map <Leader>w <Plug>(easymotion-w)
+map <Leader>W <Plug>(easymotion-W)
+map <Leader>b <Plug>(easymotion-b)
+map <Leader>B <Plug>(easymotion-B)
+
+
+" Switch to last buffer
+map <leader>ö :e#<CR>
+" Copy paste from system clipboard
+vmap <leader>y "+y
+nmap <leader>p "+p
+" Safe file
+nmap <leader><leader>w :w<CR>
+" Toggle line numbers
+nmap <leader>l :set number!<CR>
 
 lua << EOF
 -- activate LSP (followed https://neovim.io/doc/user/lsp.html)
