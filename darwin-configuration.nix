@@ -21,15 +21,34 @@
 
 
 
-#
-# Fix packages via https://lazamar.co.uk/nix-versions/
-#
+# Fixing packages
+# 1. Find out which package is needed under https://search.nixos.org/packages
+# 2. Search package under https://lazamar.co.uk/nix-versions/ and pick version
+# 3. Extract the packages as per instructions
+# 4. Add packages in pkgs.mkShell
 let
   fix_deno = (import
     (builtins.fetchTarball {
       url = "https://github.com/NixOS/nixpkgs/archive/bf972dc380f36a3bf83db052380e55f0eaa7dcb6.tar.gz";
     })
     { }).deno;
+
+  pkgs_fix_dhall = import
+    (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/d86bcbb415938888e7f606d55c52689aec127f43.tar.gz";
+    })
+    { };
+
+  fix_dhall = pkgs_fix_dhall.haskellPackages.dhall_1_41_1; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall
+  fix_dhall_docs = pkgs.haskellPackages.dhall-docs; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall-docs
+  fix_dhall_json = pkgs.haskellPackages.dhall-json; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall-json
+  fix_dhall_yaml = pkgs.haskellPackages.dhall-yaml; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall-yaml
+
+  fix_dhall_lsp_server = (import
+    (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/89f196fe781c53cb50fef61d3063fa5e8d61b6e5.tar.gz"; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall-lsp-server
+    })
+    { }).dhall-lsp-server;
 
 in
 {
@@ -73,10 +92,11 @@ in
       pkgs.nodePackages.vscode-langservers-extracted
       pkgs.nodePackages.bash-language-server
       pkgs.nodePackages.yaml-language-server
-      # pkgs.dhall-lsp-server # todo: fix version
+      fix_dhall_lsp_server
 
-      # pkgs.dhall # todo: fix version
-      # pkgs.dhall-json # todo: fix version
+      fix_dhall
+      fix_dhall_json
+      fix_dhall_yaml
       pkgs.terraform
       pkgs.terraform-docs
       pkgs.terragrunt
