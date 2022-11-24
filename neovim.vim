@@ -13,17 +13,10 @@ noremap <Right> <Nop>
 
 let mapleader="ö"
 
-" Keep Ag around, because live_grep does not fuzzy search.
-" Look into https://github.com/kelly-lin/telescope-ag
+" FZF
 map <leader>a :Ag<CR>
-" map <leader>f :FZF<CR>
 map <leader>f :Files<CR>
 map <leader>b :Buffers<CR>
-" Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fa <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 let minimap_highlight_range=1
 let minimap_highlight_search=1
@@ -37,10 +30,11 @@ let g:EasyMotion_smartcase = 1
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>s <Plug>(easymotion-s)
-map <Leader>w <Plug>(easymotion-w)
-map <Leader>W <Plug>(easymotion-W)
-map <Leader>b <Plug>(easymotion-b)
-map <Leader>B <Plug>(easymotion-B)
+" Conflicting bindings (fzf, telescope)
+" map <Leader>w <Plug>(easymotion-w)
+" map <Leader>W <Plug>(easymotion-W)
+" map <Leader>b <Plug>(easymotion-b)
+" map <Leader>B <Plug>(easymotion-B)
 
 
 " Switch to last buffer
@@ -141,12 +135,9 @@ require("nvim-tree").setup({
   },
 })
 
-require('telescope').load_extension('fzf')
-
--- FIX for Telescope/FZF colorscheme since nvim 0.8
+-- FIX for FZF colorscheme since nvim 0.8
 -- see https://github.com/nvim-telescope/telescope.nvim/issues/2145
 -- see https://neovim.discourse.group/t/how-to-configure-floating-window-colors-highlighting-in-0-8/3193/2
-
 vim.api.nvim_set_hl(0, 'FloatBorder', {bg='#3B4252', fg='#5E81AC'})
 vim.api.nvim_set_hl(0, 'NormalFloat', {bg='#3B4252'})
 vim.api.nvim_set_hl(0, 'TelescopeNormal', {bg='#3B4252'})

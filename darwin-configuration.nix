@@ -134,17 +134,12 @@ in
                 fzf-vim # <leader>f/b/a
                 minimap-vim # <leader>m
                 nvim-tree-lua # <leader>n
-                vim-easymotion # <leader><leader>w/b/f/F AND <leader>j/k
-
-                telescope-nvim # <leader>ff/fb/fa
-                telescope-fzf-native-nvim
-                plenary-nvim
+                vim-easymotion # <leader>j/k/s
 
                 # Languages
                 vim-nix
                 kotlin-vim
                 dhall-vim
-                ansible-vim
                 vim-terraform
 
                 null-ls-nvim # Part of vale setup, see https://bhupesh.me/writing-like-a-pro-with-vale-and-neovim/
