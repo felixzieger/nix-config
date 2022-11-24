@@ -24,9 +24,9 @@ nmap <leader>m :MinimapToggle<CR>
 
 map <leader>n :NvimTreeFindFileToggle<CR>
 
+let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_mapping = 0
 map <Leader> <Plug>(easymotion-prefix)
-let g:EasyMotion_smartcase = 1
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>s <Plug>(easymotion-s)
@@ -122,7 +122,6 @@ require("null-ls").setup({
 })
 
 -- Activate nvim-tree
--- g? opens help
 require("nvim-tree").setup({
   renderer = {
     group_empty = true,
@@ -132,6 +131,13 @@ require("nvim-tree").setup({
   },
   live_filter = {
     always_show_folders = false,
+  },
+  view = {
+    mappings = {
+      list = {
+        { key = "?",action = "toggle_help" },
+      }
+    }
   },
 })
 
