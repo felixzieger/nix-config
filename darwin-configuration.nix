@@ -123,6 +123,7 @@ in
             packages.myPlugins = with pkgs.vimPlugins; {
               start = [
                 nvim-lspconfig
+                vim-sleuth # Work out tabs vs spaces etc. automatically.
 
                 lualine-nvim
                 nvim-web-devicons
