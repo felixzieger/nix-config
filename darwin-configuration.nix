@@ -59,7 +59,6 @@
       # pkgs.google-cloud-sdk # Managed externally, because of plugin gke-gcloud-auth-plugin
       pkgs.azure-cli
       pkgs.awscli2
-      fix_deno
       pkgs.pre-commit
       pkgs.tldr
       pkgs.bat # Used for FZF preview in vim
