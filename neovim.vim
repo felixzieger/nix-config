@@ -43,7 +43,7 @@ map <leader>ö :e#<CR>
 vmap <leader>y "+y
 nmap <leader>p "+p
 " Safe file
-nmap <leader><leader>w :w<CR>
+nmap <leader>w :w<CR>
 " Toggle line numbers
 nmap <leader>l :set number!<CR>
 
