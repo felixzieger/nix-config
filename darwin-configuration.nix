@@ -20,9 +20,9 @@ let
     { };
 
   fix_dhall = pkgs_fix_dhall.haskellPackages.dhall_1_41_1; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall
-  fix_dhall_docs = pkgs.haskellPackages.dhall-docs; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall-docs
-  fix_dhall_json = pkgs.haskellPackages.dhall-json; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall-json
-  fix_dhall_yaml = pkgs.haskellPackages.dhall-yaml; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall-yaml
+  fix_dhall_docs = pkgs_fix_dhall.haskellPackages.dhall-docs; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall-docs
+  fix_dhall_json = pkgs_fix_dhall.haskellPackages.dhall-json; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall-json
+  fix_dhall_yaml = pkgs_fix_dhall.haskellPackages.dhall-yaml; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall-yaml
 
   fix_dhall_lsp_server = (import
     (builtins.fetchTarball {
@@ -48,7 +48,7 @@ in
       pkgs.silver-searcher
       pkgs.ripgrep
       pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
-      # pkgs.nerdfonts
+      pkgs.nerdfonts
       pkgs.tmux
       pkgs.mycli
       pkgs.vscode
@@ -74,13 +74,10 @@ in
       fix_dhall_lsp_server
 
       fix_dhall
-      fix_dhall_json
-      fix_dhall_yaml
       pkgs.terraform
       pkgs.terraform-docs
       pkgs.terragrunt
-      # pkgs.pass # fails to build
-      pkgs.fly
+      pkgs.pass
       pkgs.parallel
       pkgs.kubectl
       pkgs.k9s
@@ -90,28 +87,25 @@ in
       pkgs.yarn
       pkgs.kotlin
       pkgs.jdk
+      pkgs.python39
       # pkgs.google-cloud-sdk # Managed externally, because of plugin gke-gcloud-auth-plugin
       pkgs.azure-cli
-      # pkgs.awscli2
+      pkgs.awscli2
       fix_deno
       pkgs.pre-commit
       pkgs.tldr
       pkgs.bat # Used for FZF preview in vim
 
-      # pkgs.zoom-us # Now has darwin support, but i am too lazy to switch from the package right now
-      # pkgs.teams # Now has darwin support, but i am too lazy to switch from the package right now
-      # pkgs.alacritty # Too lazy to switch
-      # pkgs.slack # Too lazy to switch
-
-
-      pkgs.php
-      pkgs.python39
-      # Still making problems...
-      # pkgs.firefox # maybe https://github.com/cmacrae/config/tree/b33ccb041861b56c97e1744b0fd8c606e343164c/overlays/firefox
-      # pkgs.autoconf # needed for idea-community as of 2021-11-13?
+      # GUI applications do not play together with Spotlight for me
+      # Alfred could show applciations installed via nix. See https://markhudnall.com/2021/01/27/first-impressions-of-nix/
+      # pkgs.zoom-us
+      # pkgs.teams
+      # pkgs.alacritty
+      # pkgs.slack
+      # pkgs.firefox
       # pkgs.jetbrains.idea-community
       #
-      # Linux support
+      # Linux support only
       # pkgs.flameshot # https://github.com/flameshot-org/flameshot
       # pkgs.nextcloud-client
       # pkgs.sublime-merge
@@ -119,9 +113,7 @@ in
       #
       # Find out how to install
       # https://github.com/rxhanson/Rectangle
-      # Alfred
-      # Alfred can show applciations installed via nix. See https://markhudnall.com/2021/01/27/first-impressions-of-nix/
-      #
+
       #From https://github.com/a-h/dotfiles/blob/master/.nixpkgs/darwin-configuration.nix
       (
         pkgs.neovim.override {
