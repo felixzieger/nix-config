@@ -96,25 +96,6 @@ in
       pkgs.tldr
       pkgs.bat # Used for FZF preview in vim
 
-      # GUI applications do not play together with Spotlight for me
-      # Alfred could show applciations installed via nix. See https://markhudnall.com/2021/01/27/first-impressions-of-nix/
-      # pkgs.zoom-us
-      # pkgs.teams
-      # pkgs.alacritty
-      # pkgs.slack
-      # pkgs.firefox
-      # pkgs.jetbrains.idea-community
-      #
-      # Linux support only
-      # pkgs.flameshot # https://github.com/flameshot-org/flameshot
-      # pkgs.nextcloud-client
-      # pkgs.sublime-merge
-      # pkgs.spotify
-      #
-      # Find out how to install
-      # https://github.com/rxhanson/Rectangle
-
-      #From https://github.com/a-h/dotfiles/blob/master/.nixpkgs/darwin-configuration.nix
       (
         pkgs.neovim.override {
           viAlias = true;
