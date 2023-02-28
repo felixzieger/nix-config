@@ -19,7 +19,7 @@
       pkgs.ripgrep
       pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
       pkgs.nerdfonts
-      pkgs.tmux
+      # pkgs.tmux # broken: conflicts with another 3.3 version
       pkgs.mycli
       pkgs.vscode
       pkgs.shellcheck
@@ -27,10 +27,6 @@
       pkgs.ipcalc
       pkgs.asciinema
       pkgs.asciinema-scenario
-
-      # Azure IPAM deployment
-      pkgs.powershell
-      pkgs.clang
 
       # Vim Stuff
       pkgs.code-minimap # Used by minimap-vim
@@ -63,6 +59,11 @@
       pkgs.tldr
       pkgs.bat # Used for FZF preview in vim
 
+      pkgs.erlang
+      pkgs.elixir
+      pkgs.elixir_ls
+      pkgs.postgresql
+
       (
         pkgs.neovim.override {
           viAlias = true;
@@ -90,6 +91,7 @@
                 kotlin-vim
                 dhall-vim
                 vim-terraform
+                vim-elixir
 
                 null-ls-nvim # Part of vale setup, see https://bhupesh.me/writing-like-a-pro-with-vale-and-neovim/
               ];
@@ -101,7 +103,7 @@
       )
     ]
     ++ (import ./versions.nix)
-    ;
+  ;
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
@@ -114,6 +116,16 @@
     #   theme = "robbyrussell";
     # };
   };
+
+  programs.tmux =
+    {
+      enable = true;
+      extraConfig = ''
+        set -g mouse on
+        set -g default-terminal "xterm-256color"
+        set-option -g history-limit 100000
+      '';
+    };
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
