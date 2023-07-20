@@ -18,10 +18,6 @@ map <leader>a :Ag<CR>
 map <leader>f :Files<CR>
 map <leader>b :Buffers<CR>
 
-let minimap_highlight_range=1
-let minimap_highlight_search=1
-nmap <leader>m :MinimapToggle<CR>
-
 map <leader>n :NvimTreeFindFileToggle<CR>
 
 let g:EasyMotion_smartcase = 1

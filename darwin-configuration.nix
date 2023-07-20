@@ -30,9 +30,6 @@
       pkgs.bitwarden-cli
       pkgs.deno
 
-      # Vim Stuff
-      pkgs.code-minimap # Used by minimap-vim
-
       # Language Servers
       pkgs.terraform-ls
       pkgs.rnix-lsp
@@ -86,7 +83,6 @@
                 vim-fugitive # :Git
 
                 fzf-vim # <leader>f/b/a
-                minimap-vim # <leader>m
                 nvim-tree-lua # <leader>n
                 vim-easymotion # <leader>j/k/s
 
