@@ -60,11 +60,6 @@
       pkgs.tldr
       pkgs.bat # Used for FZF preview in vim
 
-      pkgs.erlang
-      pkgs.elixir
-      pkgs.elixir_ls
-      pkgs.postgresql
-
       (
         pkgs.neovim.override {
           viAlias = true;
@@ -91,7 +86,6 @@
                 kotlin-vim
                 dhall-vim
                 vim-terraform
-                vim-elixir
 
                 null-ls-nvim # Part of vale setup, see https://bhupesh.me/writing-like-a-pro-with-vale-and-neovim/
               ];
