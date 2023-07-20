@@ -19,7 +19,7 @@
       pkgs.ripgrep
       pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
       pkgs.nerdfonts
-      # pkgs.tmux # broken: conflicts with another 3.3 version
+      # pkgs.tmux
       pkgs.mycli
       pkgs.vscode
       pkgs.shellcheck
@@ -27,6 +27,8 @@
       pkgs.ipcalc
       pkgs.asciinema
       pkgs.asciinema-scenario
+      pkgs.bitwarden-cli
+      pkgs.deno
 
       # Vim Stuff
       pkgs.code-minimap # Used by minimap-vim
@@ -37,7 +39,9 @@
       pkgs.nodePackages.vscode-langservers-extracted
       pkgs.nodePackages.bash-language-server
       pkgs.nodePackages.yaml-language-server
+      pkgs.gopls
 
+      pkgs.go
       pkgs.terraform
       pkgs.terraform-docs
       pkgs.terragrunt

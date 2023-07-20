@@ -27,10 +27,6 @@ let
       url = "https://github.com/NixOS/nixpkgs/archive/6d02a514db95d3179f001a5a204595f17b89cb32.tar.gz";
     })
     { }).fly;
-
-  fix_deno = (import
-    (fetchTarball { url = "https://github.com/NixOS/nixpkgs/archive/bf972dc380f36a3bf83db052380e55f0eaa7dcb6.tar.gz"; })
-    { }).deno;
 in
 [
   fix_dhall
@@ -41,6 +37,4 @@ in
   fix_dhall_lsp
 
   fix_fly
-
-  fix_deno
 ]
