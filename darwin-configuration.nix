@@ -24,9 +24,6 @@
       pkgs.vscode
       pkgs.shellcheck
       pkgs.vale
-      pkgs.ipcalc
-      pkgs.asciinema
-      pkgs.asciinema-scenario
       pkgs.bitwarden-cli
       pkgs.deno
 
@@ -57,7 +54,6 @@
       pkgs.azure-cli
       pkgs.awscli2
       pkgs.pre-commit
-      pkgs.tldr
       pkgs.bat # Used for FZF preview in vim
 
       (
