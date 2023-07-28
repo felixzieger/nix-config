@@ -75,7 +75,6 @@
 
                 fzf-vim # <leader>f/b/a
                 nvim-tree-lua # <leader>n
-                vim-easymotion # <leader>j/k/s
 
                 # Languages
                 vim-nix

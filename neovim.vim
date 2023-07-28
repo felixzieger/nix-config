@@ -20,19 +20,6 @@ map <leader>b :Buffers<CR>
 
 map <leader>n :NvimTreeFindFileToggle<CR>
 
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_do_mapping = 0
-map <Leader> <Plug>(easymotion-prefix)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>s <Plug>(easymotion-s)
-" Conflicting bindings (fzf, telescope)
-" map <Leader>w <Plug>(easymotion-w)
-" map <Leader>W <Plug>(easymotion-W)
-" map <Leader>b <Plug>(easymotion-b)
-" map <Leader>B <Plug>(easymotion-B)
-
-
 " Switch to last buffer
 map <leader>ö :e#<CR>
 " Copy paste from system clipboard
