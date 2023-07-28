@@ -31,6 +31,36 @@ nmap <leader>w :w<CR>
 nmap <leader>l :set number!<CR>
 
 lua << EOF
+-- Set up nvim-cmp
+vim.diagnostic.config({
+  signs = false,
+})
+
+local cmp = require("cmp")
+
+require("luasnip.loaders.from_vscode").lazy_load()
+
+cmp.setup({
+    snippet = {
+      expand = function(args)
+        require('luasnip').lsp_expand(args.body)
+      end,
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' },
+    }, {
+      { name = 'buffer' },
+    })
+    })
+
 -- activate LSP (followed https://neovim.io/doc/user/lsp.html)
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -66,12 +96,16 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = { 'dhall_lsp_server', 'denols', 'terraformls', 'yamlls', 'jsonls', 'rnix', 'bashls', 'gopls' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
-    on_attach = on_attach
+    on_attach = on_attach,
+    capabilities = capabilities,
   }
 end
 

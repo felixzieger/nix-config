@@ -83,6 +83,13 @@
                 vim-terraform
 
                 null-ls-nvim # Part of vale setup, see https://bhupesh.me/writing-like-a-pro-with-vale-and-neovim/
+
+                # Completions
+                nvim-cmp
+                cmp-nvim-lsp
+                luasnip
+                cmp_luasnip
+                friendly-snippets
               ];
               opt = [ ];
             };
