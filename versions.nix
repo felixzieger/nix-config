@@ -6,13 +6,13 @@
 let
   pkgs_fix_dhall = import
     (fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/d86bcbb415938888e7f606d55c52689aec127f43.tar.gz";
+      url = "https://github.com/NixOS/nixpkgs/archive/976fa3369d722e76f37c77493d99829540d43845.tar.gz";
     })
     { };
 
-  fix_dhall = pkgs_fix_dhall.haskellPackages.dhall_1_41_1; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall
+  fix_dhall = pkgs_fix_dhall.haskellPackages.dhall; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall
   fix_dhall_docs = pkgs_fix_dhall.haskellPackages.dhall-docs; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall-docs
-  fix_dhall_json = pkgs_fix_dhall.haskellPackages.dhall-json_1_7_10; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall-json
+  fix_dhall_json = pkgs_fix_dhall.haskellPackages.dhall-json; # https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=dhall-json
 
   pkgs_fix_dhall_lsp = import
     (fetchTarball {
@@ -36,5 +36,5 @@ in
   })
   fix_dhall_lsp
 
-  fix_fly
+  # fix_fly
 ]

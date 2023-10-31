@@ -19,7 +19,7 @@
       pkgs.ripgrep
       pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
       pkgs.nerdfonts
-      # pkgs.tmux
+      pkgs.tmux
       pkgs.mycli
       pkgs.vscode
       pkgs.shellcheck
@@ -34,6 +34,8 @@
       pkgs.nodePackages.bash-language-server
       pkgs.nodePackages.yaml-language-server
       pkgs.gopls
+
+      pkgs.watchman
 
       pkgs.go
       pkgs.terraform
@@ -112,9 +114,14 @@
     {
       enable = true;
       extraConfig = ''
+        # Switch pane layout    CTRL+B SPACE
+        # Toggle focus for pane CTRL+B Z
         set -g mouse on
         set -g default-terminal "xterm-256color"
         set-option -g history-limit 100000
+
+        bind '"' split-window -c "#{pane_current_path}"
+        bind % split-window -h -c "#{pane_current_path}"
       '';
     };
 

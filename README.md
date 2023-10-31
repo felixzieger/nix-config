@@ -20,7 +20,7 @@ https://markhudnall.com/2021/01/27/first-impressions-of-nix/
 ## For future installations I might want to play with
 
 ### GUI applications do not play together with Spotlight for me
-Alfred could show applciations installed via nix. See https://markhudnall.com/2021/01/27/first-impressions-of-nix/
+Alfred could show applications installed via nix. See https://markhudnall.com/2021/01/27/first-impressions-of-nix/
 pkgs.zoom-us
 pkgs.teams
 pkgs.alacritty
