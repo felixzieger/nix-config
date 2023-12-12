@@ -19,13 +19,14 @@
       pkgs.ripgrep
       pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
       pkgs.nerdfonts
-      pkgs.tmux
+      # pkgs.tmux
       pkgs.mycli
       pkgs.vscode
       pkgs.shellcheck
       pkgs.vale
       pkgs.bitwarden-cli
       pkgs.deno
+      pkgs.gh
 
       # Language Servers
       pkgs.terraform-ls
@@ -39,13 +40,14 @@
 
       pkgs.go
       pkgs.terraform
+      # pkgs.opentofu
       pkgs.terraform-docs
       pkgs.terragrunt
       pkgs.pass
       pkgs.parallel
       pkgs.kubectl
       pkgs.k9s
-      pkgs.nodejs
+      # pkgs.nodejs
       pkgs.vault
       pkgs.jq
       pkgs.yarn
