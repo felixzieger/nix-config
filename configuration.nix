@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, agenix, ... }:
 
 {
   imports = [
@@ -6,6 +6,7 @@
     ./nginx.nix
     ./adguard.nix
     ./uptime-kuma.nix
+    ./plausible.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -50,7 +51,13 @@
 
   environment.systemPackages = with pkgs; [
     git
+    agenix.packages."${system}".default
   ];
+
+  age.secrets = {
+    email-password-bot-sonnenhof-zieger.file = ./secrets/email-password-bot-sonnenhof-zieger.age;
+    plausible-keybase.file = ./secrets/plausible-keybase.age;
+  };
 
   programs.zsh.enable = true;
 
