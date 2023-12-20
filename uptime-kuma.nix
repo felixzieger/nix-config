@@ -1,21 +1,9 @@
 { pkgs, lib, ... }:
 let
   uptimeKumaPort = 3001;
-  uptimeKumaHost = "up.sonnenhof-zieger.de";
 in
 {
   config = {
-    # networking = {
-    #   firewall = {
-    #     allowedTCPPorts = [ uptimeKumaPort ];
-    #   };
-    # };
-
-    services.nginx = {
-      enable = true;
-      recommendedProxySettings = true;
-      recommendedTlsSettings = true;
-    };
 
     services.nginx.virtualHosts."up.sonnenhof-zieger.de" = {
       forceSSL = true;
