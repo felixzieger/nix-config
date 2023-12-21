@@ -7,6 +7,7 @@
     ./services/adguard.nix
     ./services/uptime-kuma.nix
     ./services/plausible.nix
+    # ./home-assistant.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -55,22 +56,6 @@
   ];
 
   programs.zsh.enable = true;
-
-  programs.tmux =
-    {
-      enable = true;
-      extraConfig = ''
-        # Switch pane layout    CTRL+B SPACE
-        # Toggle focus for pane CTRL+B Z
-        set -g mouse on
-        bind '"' split-window -c "#{pane_current_path}"
-        bind % split-window -h -c "#{pane_current_path}"
-
-        # True color settings
-        set -g default-terminal "$TERM"
-        set -ag terminal-overrides ",$TERM:Tc"
-      '';
-    };
 
   environment.variables.EDITOR = "nvim";
   programs.neovim = {

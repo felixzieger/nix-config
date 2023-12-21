@@ -6,11 +6,10 @@
     which
     tree
 
-    silver-searcher
-    # zsh-fzf-history-search
-    # zsh-fzf-tab
+    silver-searcher # used for fzf in vim
 
     rnix-lsp
+    lua-language-server
   ];
 
   programs.zsh = {
@@ -18,9 +17,7 @@
     enableCompletion = true;
     enableAutosuggestions = true;
     syntaxHighlighting.enable = true;
-    # Enable ZSH https://discourse.nixos.org/t/darwin-home-manager-zsh-fzf-and-zsh-fzf-tab/33943/2
     initExtra = builtins.readFile ./zsh.rc;
-
   };
 
   programs.git = {
@@ -36,6 +33,25 @@
   programs.bat = {
     enable = true;
   };
+
+  programs.tmux =
+    {
+      enable = true;
+      extraConfig = ''
+        # Switch pane layout    CTRL+B SPACE
+        # Toggle focus for pane CTRL+B Z
+        set -g mouse on
+
+        # Split panes start in current path
+        bind '"' split-window -c "#{pane_current_path}"
+        bind % split-window -h -c "#{pane_current_path}"
+
+        # True color settings
+        set -g default-terminal "$TERM"
+        set -ag terminal-overrides ",$TERM:Tc"
+      '';
+    };
+
 
   programs.neovim = {
     enable = true;
