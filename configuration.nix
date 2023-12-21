@@ -3,10 +3,10 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./nginx.nix
-    ./adguard.nix
-    ./uptime-kuma.nix
-    ./plausible.nix
+    ./services/nginx.nix
+    ./services/adguard.nix
+    ./services/uptime-kuma.nix
+    ./services/plausible.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -53,11 +53,6 @@
     git
     agenix.packages."${system}".default
   ];
-
-  age.secrets = {
-    email-password-bot-sonnenhof-zieger.file = ./secrets/email-password-bot-sonnenhof-zieger.age;
-    plausible-keybase.file = ./secrets/plausible-keybase.age;
-  };
 
   programs.zsh.enable = true;
 

@@ -15,9 +15,9 @@ in
     };
 
     age.secrets = {
-      email-password-bot-sonnenhof-zieger.file = ./secrets/email-password-bot-sonnenhof-zieger.age;
-      plausible-keybase.file = ./secrets/plausible-keybase.age;
-      plausible-admin-password.file = ./secrets/plausible-admin-password.age;
+      email-password-bot-sonnenhof-zieger.file = ../secrets/email-password-bot-sonnenhof-zieger.age;
+      plausible-keybase.file = ../secrets/plausible-keybase.age;
+      plausible-admin-password.file = ../secrets/plausible-admin-password.age;
     };
 
     services = {
