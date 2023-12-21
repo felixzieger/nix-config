@@ -6,19 +6,13 @@ in
 {
   config = {
 
-    # services.nginx.virtualHosts."${plausibleHost}" = {
-    #   forceSSL = true;
-    #   enableACME = true;
-    #   locations."/" = {
-    #     proxyPass = "http://localhost:${toString plausiblePort}";
-    #   };
-    # };
-
-    # networking = {
-    #   firewall = {
-    #     allowedTCPPorts = [ plausiblePort ];
-    #   };
-    # };
+    services.nginx.virtualHosts."${plausibleHost}" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://localhost:${toString plausiblePort}";
+      };
+    };
 
     age.secrets = {
       email-password-bot-sonnenhof-zieger.file = ./secrets/email-password-bot-sonnenhof-zieger.age;
@@ -31,7 +25,7 @@ in
         enable = true;
 
         server = {
-          baseUrl = plausibleHost;
+          baseUrl = "https://${plausibleHost}";
           port = plausiblePort;
           # disableRegistration = true;
           secretKeybaseFile = config.age.secrets.plausible-keybase.path;
@@ -39,7 +33,7 @@ in
 
         adminUser = {
           activate = true;
-          name = "felix";
+          name = "Felix Zieger";
           email = "felix@sonnenhof-zieger.de";
           passwordFile = config.age.secrets.plausible-admin-password.path;
         };
