@@ -8,8 +8,11 @@
 
     silver-searcher # used for fzf in vim
 
-    rnix-lsp
+    # for nvim
     lua-language-server
+    nodePackages.vim-language-server
+    nixd
+    nixpkgs-fmt
   ];
 
   programs.zsh = {

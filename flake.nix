@@ -6,6 +6,7 @@
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
+    # nixd.url = "github:nix-community/nixd";
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: {

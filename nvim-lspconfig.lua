@@ -1,11 +1,11 @@
-local lspconfig = require('lspconfig') 
+local lspconfig = require('lspconfig')
 
-lspconfig.rnix.setup {}
+lspconfig.nixd.setup {}
 
 lspconfig.lua_ls.setup {
   on_init = function(client)
     local path = client.workspace_folders[1].name
-    if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
+    if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
       client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
         Lua = {
           runtime = {
@@ -34,6 +34,7 @@ lspconfig.lua_ls.setup {
 }
 
 
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
@@ -53,4 +54,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, opts)
   end
 })
-

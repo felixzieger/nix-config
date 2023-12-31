@@ -6,8 +6,8 @@
     ./services/nginx.nix
     ./services/adguard.nix
     ./services/uptime-kuma.nix
-    ./services/plausible.nix
-    # ./home-assistant.nix
+    # ./services/plausible.nix
+    ./home-assistant.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
