@@ -53,6 +53,8 @@
   environment.systemPackages = with pkgs; [
     git
     agenix.packages."${system}".default
+    btop
+    dig
   ];
 
   programs.zsh.enable = true;
