@@ -10,3 +10,4 @@ Where the
 
 - Awaire integration
 - Emfit integration https://github.com/jxlarrea/ha-emfitqs
+- Voice control in German is pretty bad https://community.home-assistant.io/t/whisper-is-really-bad-at-understanding-german-what-can-i-do-about-that/599167/3

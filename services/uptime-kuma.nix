@@ -1,11 +1,11 @@
 { pkgs, lib, ... }:
 let
   uptimeKumaPort = 3001;
+  uptimeKumaHost = "up.felixzieger.de";
 in
 {
   config = {
-
-    services.nginx.virtualHosts."up.sonnenhof-zieger.de" = {
+    services.nginx.virtualHosts."${uptimeKumaHost}" = {
       forceSSL = true;
       enableACME = true;
       locations."/" = {
