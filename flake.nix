@@ -6,20 +6,21 @@
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
-    # nixd.url = "github:nix-community/nixd";
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
     nixosConfigurations = {
-      "nixos" = nixpkgs.lib.nixosSystem {
+      "schwalbe" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
         specialArgs = inputs;
         modules = [
-          # Import the configuration.nix here, so that the
-          # old configuration file can still take effect.
-          # Note: configuration.nix itself is also a Nixpkgs Module,
-          ./configuration.nix
+          ./hosts/schwalbe/configuration.nix
+          ./services/nginx.nix
+          ./services/adguard.nix
+          ./services/uptime-kuma.nix
+          ./services/home-assistant.nix
+          # ./services/plausible.nix
 
           # Secret management https://nixos.wiki/wiki/Agenix
           inputs.agenix.nixosModules.default
@@ -34,6 +35,22 @@
             home-manager.users.felix = import ./home.nix;
 
             # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+          }
+        ];
+      };
+      "hpt630-sonnenhof" = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        specialArgs = inputs;
+        modules = [
+          ./hosts/hpt630-sonnenhof/configuration.nix
+          ./common.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.felix = import ./home.nix;
           }
         ];
       };

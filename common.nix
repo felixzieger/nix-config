@@ -1,19 +1,4 @@
-{ config, pkgs, agenix, ... }:
-
-{
-  imports = [
-    ./hardware-configuration.nix
-    ./services/nginx.nix
-    ./services/adguard.nix
-    ./services/uptime-kuma.nix
-    # ./services/plausible.nix
-    ./home-assistant.nix
-  ];
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "nixos";
+{pkgs, ...}: {
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Berlin";
@@ -33,9 +18,15 @@
 
   console.keyMap = "de";
 
+  nixpkgs.config.allowUnfree = true;
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  security.sudo.wheelNeedsPassword = false;
+
   users.users.felix = {
     isNormalUser = true;
-    description = "Felix";
+    description = "felix";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     packages = with pkgs; [ ];
@@ -44,15 +35,8 @@
     ];
   };
 
-  nixpkgs.config.allowUnfree = true;
-
-  security.sudo.wheelNeedsPassword = false;
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   environment.systemPackages = with pkgs; [
     git
-    agenix.packages."${system}".default
     btop
     dig
   ];
@@ -72,13 +56,4 @@
       PasswordAuthentication = false;
     };
   };
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
-
 }
