@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, agenix, ...}: {
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Berlin";
@@ -39,6 +39,7 @@
     git
     btop
     dig
+    agenix.packages."${system}".default
   ];
 
   programs.zsh.enable = true;

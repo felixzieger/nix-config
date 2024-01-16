@@ -1,4 +1,4 @@
-{ config, pkgs, agenix, ... }:
+{ config, pkgs, ... }:
 
 {
   imports =
@@ -10,10 +10,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "schwalbe";
-
-  environment.systemPackages = with pkgs; [
-    agenix.packages."${system}".default
-  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

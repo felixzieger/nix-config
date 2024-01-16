@@ -16,25 +16,20 @@
         specialArgs = inputs;
         modules = [
           ./hosts/schwalbe/configuration.nix
+          ./common.nix
           ./services/nginx.nix
           ./services/adguard.nix
           ./services/uptime-kuma.nix
           ./services/home-assistant.nix
-          # ./services/plausible.nix
 
-          # Secret management https://nixos.wiki/wiki/Agenix
           inputs.agenix.nixosModules.default
 
-          # make home-manager as a module of nixos
-          # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
             home-manager.users.felix = import ./home.nix;
-
-            # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
           }
         ];
       };
@@ -45,6 +40,11 @@
         modules = [
           ./hosts/hpt630-sonnenhof/configuration.nix
           ./common.nix
+          ./services/nginx.nix
+          ./services/adguard.nix
+          ./services/frigate.nix
+
+          inputs.agenix.nixosModules.default
 
           home-manager.nixosModules.home-manager
           {
