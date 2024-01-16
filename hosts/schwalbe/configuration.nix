@@ -10,6 +10,15 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "schwalbe";
+  
+  programs.tmux =
+    {
+      enable = true;
+      extraConfig = ''
+        set -g status-bg blue
+      '';
+    };
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
