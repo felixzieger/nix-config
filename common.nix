@@ -39,6 +39,7 @@
     git
     btop
     dig
+
     agenix.packages."${system}".default
   ];
 

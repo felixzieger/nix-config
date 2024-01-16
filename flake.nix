@@ -33,12 +33,12 @@
           }
         ];
       };
-      "hpt630-sonnenhof" = nixpkgs.lib.nixosSystem {
+      "cameron" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
         specialArgs = inputs;
         modules = [
-          ./hosts/hpt630-sonnenhof/configuration.nix
+          ./hosts/cameron/configuration.nix
           ./common.nix
           ./services/nginx.nix
           ./services/adguard.nix

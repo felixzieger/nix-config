@@ -43,6 +43,7 @@
       extraConfig = ''
         # Switch pane layout    CTRL+B SPACE
         # Toggle focus for pane CTRL+B Z
+
         set -g mouse on
 
         # Split panes start in current path
