@@ -15,7 +15,6 @@ Where the
 
 # Home Assistant
 
-- Awaire integration
 - Emfit integration https://github.com/jxlarrea/ha-emfitqs
 - Voice control in German is pretty bad https://community.home-assistant.io/t/whisper-is-really-bad-at-understanding-german-what-can-i-do-about-that/599167/3
 
@@ -23,3 +22,4 @@ Where the
 
 - Certs for internal IPs via DNS-01 https://nixos.org/manual/nixos/stable/#module-security-acme-config-dns
 - Separate network for Cameras
+- Bitcoin + Lightning Node https://github.com/fort-nix/nix-bitcoin/

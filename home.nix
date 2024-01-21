@@ -3,12 +3,9 @@
   home.username = "felix";
   home.homeDirectory = "/home/felix";
   home.packages = with pkgs; [
-    which
-    tree
-
     silver-searcher # used for fzf in vim
 
-    # for nvim
+    # used for nvim
     lua-language-server
     nodePackages.vim-language-server
     nixd
@@ -20,7 +17,7 @@
     enableCompletion = true;
     enableAutosuggestions = true;
     syntaxHighlighting.enable = true;
-    initExtra = builtins.readFile ./zsh.rc;
+    initExtra = builtins.readFile ./modules/zsh/zsh.rc;
   };
 
   programs.git = {
@@ -30,13 +27,11 @@
     delta.enable = true;
   };
 
-  programs.fzf = {
-    enable = true;
-  };
+  programs.lazygit.enable = true;
 
-  programs.bat = {
-    enable = true;
-  };
+  programs.fzf.enable = true;
+
+  programs.bat.enable = true;
 
   programs.tmux =
     {
@@ -54,6 +49,9 @@
         # True color settings
         set -g default-terminal "$TERM"
         set -ag terminal-overrides ",$TERM:Tc"
+
+        # nvim :healthcheck recommends setting escape-time
+        set-option -sg escape-time 10
       '';
     };
 
@@ -66,7 +64,7 @@
       {
         plugin = nvim-lspconfig;
         type = "lua";
-        config = builtins.readFile ./nvim-lspconfig.lua;
+        config = builtins.readFile ./modules/neovim/nvim-lspconfig.lua;
       }
       vim-nix
       tokyonight-nvim
@@ -74,7 +72,7 @@
       {
         plugin = lualine-nvim;
         type = "lua";
-        config = builtins.readFile ./nvim-lualine.lua;
+        config = builtins.readFile ./modules/neovim/nvim-lualine.lua;
       }
       nvim-web-devicons
       git-blame-nvim # Git blame with lualine-nvim integration
@@ -84,10 +82,10 @@
       {
         plugin = nvim-tree-lua; # <leader>n
         type = "lua";
-        config = builtins.readFile ./nvim-tree.lua;
+        config = builtins.readFile ./modules/neovim/nvim-tree.lua;
       }
     ];
-    extraConfig = builtins.readFile ./neovim.vim;
+    extraConfig = builtins.readFile ./modules/neovim/neovim.vim;
   };
 
   # This value determines the home Manager release that your

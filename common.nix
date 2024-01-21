@@ -1,4 +1,4 @@
-{pkgs, agenix, ...}: {
+{ pkgs, agenix, ... }: {
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Berlin";
@@ -21,6 +21,12 @@
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.optimise.automatic = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 
   security.sudo.wheelNeedsPassword = false;
 
@@ -36,6 +42,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+    which
+    tree
     git
     btop
     dig
@@ -56,6 +64,7 @@
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
     };
   };
 }
