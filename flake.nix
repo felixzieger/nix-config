@@ -6,9 +6,12 @@
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
+
+    nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
+    nix-bitcoin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, nix-bitcoin, ... }: {
     nixosConfigurations = {
       "schwalbe" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -21,6 +24,9 @@
           ./services/adguard.nix
           ./services/uptime-kuma.nix
           ./services/home-assistant.nix
+
+          nix-bitcoin.nixosModules.default
+          ./services/bitcoin.nix
 
           inputs.agenix.nixosModules.default
 
