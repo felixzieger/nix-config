@@ -10,6 +10,8 @@
     nodePackages.vim-language-server
     nixd
     nixpkgs-fmt
+
+    systemctl-tui # view systemctl interactively
   ];
 
   programs.zsh = {
