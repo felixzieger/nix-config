@@ -23,3 +23,4 @@ Where the
 - Certs for internal IPs via DNS-01 https://nixos.org/manual/nixos/stable/#module-security-acme-config-dns
 - Separate network for Cameras
 - Bitcoin + Lightning Node https://github.com/fort-nix/nix-bitcoin/
+- use shared config in darwin workstation https://github.com/DieracDelta/flakes
