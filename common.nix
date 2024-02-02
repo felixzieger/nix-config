@@ -1,4 +1,4 @@
-{ pkgs, agenix, ... }: {
+{ self, pkgs, agenix, ... }: {
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Berlin";
@@ -24,11 +24,32 @@
   nix.optimise.automatic = true;
   nix.gc = {
     automatic = true;
-    dates = "weekly";
+    dates = "Sat *-*-* 14:30:00";
     options = "--delete-older-than 30d";
   };
+  system.autoUpgrade = {
+    enable = true;
+    flake = self.outPath;
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "--commit-lock-file"
+      "-L" # print build logs
+    ];
+    dates = "Sat *-*-* 12:30:00";
+    allowReboot = true;
+  };
 
-  security.sudo.wheelNeedsPassword = false;
+
+  security.doas.enable = true;
+  security.doas.extraRules = [{
+    users = [ "felix" ];
+    keepEnv = true;
+    setEnv = [ "HOME" ];
+    noPass = true;
+  }];
+  security.sudo.enable = false;
+  environment.shellAliases.sudo = "doas";
 
   users.users.felix = {
     isNormalUser = true;

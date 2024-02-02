@@ -12,6 +12,7 @@
     nixpkgs-fmt
 
     systemctl-tui # view systemctl interactively
+    sysz
   ];
 
   programs.zsh = {

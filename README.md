@@ -3,7 +3,7 @@
 Config files are in /etc/nixos.
 
 Reload config via
-`sudo nixos-rebuild switch --flake .#hpt630-sonnenhof`
+`(HOME="/root"; doas nixos-rebuild switch)`
 
 # Service Debugging
 
@@ -12,6 +12,16 @@ Reload config via
 Where the 
 - `-u` argument is a unit name (retrievable by using systemctl) and
 - `-b 0` filters by current boot.
+
+# Nix config Debugging
+
+Show values. Add and rebuild switch
+
+```
+system.extraDependencies = let
+  debugVal = config.networking.firewall.allowedTCPPorts;
+in lib.traceSeqN 3 debugVal [];
+```
 
 # Home Assistant
 
