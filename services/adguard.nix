@@ -1,11 +1,19 @@
-{ pkgs, lib, ... }:
-let adguardPort = 3000;
-in {
+{ pkgs, config, ... }:
+let
+  adguardPort = 3000;
+in
+{
   config = {
     networking = {
       firewall = {
         allowedTCPPorts = [ adguardPort ];
         allowedUDPPorts = [ 53 ];
+      };
+    };
+
+    services.nginx.virtualHosts."adguard.${config.networking.hostName}.local" = {
+      locations."/" = {
+        proxyPass = "http://localhost:${toString adguardPort}";
       };
     };
 
