@@ -6,6 +6,7 @@ in
 {
   config = {
     services.nginx.virtualHosts."${uptimeKumaHost}" = {
+      default = true;
       forceSSL = true;
       enableACME = true;
       locations."/" = {
