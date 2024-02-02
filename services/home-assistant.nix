@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, config, ... }:
 let
   homeAssistantPort = 8123;
   whisperPort = 10300;
@@ -12,8 +12,18 @@ in
       };
     };
 
-    # Compare https://kressle.in/articles/2023/home-assistant-on-docker-with-nixos
+    # This requires setting use_x_forwarded_for and trusted_proxies in configuration.yaml
+    # Check docker container logs for the address of the proxy. Was ::1 for me.
+    services.nginx.virtualHosts."home.${config.networking.hostName}.local" = {
+      locations."/" = {
+        proxyPass = "http://localhost:${toString homeAssistantPort}";
+        proxyWebsockets = true;
+      };
+    };
+
     virtualisation.docker.enable = true;
+    virtualisation.docker.autoPrune.enable = true;
+    virtualisation.docker.autoPrune.flags = [ "--all" ];
     users.extraGroups.docker.members = [ "felix" ];
     virtualisation.oci-containers = {
       backend = "docker";
@@ -21,7 +31,7 @@ in
         homeassistant =
           {
             autoStart = true;
-            image = "ghcr.io/home-assistant/home-assistant:2023.12.3";
+            image = "ghcr.io/home-assistant/home-assistant:2024.1";
             volumes = [
               "/home/felix/HomeAssistant:/config"
               "/etc/localtime:/etc/localtime:ro"
@@ -36,14 +46,14 @@ in
         whisper =
           {
             autoStart = true;
-            image = "rhasspy/wyoming-whisper";
+            image = "rhasspy/wyoming-whisper:1.0.0";
             ports = [ "${builtins.toString whisperPort}:${builtins.toString whisperPort}" ];
             volumes = [ "/home/felix/whisper/data:/data" ];
             cmd = [ "--model=tiny-int8" ];
           };
         piper = {
           autoStart = true;
-          image = "rhasspy/wyoming-piper";
+          image = "rhasspy/wyoming-piper:1.4.0";
           ports = [ "${builtins.toString piperPort}:${builtins.toString piperPort}" ];
           volumes = [
             "/home/felix/piper/data:/data"
