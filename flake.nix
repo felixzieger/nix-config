@@ -22,6 +22,7 @@
 
         specialArgs = inputs;
         modules = [
+          home-manager.nixosModules.home-manager
           ./hosts/nixos
           ./hosts/nixos/schwalbe/configuration.nix
           ./services/nginx.nix
@@ -35,7 +36,6 @@
 
           inputs.agenix.nixosModules.default
 
-          home-manager.nixosModules.home-manager
         ];
       };
       "cameron" = nixpkgs.lib.nixosSystem {
@@ -43,6 +43,7 @@
 
         specialArgs = inputs;
         modules = [
+          home-manager.nixosModules.home-manager
           ./hosts/nixos
           ./hosts/nixos/cameron/configuration.nix
           ./services/nginx.nix
@@ -50,13 +51,6 @@
           ./services/frigate.nix
 
           inputs.agenix.nixosModules.default
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.felix = import ./home.nix;
-          }
 	];
     };
   };

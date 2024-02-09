@@ -1,4 +1,4 @@
-{ self, pkgs, agenix, ... }: {
+{ self, pkgs, agenix, home-manager, ... }: {
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Berlin";

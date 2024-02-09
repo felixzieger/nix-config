@@ -18,6 +18,6 @@
       
       # used for sad 
       export GIT_PAGER='delta -s'
-    ''
+    '';
   };
 }
