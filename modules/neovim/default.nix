@@ -1,5 +1,17 @@
 { inputs, pkgs, ... }:
 {
+  home.packages = with pkgs; [
+    fzf
+    silver-searcher
+
+    rnix-lsp
+    nixd
+    nixpkgs-fmt
+
+    lua-language-server
+    nodePackages.vim-language-server
+  ];
+
   programs.neovim = {
     enable = true;
     viAlias = true;

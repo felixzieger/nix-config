@@ -36,12 +36,6 @@
           inputs.agenix.nixosModules.default
 
           home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-
-            home-manager.users.felix = import ./home.nix;
-          }
         ];
       };
       "cameron" = nixpkgs.lib.nixosSystem {

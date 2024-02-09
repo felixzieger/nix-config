@@ -16,19 +16,28 @@
       users.fzieger = {
         home.username = lib.mkForce "fzieger";
         home.homeDirectory = lib.mkForce "/Users/fzieger";
+
         programs.lazygit.enable = true;
-        programs.fzf.enable = true;
-        programs.bat.enable = true;
         programs.home-manager.enable = true;
 
         imports = [
+          ./../../modules/fzf
           ./../../modules/zsh
           ./../../modules/git
           ./../../modules/neovim
           ./../../modules/tmux
         ];
 
+        programs.zsh.initExtra = builtins.readFile ./zshrc;
+
         # Additional plugins for nvim
+        home.packages = with pkgs; [
+          terraform-ls
+          nodePackages.vscode-langservers-extracted
+          nodePackages.bash-language-server
+          nodePackages.yaml-language-server
+          gopls
+        ];
         programs.neovim.plugins = with pkgs.vimPlugins; [
           # Languages
           vim-nix
@@ -92,15 +101,8 @@
     };
   };
 
-  # services.nix-daemon.enable = lib.mkForce true;
-
   environment.systemPackages = with pkgs;
     [
-      # used for nvim
-      lua-language-server
-      nodePackages.vim-language-server
-      nixpkgs-fmt
-
       systemctl-tui # view systemctl interactively
       sysz
 
@@ -110,10 +112,6 @@
       pkgs.tree
       pkgs.wget
       pkgs.starship
-      pkgs.fzf # add ZSH shortcuts by following https://nixos.wiki/wiki/Fzf
-      silver-searcher # used for fzf in vim
-      pkgs.bat # Used for FZF preview in vim
-      pkgs.silver-searcher
       pkgs.ripgrep
       pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
       pkgs.mycli
@@ -124,13 +122,6 @@
       pkgs.deno
       pkgs.gh
 
-      # Language Servers
-      pkgs.terraform-ls
-      pkgs.rnix-lsp
-      pkgs.nodePackages.vscode-langservers-extracted
-      pkgs.nodePackages.bash-language-server
-      pkgs.nodePackages.yaml-language-server
-      pkgs.gopls
 
       pkgs.watchman
 

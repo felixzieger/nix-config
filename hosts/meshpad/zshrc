@@ -1,0 +1,60 @@
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.deno/bin:$PATH
+
+HYPHEN_INSENSITIVE="true"
+alias zshconfig="$EDITOR ~/.zshrc"
+alias sourcezshrc="source ~/.zshrc"
+alias ls='lsd'
+alias l='ls'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='ls --tree'
+
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+setopt PROMPT_SUBST
+PROMPT='%9c%{%F{green}%}$(parse_git_branch)%{%F{none}%} $ '
+
+export TERM=xterm-256color
+export DIFFPROG="$EDITOR -d"
+
+
+alias ..="cd .."
+
+alias me="cd $HOME/meshcloud"
+alias mf="cd $HOME/meshcloud/meshfed-release"
+alias mi="cd $HOME/meshcloud/infrastructure"
+alias md="cd $HOME/meshcloud/deployments"
+alias mdocs="cd $HOME/meshcloud/meshcloud-docs"
+alias chub="cd $HOME/meshcloud/collie-hub"
+alias ccli="cd $HOME/meshcloud/collie-cli"
+alias validate-dhall="mf && deployment/test/validate.sh"
+alias validate-override="mf && ci/deployment/overrides-idempotent.sh"
+alias format-dhall="mf && deployment/bin/format-all-osx.sh"
+alias fk="fly -t k"
+
+alias vault-forward="mi && meshstack-infra-k8s/vault-forward.sh"
+export VAULT_ADDR=http://localhost:8200
+
+alias sm='smerge'
+
+# ssh-add -K ~/.ssh/id_rsa &> /dev/null
+if [ $(ssh-add -L | grep "felix@felix-meshpad" | wc -l) -eq 0 ]; then
+    ssh-add --apple-use-keychain ~/.ssh/id_rsa
+fi
+
+# alias unipipesh=/Users/$(id -un)/meshcloud/unipipe-service-broker/cli/unipipe/unipipe.sh
+# source <(unipipe completions zsh)
+export DENO_NO_UPDATE_CHECK=1
+# source <(collie completions zsh)
+
+# GCLOUD
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/fzieger/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/fzieger/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+# if [ -f '/Users/fzieger/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/fzieger/google-cloud-sdk/completion.zsh.inc'; fi
+

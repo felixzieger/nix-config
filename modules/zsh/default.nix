@@ -8,6 +8,16 @@
     enableCompletion = true;
     enableAutosuggestions = true;
     syntaxHighlighting.enable = true;
-    initExtra = builtins.readFile ./zsh.rc;
+    initExtra = ''
+      unsetopt BEEP
+
+      HYPHEN_INSENSITIVE="true"
+      
+      bindkey "^A" vi-beginning-of-line
+      bindkey "^E" vi-end-of-line
+      
+      # used for sad 
+      export GIT_PAGER='delta -s'
+    ''
   };
 }
