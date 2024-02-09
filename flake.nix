@@ -9,9 +9,13 @@
 
     nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
     nix-bitcoin.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-23.11-darwin";
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nix-bitcoin, ... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, nix-bitcoin, nixpkgs-darwin, nix-darwin, ... }: {
     nixosConfigurations = {
       "schwalbe" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -59,7 +63,18 @@
             home-manager.useUserPackages = true;
             home-manager.users.felix = import ./home.nix;
           }
-        ];
+	];
+    };
+  };
+  darwinConfigurations = {
+      "Felixs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+        system = "x86_64-darwin";
+
+        specialArgs = inputs;
+	modules = [
+          home-manager.darwinModules.home-manager
+          ./hosts/meshpad
+	];
       };
     };
   };
