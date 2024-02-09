@@ -22,8 +22,8 @@
 
         specialArgs = inputs;
         modules = [
-          ./hosts/schwalbe/configuration.nix
-          ./common.nix
+          ./hosts/nixos
+          ./hosts/nixos/schwalbe/configuration.nix
           ./services/nginx.nix
           ./services/adguard.nix
           ./services/uptime-kuma.nix
@@ -49,8 +49,8 @@
 
         specialArgs = inputs;
         modules = [
-          ./hosts/cameron/configuration.nix
-          ./common.nix
+          ./hosts/nixos
+          ./hosts/nixos/cameron/configuration.nix
           ./services/nginx.nix
           ./services/adguard.nix
           ./services/frigate.nix
