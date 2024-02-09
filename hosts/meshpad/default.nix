@@ -28,6 +28,24 @@
           ./../../modules/tmux
         ];
 
+        # Additional plugins for nvim
+        programs.neovim.plugins = with pkgs.vimPlugins; [
+          # Languages
+          vim-nix
+          kotlin-vim
+          dhall-vim
+          vim-terraform
+
+          null-ls-nvim # Part of vale setup, see https://bhupesh.me/writing-like-a-pro-with-vale-and-neovim/
+
+          # Completions
+          nvim-cmp
+          cmp-nvim-lsp
+          luasnip
+          cmp_luasnip
+          friendly-snippets
+        ];
+
         # This value determines the home Manager release that your
         # configuration is compatible with. This helps avoid breakage
         # when a new home Manager release introduces backwards
