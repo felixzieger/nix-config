@@ -147,7 +147,10 @@
       pkgs.awscli2
       # pkgs.google-cloud-sdk # Managed externally, because of plugin gke-gcloud-auth-plugin
       # pkgs.azure-cli # Managed externall, because plugin installs fail otherwise
-    ];
+    ] 
+    # I haven't figured out how to fix the dhall versions in the new flakes based setup yet
+    # ++ import (./versions.nix)
+  ;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
