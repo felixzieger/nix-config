@@ -1,6 +1,11 @@
 local lspconfig = require('lspconfig')
 
 lspconfig.nixd.setup {}
+lspconfig.dhall_lsp_server.setup {}
+lspconfig.terraformls.setup {}
+lspconfig.yamlls.setup {}
+lspconfig.jsonls.setup {}
+lspconfig.bashls.setup {}
 
 lspconfig.lua_ls.setup {
   on_init = function(client)
@@ -18,11 +23,7 @@ lspconfig.lua_ls.setup {
             checkThirdParty = false,
             library = {
               vim.env.VIMRUNTIME
-              -- "${3rd}/luv/library"
-              -- "${3rd}/busted/library",
             }
-            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-            -- library = vim.api.nvim_get_runtime_file("", true)
           }
         }
       })
@@ -32,8 +33,6 @@ lspconfig.lua_ls.setup {
     return true
   end
 }
-
-
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
