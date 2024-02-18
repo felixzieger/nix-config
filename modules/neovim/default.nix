@@ -10,6 +10,8 @@
 
     lua-language-server
     nodePackages.vim-language-server
+          nodePackages.bash-language-server
+          nodePackages.yaml-language-server
   ];
 
   programs.neovim = {
@@ -17,12 +19,19 @@
     viAlias = true;
     vimAlias = true;
     plugins = with pkgs.vimPlugins; [
+      # Languages
+      vim-nix
+      # Completions
+      nvim-cmp
+      cmp-nvim-lsp
+      luasnip
+      cmp_luasnip
+      friendly-snippets
       {
         plugin = nvim-lspconfig;
         type = "lua";
         config = builtins.readFile ./nvim-lspconfig.lua;
       }
-      vim-nix
       tokyonight-nvim
 
       {

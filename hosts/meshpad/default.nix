@@ -34,25 +34,16 @@
         home.packages = with pkgs; [
           terraform-ls
           nodePackages.vscode-langservers-extracted
-          nodePackages.bash-language-server
-          nodePackages.yaml-language-server
           gopls
         ];
         programs.neovim.plugins = with pkgs.vimPlugins; [
           # Languages
-          vim-nix
           kotlin-vim
           dhall-vim
           vim-terraform
 
           null-ls-nvim # Part of vale setup, see https://bhupesh.me/writing-like-a-pro-with-vale-and-neovim/
 
-          # Completions
-          nvim-cmp
-          cmp-nvim-lsp
-          luasnip
-          cmp_luasnip
-          friendly-snippets
         ];
 
         # This value determines the home Manager release that your
@@ -147,7 +138,7 @@
       pkgs.awscli2
       # pkgs.google-cloud-sdk # Managed externally, because of plugin gke-gcloud-auth-plugin
       # pkgs.azure-cli # Managed externall, because plugin installs fail otherwise
-    ] 
+    ]
     # I haven't figured out how to fix the dhall versions in the new flakes based setup yet
     # ++ import (./versions.nix)
   ;
