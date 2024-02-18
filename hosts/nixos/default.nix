@@ -41,15 +41,8 @@
   };
 
 
-  security.doas.enable = true;
-  security.doas.extraRules = [{
-    users = [ "felix" ];
-    keepEnv = true;
-    setEnv = [ "HOME" ];
-    noPass = true;
-  }];
-  security.sudo.enable = false;
-  environment.shellAliases.sudo = "doas";
+  security.sudo.enable = true;
+  security.sudo.wheelNeedsPassword = false;
 
   users.users.felix = {
     isNormalUser = true;
