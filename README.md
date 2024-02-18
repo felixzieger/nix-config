@@ -31,3 +31,4 @@ in lib.traceSeqN 3 debugVal [];
 # Up next
 
 - Observability https://xeiaso.net/blog/prometheus-grafana-loki-nixos-2020-11-20/
+- Write proper modules (with options and all). See https://guekka.github.io/nixos-server-2/ for an example

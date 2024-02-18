@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
-
+# I mostly followed
+# https://tailscale.com/kb/1096/nixos-minecraft
 {
   age.secrets = {
     tailscale-authkey.file = ../secrets/tailscale-authkey.age;
@@ -42,6 +43,7 @@
       fi
 
       # otherwise authenticate with tailscale
+      # (idea with cat'ing file into tailscale up taken from https://guekka.github.io/nixos-server-2/)
       ${tailscale}/bin/tailscale up --authkey=$(cat "${config.age.secrets.tailscale-authkey.path}")
     '';
   };
