@@ -12,4 +12,5 @@ in
   "plausible-admin-password.age".publicKeys = [ schwalbe ];
 
   "frigate-basic-auth.age".publicKeys = [ cameron ];
+  "tailscale-authkey.age".publicKeys = [ schwalbe ];
 }

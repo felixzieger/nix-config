@@ -4,13 +4,14 @@
   imports =
     [
       ./hardware-configuration.nix
+      ../../../services/tailscale.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "schwalbe";
-  
+
   programs.tmux =
     {
       enable = true;
