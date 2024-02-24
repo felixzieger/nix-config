@@ -15,6 +15,7 @@ in
     # This requires setting use_x_forwarded_for and trusted_proxies in configuration.yaml
     # Check docker container logs for the address of the proxy. Was ::1 for me.
     services.nginx.virtualHosts."home.${config.networking.hostName}.local" = {
+      rejectSSL = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString homeAssistantPort}";
         proxyWebsockets = true;

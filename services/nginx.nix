@@ -22,5 +22,10 @@
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
     };
+
+    services.nginx.virtualHosts."_" = {
+      default = true;
+      extraConfig = "deny all;";
+    };
   };
 }

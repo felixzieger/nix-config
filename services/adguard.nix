@@ -12,6 +12,7 @@ in
     };
 
     services.nginx.virtualHosts."adguard.${config.networking.hostName}.local" = {
+      rejectSSL = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString adguardPort}";
       };
