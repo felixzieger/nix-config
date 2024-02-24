@@ -29,6 +29,7 @@
           ./services/adguard.nix
           ./services/uptime-kuma.nix
           ./services/home-assistant.nix
+          ./services/minio.nix
 
           nix-bitcoin.nixosModules.default
           (nix-bitcoin + "/modules/presets/enable-tor.nix")
