@@ -6,7 +6,6 @@ in
   config = {
     networking = {
       firewall = {
-        allowedTCPPorts = [ adguardPort ];
         allowedUDPPorts = [ 53 ];
       };
     };
@@ -21,7 +20,6 @@ in
     services = {
       adguardhome = {
         enable = true;
-        openFirewall = true;
         settings = {
           bind_port = adguardPort;
           schema_version = 20;
