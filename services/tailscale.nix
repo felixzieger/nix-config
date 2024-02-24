@@ -12,10 +12,6 @@
   };
 
   environment.systemPackages = [ pkgs.tailscale ];
-  environment.persistence = {
-    "/persist".directories = [ "/var/lib/tailscale" ];
-  };
-
 
   services.tailscale.enable = true;
 
