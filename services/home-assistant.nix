@@ -43,7 +43,7 @@ in
             autoStart = true;
             image = "ghcr.io/home-assistant/home-assistant:2024.1";
             volumes = [
-              "/home/felix/HomeAssistant:/config"
+              "/data/HomeAssistant:/config"
               "/etc/localtime:/etc/localtime:ro"
             ];
             environment.TZ = "Europe/Berlin";
@@ -58,7 +58,7 @@ in
             autoStart = true;
             image = "rhasspy/wyoming-whisper:1.0.0";
             ports = [ "${builtins.toString whisperPort}:${builtins.toString whisperPort}" ];
-            volumes = [ "/home/felix/whisper/data:/data" ];
+            volumes = [ "/data/whisper/data:/data" ];
             cmd = [ "--model=tiny-int8" ];
           };
         piper = {
@@ -66,7 +66,7 @@ in
           image = "rhasspy/wyoming-piper:1.4.0";
           ports = [ "${builtins.toString piperPort}:${builtins.toString piperPort}" ];
           volumes = [
-            "/home/felix/piper/data:/data"
+            "/data/piper/data:/data"
           ];
           cmd = [ "--voice=en_US-lessac-medium" ];
         };
