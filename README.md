@@ -1,9 +1,9 @@
 # How to use
 
-Config files for nixos are in /etc/nixos.
+Config files for nixos are in `/etc/nixos`.
 Reload config via `sudo nixos-rebuild switch`
 
-Config files for mac os are in ~/.nixpkg.
+Config files for mac os are in `~/.nixpkgs`.
 Relod config via `darwin-rebuild switch --flake ~/.nixpkgs `
 
 # Service Debugging
