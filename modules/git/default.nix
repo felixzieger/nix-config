@@ -1,5 +1,6 @@
 { inputs, pkgs, ... }:
 {
+  programs.lazygit.enable = true;
   programs.git = {
     enable = true;
     userName = "Felix Zieger";

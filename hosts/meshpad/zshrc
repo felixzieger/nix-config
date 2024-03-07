@@ -1,14 +1,5 @@
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$HOME/.deno/bin:$PATH
-
-HYPHEN_INSENSITIVE="true"
-alias zshconfig="$EDITOR ~/.zshrc"
-alias sourcezshrc="source ~/.zshrc"
 alias ls='lsd'
-alias l='ls'
-alias la='ls -a'
-alias lla='ls -la'
-alias lt='ls --tree'
+alias tree='ls --tree'
 
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
@@ -18,10 +9,6 @@ setopt PROMPT_SUBST
 PROMPT='%9c%{%F{green}%}$(parse_git_branch)%{%F{none}%} $ '
 
 export TERM=xterm-256color
-export DIFFPROG="$EDITOR -d"
-
-
-alias ..="cd .."
 
 alias me="cd $HOME/meshcloud"
 alias mf="cd $HOME/meshcloud/meshfed-release"
@@ -45,10 +32,18 @@ if [ $(ssh-add -L | grep "felix@felix-meshpad" | wc -l) -eq 0 ]; then
     ssh-add --apple-use-keychain ~/.ssh/id_rsa
 fi
 
-# alias unipipesh=/Users/$(id -un)/meshcloud/unipipe-service-broker/cli/unipipe/unipipe.sh
-# source <(unipipe completions zsh)
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.deno/bin:$PATH
 export DENO_NO_UPDATE_CHECK=1
-# source <(collie completions zsh)
+
+# source_collie_completions() {
+#     source <(collie completions zsh) # I only enable this in collie repos since it adds a few hundred ms to shell startup time
+# }
+# if [[ -d '.collie' ]]; then
+#     echo "It's a collie repo. collie completions enabled."
+#     source_collie_completions;
+# fi
+# source <(unipipe completions zsh)
 
 # GCLOUD
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True

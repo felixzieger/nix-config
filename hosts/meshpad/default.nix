@@ -17,7 +17,6 @@
         home.username = lib.mkForce "fzieger";
         home.homeDirectory = lib.mkForce "/Users/fzieger";
 
-        programs.lazygit.enable = true;
         programs.home-manager.enable = true;
 
         imports = [
@@ -74,6 +73,7 @@
       "bitwarden"
       "monitorcontrol"
       "kitty"
+      "visual-studio-code"
     ];
   };
 
@@ -92,11 +92,10 @@
     };
   };
 
+
+  environment.variables.EDITOR = "nvim";
   environment.systemPackages = with pkgs;
     [
-      systemctl-tui # view systemctl interactively
-      sysz
-
       pkgs.btop
       pkgs.git
       pkgs.tig
@@ -106,7 +105,7 @@
       pkgs.ripgrep
       pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
       pkgs.mycli
-      pkgs.vscode
+      # pkgs.vscode # Managed via brew because it does not show up in spotlight
       pkgs.shellcheck
       pkgs.vale
       pkgs.bitwarden-cli
@@ -118,7 +117,6 @@
 
       pkgs.go
       pkgs.terraform
-      pkgs.opentofu
       pkgs.terraform-docs
       pkgs.terragrunt
       pkgs.pass
@@ -146,5 +144,4 @@
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
-
 }
