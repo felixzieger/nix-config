@@ -41,7 +41,7 @@ in
         homeassistant =
           {
             autoStart = true;
-            image = "ghcr.io/home-assistant/home-assistant:2024.2";
+            image = "ghcr.io/home-assistant/home-assistant:2024.3.0";
             volumes = [
               "/data/HomeAssistant:/config"
               "/etc/localtime:/etc/localtime:ro"
