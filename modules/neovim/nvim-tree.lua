@@ -74,5 +74,16 @@ require("nvim-tree").setup({
   },
   live_filter = {
     always_show_folders = false,
-  }
+  },
+  view = {
+    adaptive_size = true,
+  },
+  update_focused_file = { enable = true, },
+  actions = {
+    open_file = {
+      window_picker = {
+        enable = false,
+      },
+    },
+  },
 })
