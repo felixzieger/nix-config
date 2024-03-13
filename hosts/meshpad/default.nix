@@ -43,6 +43,12 @@
 
           null-ls-nvim # Part of vale setup, see https://bhupesh.me/writing-like-a-pro-with-vale-and-neovim/
 
+          friendly-snippets
+          {
+            plugin = nvim-lspconfig;
+            type = "lua";
+            config = builtins.readFile ./nvim-lspconfig.lua;
+          }
         ];
 
         # This value determines the home Manager release that your
