@@ -1,8 +1,6 @@
 local lspconfig = require('lspconfig')
 
 lspconfig.nixd.setup {}
-lspconfig.dhall_lsp_server.setup {}
-lspconfig.terraformls.setup {}
 lspconfig.yamlls.setup {}
 lspconfig.jsonls.setup {}
 lspconfig.bashls.setup {}
