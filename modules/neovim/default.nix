@@ -10,8 +10,8 @@
 
     lua-language-server
     nodePackages.vim-language-server
-          nodePackages.bash-language-server
-          nodePackages.yaml-language-server
+    nodePackages.bash-language-server
+    nodePackages.yaml-language-server
   ];
 
   programs.neovim = {
