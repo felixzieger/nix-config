@@ -14,4 +14,7 @@ in
   "frigate-basic-auth.age".publicKeys = [ cameron ];
   "tailscale-authkey.age".publicKeys = [ schwalbe ];
   "minio-root-credentials.age".publicKeys = [ schwalbe ];
+
+  "uptime-kuma-restic-password.age".publicKeys = [ schwalbe ];
+  "uptime-kuma-restic-environment.age".publicKeys = [ schwalbe ];
 }

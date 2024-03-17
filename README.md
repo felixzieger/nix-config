@@ -29,6 +29,21 @@ in lib.traceSeqN 3 debugVal [];
 - Emfit integration https://github.com/jxlarrea/ha-emfitqs
 - Voice control in German is pretty bad https://community.home-assistant.io/t/whisper-is-really-bad-at-understanding-german-what-can-i-do-about-that/599167/3
 
+# Backups
+
+Restic creates backups on b2. I followed https://www.arthurkoziel.com/restic-backups-b2-nixos/ and https://francis.begyn.be/blog/nixos-restic-backups for setup.
+
+Start the service manually to trigger a new backup run:
+`$ sudo systemctl start restic-$job.service`
+Check the ouput for errors:
+`$ journalctl -u restic-$job.service`
+
+The restic service creates wrapper scripts for each job. 
+The script is name `restic-$job`. It will automatically load the environment variables, repository name and password from the service definition.
+List snapshots in the repository:
+`$ sudo restic-$job snapshots`
+
+
 # Up next
 
 - Observability https://xeiaso.net/blog/prometheus-grafana-loki-nixos-2020-11-20/
