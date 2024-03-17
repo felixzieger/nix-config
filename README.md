@@ -40,8 +40,9 @@ Check the ouput for errors:
 
 The restic service creates wrapper scripts for each job. 
 The script is name `restic-$job`. It will automatically load the environment variables, repository name and password from the service definition.
-List snapshots in the repository:
-`$ sudo restic-$job snapshots`
+
+For example, to restore the uptime-kuma backup run:
+`sudo restic-uptime-kuma restore latest --target /`
 
 
 # Up next
