@@ -17,4 +17,6 @@ in
 
   "uptime-kuma-restic-password.age".publicKeys = [ schwalbe ];
   "uptime-kuma-restic-environment.age".publicKeys = [ schwalbe ];
+  "home-assistant-restic-password.age".publicKeys = [ schwalbe ];
+  "home-assistant-restic-environment.age".publicKeys = [ schwalbe ];
 }

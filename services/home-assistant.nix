@@ -1,6 +1,7 @@
 { pkgs, config, ... }:
 let
   homeAssistantPort = 8123;
+  homeAssistantConfigDir = "/data/HomeAssistant";
   whisperPort = 10300;
   piperPort = 10200;
 in
@@ -24,7 +25,7 @@ in
         allow 172.16.0.0/12;
         allow 10.0.0.0/8;
         deny all;
-        '';
+      '';
       locations."/" = {
         proxyPass = "http://localhost:${toString homeAssistantPort}";
         proxyWebsockets = true;
@@ -43,7 +44,7 @@ in
             autoStart = true;
             image = "ghcr.io/home-assistant/home-assistant:2024.3.0";
             volumes = [
-              "/data/HomeAssistant:/config"
+              "${homeAssistantConfigDir}:/config"
               "/etc/localtime:/etc/localtime:ro"
             ];
             environment.TZ = "Europe/Berlin";
@@ -70,6 +71,34 @@ in
           ];
           cmd = [ "--voice=en_US-lessac-medium" ];
         };
+      };
+    };
+
+    age.secrets = {
+      home-assistant-restic-environment.file = ../secrets/home-assistant-restic-environment.age;
+      home-assistant-restic-password.file = ../secrets/home-assistant-restic-password.age;
+    };
+
+    services.restic.backups = {
+      home-assistant = {
+        initialize = true;
+
+        paths = [ homeAssistantConfigDir ];
+
+        repository = "b2:${config.networking.hostName}-home-assistant";
+        environmentFile = config.age.secrets.home-assistant-restic-environment.path;
+        passwordFile = config.age.secrets.home-assistant-restic-password.path;
+
+        timerConfig = {
+          OnCalendar = "10:00";
+          RandomizedDelaySec = "2h";
+        };
+
+        pruneOpts = [
+          "--keep-daily 7"
+          "--keep-weekly 5"
+          "--keep-monthly 12"
+        ];
       };
     };
   };
