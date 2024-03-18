@@ -19,6 +19,10 @@
   console.keyMap = "de";
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [
+    "nix-2.15.3"
+    "nix-2.16.2"
+  ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.optimise.automatic = true;

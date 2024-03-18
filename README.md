@@ -13,6 +13,12 @@ ssh-keygen
 Add public key to github repo
 git clone
 nix-rebuild switch
+# Update inputs
+
+```
+# Update flake.lock
+nix flake update
+```
 
 # Service Debugging
 
