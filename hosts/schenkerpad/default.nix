@@ -1,4 +1,7 @@
 { self, pkgs, agenix, home-manager, ... }: {
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "DejaVuSansMono" "SourceCodePro" ]; })
+  ];
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
@@ -17,10 +20,10 @@
       programs.lazygit.enable = true;
 
       imports = [
-       ./../../modules/fzf
-       ./../../modules/zsh
-       ./../../modules/tmux
-       ./../../modules/neovim
+        ./../../modules/fzf
+        ./../../modules/zsh
+        ./../../modules/tmux
+        ./../../modules/neovim
       ];
 
       # This value determines the home Manager release that your

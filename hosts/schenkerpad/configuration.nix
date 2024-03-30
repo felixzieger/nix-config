@@ -93,15 +93,21 @@
     packages = with pkgs; [
       firefox
       bitwarden
+      spotify
     ];
   };
 
   nixpkgs.config.allowUnfree = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+	"nix-2.15.3" # nvim depends on this version
+  ];
+
   environment.systemPackages = with pkgs; [
   git
   neovim
   tmux
+  lshw # find out GPU stats
 
   ];
 
