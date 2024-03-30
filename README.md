@@ -6,6 +6,14 @@ Reload config via `sudo nixos-rebuild switch`
 Config files for mac os are in `~/.nixpkgs`.
 Relod config via `darwin-rebuild switch --flake ~/.nixpkgs `
 
+## Adding a new machine
+
+install git
+ssh-keygen
+Add public key to github repo
+git clone
+nix-rebuild switch
+
 # Service Debugging
 
 `journalctl -u plausible.service -b0`
