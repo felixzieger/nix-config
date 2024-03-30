@@ -53,6 +53,16 @@
           inputs.agenix.nixosModules.default
 	];
     };
+      "schenkerpad" = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        specialArgs = inputs;
+        modules = [
+          home-manager.nixosModules.home-manager
+          ./hosts/schenkerpad
+          ./hosts/schenkerpad/configuration.nix
+	];
+    };
   };
   darwinConfigurations = {
       "Felixs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
