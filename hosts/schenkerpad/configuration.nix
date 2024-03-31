@@ -19,7 +19,7 @@
   boot.loader.grub.enableCryptodisk=true;
 
   boot.initrd.luks.devices."luks-326db574-8d3f-461d-a178-0ac45d8da7b7".keyFile = "/crypto_keyfile.bin";
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "schenkerpad"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
