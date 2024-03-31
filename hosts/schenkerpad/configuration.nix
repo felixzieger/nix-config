@@ -110,6 +110,7 @@
   git
   neovim
   tmux
+  rsync
 
   ];
 
