@@ -20,12 +20,6 @@ in
     services.nginx.virtualHosts."home.${config.networking.hostName}.felixzieger.de" = {
       forceSSL = true;
       enableACME = true;
-      extraConfig = ''
-        allow 192.168.0.0/16;
-        allow 172.16.0.0/12;
-        allow 10.0.0.0/8;
-        deny all;
-      '';
       locations."/" = {
         proxyPass = "http://localhost:${toString homeAssistantPort}";
         proxyWebsockets = true;
@@ -51,7 +45,6 @@ in
             extraOptions = [
               "--network=host"
               "--privileged"
-              # "--device=/dev/ttyUSB0" # USB devices
             ];
           };
         whisper =
