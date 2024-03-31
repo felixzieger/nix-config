@@ -94,7 +94,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
-      firefox
       bitwarden
       spotify
       nextcloud-client
