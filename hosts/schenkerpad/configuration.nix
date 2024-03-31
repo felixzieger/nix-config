@@ -97,6 +97,7 @@
       firefox
       bitwarden
       spotify
+      nextcloud-client
     ];
   };
 
@@ -110,7 +111,6 @@
   git
   neovim
   tmux
-  lshw # find out GPU stats
 
   ];
 
