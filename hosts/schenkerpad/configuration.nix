@@ -50,6 +50,9 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
+  security.sudo.enable = true;
+  security.sudo.wheelNeedsPassword = false;
+
   # Configure keymap in X11
   services.xserver = {
     layout = "de";
