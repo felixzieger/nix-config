@@ -26,4 +26,6 @@ in
   "ghost-environment.age".publicKeys = [ schwalbe ];
   "ghost-restic-password.age".publicKeys = [ schwalbe ];
   "ghost-restic-environment.age".publicKeys = [ schwalbe ];
+
+  "watchtower-environment.age".publicKeys = [ schwalbe ];
 }

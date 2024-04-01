@@ -27,16 +27,13 @@ in
     };
 
     virtualisation.docker.enable = true;
-    virtualisation.docker.autoPrune.enable = true;
-    virtualisation.docker.autoPrune.flags = [ "--all" ];
-    users.extraGroups.docker.members = [ "felix" ];
     virtualisation.oci-containers = {
       backend = "docker";
       containers = {
         homeassistant =
           {
             autoStart = true;
-            image = "ghcr.io/home-assistant/home-assistant:2024.3.0";
+            image = "ghcr.io/home-assistant/home-assistant:latest";
             volumes = [
               "${homeAssistantConfigDir}:/config"
               "/etc/localtime:/etc/localtime:ro"
@@ -50,14 +47,14 @@ in
         whisper =
           {
             autoStart = true;
-            image = "rhasspy/wyoming-whisper:1.0.0";
+            image = "rhasspy/wyoming-whisper:latest";
             ports = [ "${builtins.toString whisperPort}:${builtins.toString whisperPort}" ];
             volumes = [ "/data/whisper/data:/data" ];
             cmd = [ "--model=tiny-int8" ];
           };
         piper = {
           autoStart = true;
-          image = "rhasspy/wyoming-piper:1.4.0";
+          image = "rhasspy/wyoming-piper:latest";
           ports = [ "${builtins.toString piperPort}:${builtins.toString piperPort}" ];
           volumes = [
             "/data/piper/data:/data"
