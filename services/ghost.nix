@@ -9,6 +9,8 @@ in
     services.nginx.virtualHosts."${ghostHost}" = {
       forceSSL = true;
       enableACME = true;
+      http3 = true;
+      quic = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString ghostPort}";
       };

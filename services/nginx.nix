@@ -17,6 +17,7 @@
     # See https://nixos.wiki/wiki/Nginx
     services.nginx = {
       enable = true;
+      package = pkgs.nginxQuic; # HTTP/3 support
 
       recommendedGzipSettings = true;
       recommendedOptimisation = true;

@@ -20,6 +20,8 @@ in
     services.nginx.virtualHosts."home.${config.networking.hostName}.felixzieger.de" = {
       forceSSL = true;
       enableACME = true;
+      http3 = true;
+      quic = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString homeAssistantPort}";
         proxyWebsockets = true;
