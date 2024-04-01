@@ -13,10 +13,13 @@ in
 
   "frigate-basic-auth.age".publicKeys = [ cameron ];
   "tailscale-authkey.age".publicKeys = [ schwalbe ];
-  "minio-root-credentials.age".publicKeys = [ schwalbe ];
 
   "uptime-kuma-restic-password.age".publicKeys = [ schwalbe ];
   "uptime-kuma-restic-environment.age".publicKeys = [ schwalbe ];
   "home-assistant-restic-password.age".publicKeys = [ schwalbe ];
   "home-assistant-restic-environment.age".publicKeys = [ schwalbe ];
+
+  "vaultwarden-environment.age".publicKeys = [ schwalbe ];
+  "vaultwarden-restic-password.age".publicKeys = [ schwalbe ];
+  "vaultwarden-restic-environment.age".publicKeys = [ schwalbe ];
 }
