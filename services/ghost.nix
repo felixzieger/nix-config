@@ -61,32 +61,32 @@ in
       };
     };
 
-    # age.secrets = {
-    #   ghost-restic-environment.file = ../secrets/ghost-restic-environment.age;
-    #   ghost-restic-password.file = ../secrets/ghost-restic-password.age;
-    # };
+    age.secrets = {
+      ghost-restic-environment.file = ../secrets/ghost-restic-environment.age;
+      ghost-restic-password.file = ../secrets/ghost-restic-password.age;
+    };
 
-    # services.restic.backups = {
-    #   ghost = {
-    #     initialize = true;
+    services.restic.backups = {
+      ghost = {
+        initialize = true;
 
-    #     paths = [ ghostDataDir ];
+        paths = [ ghostDataDir ];
 
-    #     repository = "b2:${config.networking.hostName}-ghost";
-    #     environmentFile = config.age.secrets.ghost-restic-environment.path;
-    #     passwordFile = config.age.secrets.ghost-restic-password.path;
+        repository = "b2:${config.networking.hostName}-ghost";
+        environmentFile = config.age.secrets.ghost-restic-environment.path;
+        passwordFile = config.age.secrets.ghost-restic-password.path;
 
-    #     timerConfig = {
-    #       OnCalendar = "10:00";
-    #       RandomizedDelaySec = "2h";
-    #     };
+        timerConfig = {
+          OnCalendar = "15:00";
+          RandomizedDelaySec = "2h";
+        };
 
-    #     pruneOpts = [
-    #       "--keep-daily 7"
-    #       "--keep-weekly 5"
-    #       "--keep-monthly 12"
-    #     ];
-    #   };
-    # };
+        pruneOpts = [
+          "--keep-daily 7"
+          "--keep-weekly 5"
+          "--keep-monthly 12"
+        ];
+      };
+    };
   };
 }
