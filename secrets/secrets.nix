@@ -22,4 +22,8 @@ in
   "vaultwarden-environment.age".publicKeys = [ schwalbe ];
   "vaultwarden-restic-password.age".publicKeys = [ schwalbe ];
   "vaultwarden-restic-environment.age".publicKeys = [ schwalbe ];
+
+  "ghost-environment.age".publicKeys = [ schwalbe ];
+  "ghost-restic-password.age".publicKeys = [ schwalbe ];
+  "ghost-restic-environment.age".publicKeys = [ schwalbe ];
 }
