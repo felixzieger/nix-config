@@ -46,7 +46,7 @@ in
 
         timerConfig = {
           OnCalendar = "11:00";
-          RandomizedDelaySec = "2h";
+          RandomizedDelaySec = "5min";
         };
 
         pruneOpts = [

@@ -40,7 +40,7 @@ in
 
         timerConfig = {
           OnCalendar = "16:00";
-          RandomizedDelaySec = "600s";
+          RandomizedDelaySec = "5min";
         };
 
         pruneOpts = [

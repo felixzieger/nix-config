@@ -83,7 +83,7 @@ in
 
         timerConfig = {
           OnCalendar = "10:00";
-          RandomizedDelaySec = "2h";
+          RandomizedDelaySec = "5min";
         };
 
         pruneOpts = [

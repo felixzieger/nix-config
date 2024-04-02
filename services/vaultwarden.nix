@@ -64,10 +64,10 @@ in
 
         timerConfig = {
           # Ideally, this would always run directly after systemd.services.backup-vaultwarden
-          # But I don't know how to set this up. The vaultwarden backup unit starts at 23:00, so this just starts 20 min later
+          # But I don't know how to set this up. The vaultwarden backup unit starts at 23:00, so this just starts a bit later
           # See https://github.com/NixOS/nixpkgs/blob/2230a20f2b5a14f2db3d7f13a2dc3c22517e790b/nixos/modules/services/security/vaultwarden/default.nix#L225
-          OnCalendar = "23:20";
-          RandomizedDelaySec = "30s";
+          OnCalendar = "23:30";
+          RandomizedDelaySec = "5min";
         };
 
         pruneOpts = [
