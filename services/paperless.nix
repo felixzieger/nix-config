@@ -7,6 +7,8 @@ in
     services.nginx.virtualHosts."${paperlessHost}" = {
       forceSSL = true;
       enableACME = true;
+      http3 = true;
+      quic = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString config.services.paperless.port}";
         proxyWebsockets = true;

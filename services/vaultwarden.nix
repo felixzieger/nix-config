@@ -7,6 +7,8 @@ in
     services.nginx.virtualHosts."${vaultwardenHost}" = {
       forceSSL = true;
       enableACME = true;
+      http3 = true;
+      quic = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}";
         proxyWebsockets = true;
