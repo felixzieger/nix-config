@@ -80,6 +80,7 @@
       "monitorcontrol"
       "kitty"
       "visual-studio-code"
+      "bruno"
     ];
   };
 
@@ -137,6 +138,8 @@
       pkgs.jdk
       pkgs.python39
       pkgs.pre-commit
+
+      pkgs.cntlm
 
       # Cloud CLIs
       pkgs.awscli2
