@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "ehci_pci" "usbhid" "usb_storage" "sd_mod" ];
@@ -14,19 +15,29 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/7dfe4ec9-8818-436e-ab68-12b79462ce12";
+    {
+      device = "/dev/disk/by-uuid/7dfe4ec9-8818-436e-ab68-12b79462ce12";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/BF5C-11EC";
+    {
+      device = "/dev/disk/by-uuid/BF5C-11EC";
       fsType = "vfat";
     };
 
   fileSystems."/data" =
-    { device = "/dev/disk/by-uuid/9b69fad5-23b1-400f-8675-e135734e6a2c";
+    {
+      device = "/dev/disk/by-uuid/9b69fad5-23b1-400f-8675-e135734e6a2c";
       fsType = "ext4";
     };
+
+  fileSystems."/sonnenhof-backup" =
+    {
+      device = "/dev/disk/by-uuid/32f56903-576a-430e-8842-47522129cab6";
+      fsType = "ext4";
+    };
+
 
   swapDevices = [ ];
 
