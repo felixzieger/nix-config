@@ -21,7 +21,18 @@
 
       # nvim :healthcheck recommends setting escape-time
       set-option -sg escape-time 10
+
+      # SSH agent forwarding for attached sessions
+      # I followed https://werat.dev/blog/happy-ssh-agent-forwarding/ for this
+      set-environment -g 'SSH_AUTH_SOCK' ~/.ssh/ssh_auth_sock
     '';
   };
+
+  home.file.".ssh/rc".text = ''
+    # SSH agent forwarding for attached sessions
+    if [ ! -S ~/.ssh/ssh_auth_sock ] && [ -S "$SSH_AUTH_SOCK" ]; then
+      ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
+    fi
+  '';
 }
 
