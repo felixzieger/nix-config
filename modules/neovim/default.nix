@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     fzf
     silver-searcher
+    ripgrep
 
     rnix-lsp
     nixd

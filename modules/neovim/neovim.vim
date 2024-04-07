@@ -19,8 +19,10 @@ let mapleader="ö"
 
 " FZF
 map <leader>a :Ag<CR>
+map <leader>r :RG<CR>
 map <leader>f :Files<CR>
 map <leader>b :Buffers<CR>
+map <leader>g :Commits<CR>
 
 map <leader>n :NvimTreeFindFileToggle<CR>
 
