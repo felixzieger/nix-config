@@ -65,3 +65,4 @@ For example, to restore the uptime-kuma backup run:
 - Write proper modules (with options and all). See https://guekka.github.io/nixos-server-2/ for an example
 - Nextcloud backup to Schwalbe
 - Encryption at rest for servers (password for decryption via SSH at boot; see https://www.return12.net/decrypt-nixos-via-ssh/)
+- Get rid of ../../ imports. Have a look at https://github.com/NotAShelf/nyx/
