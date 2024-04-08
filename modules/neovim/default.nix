@@ -2,8 +2,9 @@
 {
   home.packages = with pkgs; [
     fzf
-    silver-searcher
     ripgrep
+    fd
+    bat
 
     rnix-lsp
     nixd
@@ -45,7 +46,7 @@
       git-blame-nvim # Git blame with lualine-nvim integration
       vim-sleuth # Work out tabs vs spaces etc. automatically.
       vim-commentary # gcc
-      fzf-vim # <leader>f/b/a
+      fzf-lua # <leader>f/b/a
       {
         plugin = nvim-tree-lua; # <leader>n
         type = "lua";

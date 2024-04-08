@@ -18,11 +18,12 @@ noremap <Right> <Nop>
 let mapleader="ö"
 
 " FZF
-map <leader>a :Ag<CR>
-map <leader>r :RG<CR>
-map <leader>f :Files<CR>
-map <leader>b :Buffers<CR>
-map <leader>g :Commits<CR>
+map <leader>a :FzfLua grep_project<CR>
+map <leader>r :FzfLua live_grep<CR>
+map <leader>f :FzfLua files<CR>
+map <leader>b :FzfLua buffers<CR>
+map <leader>g :FzfLua git_commits<CR>
+
 
 map <leader>n :NvimTreeFindFileToggle<CR>
 
