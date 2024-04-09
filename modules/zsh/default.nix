@@ -29,4 +29,5 @@
       # alias sourcezshrc="source ~/.zshrc"
     '';
   };
+  programs.zoxide.enable = true;
 }
