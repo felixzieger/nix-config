@@ -5,7 +5,7 @@ local git_blame = require('gitblame')
 
 require('lualine').setup({
     options = {
-        theme = 'papercolor_light'
+        theme = 'powerline'
     },
     sections = {
         lualine_c = {
