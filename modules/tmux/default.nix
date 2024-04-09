@@ -1,8 +1,5 @@
 { inputs, pkgs, ... }:
 {
-  home.packages = with pkgs; [
-    powerline
-  ];
   programs.tmux = {
     enable = true;
     extraConfig = ''
@@ -25,9 +22,6 @@
       # SSH agent forwarding for attached sessions
       # I followed https://werat.dev/blog/happy-ssh-agent-forwarding/ for this
       set-environment -g 'SSH_AUTH_SOCK' ~/.ssh/ssh_auth_sock
-
-      run-shell "powerline-daemon -q"
-      source ${pkgs.powerline}/share/tmux/powerline.conf
     '';
   };
 
