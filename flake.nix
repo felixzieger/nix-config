@@ -35,7 +35,7 @@
           ./services/home-assistant.nix
 
           nix-bitcoin.nixosModules.default
-          (nix-bitcoin + "/modules/presets/enable-tor.nix")
+          # (nix-bitcoin + "/modules/presets/enable-tor.nix")
           ./services/bitcoin.nix
 
           inputs.agenix.nixosModules.default
