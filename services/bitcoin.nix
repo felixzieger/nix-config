@@ -48,5 +48,22 @@ in
       enable = true;
       name = "felix";
     };
+
+    services.nginx.virtualHosts."pay.sonnenhof-zieger.de" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://localhost:${toString config.services.btcpayserver.port}";
+      };
+    };
+    services.btcpayserver = {
+      enable = true;
+      lightningBackend = "clightning";
+      dataDir = "/data/btcpayserver";
+    };
+    services.nbxplorer = {
+      dataDir = "/data/nbxplorer";
+    };
+
   };
 }
