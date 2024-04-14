@@ -32,11 +32,6 @@
       fsType = "ext4";
     };
 
-  fileSystems."/sonnenhof-backup" =
-    {
-      device = "/dev/disk/by-uuid/32f56903-576a-430e-8842-47522129cab6";
-      fsType = "ext4";
-    };
 
 
   swapDevices = [ ];

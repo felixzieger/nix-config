@@ -44,6 +44,8 @@
     allowReboot = true;
   };
 
+  systemd.enableEmergencyMode = false;
+
 
   security.sudo.enable = true;
   security.sudo.wheelNeedsPassword = false;
