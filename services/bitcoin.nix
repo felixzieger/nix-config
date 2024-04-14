@@ -20,7 +20,7 @@ in
       enable = true;
       listen = true;
       dataDir = "/data/bitcoind";
-      dbCache = 4096;
+      dbCache = 2048;
     };
 
     services.clightning.enable = true;
