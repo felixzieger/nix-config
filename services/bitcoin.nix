@@ -1,7 +1,4 @@
 { pkgs, config, nix-bitcoin, ... }:
-let
-  rtlPort = 3003;
-in
 {
   config = {
     # nix-bitcoin.useVersionLockedPkgs = true;
@@ -23,23 +20,22 @@ in
       dbCache = 2048;
     };
 
-    services.clightning.enable = true;
     services.clightning = {
+      enable = true;
       address = "127.0.0.1";
       port = 9735;
     };
-
     services.clightning-rest.port = 3002;
 
     services.nginx.virtualHosts."rtl.${config.networking.hostName}.local" = {
       locations."/" = {
-        proxyPass = "http://localhost:${toString rtlPort}";
+        proxyPass = "http://localhost:${toString config.services.rtl.port}";
       };
     };
-    services.rtl.enable = true;
     services.rtl = {
+      enable = true;
       address = "127.0.0.1";
-      port = rtlPort;
+      port = 3003;
       nodes.clightning.enable = true;
       extraCurrency = "EUR";
     };
