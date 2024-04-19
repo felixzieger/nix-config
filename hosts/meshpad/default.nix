@@ -1,4 +1,9 @@
-{ inputs, home-manager, lib, config, pkgs, ... }:
+{ inputs, home-manager, lib, config, pkgs, nixpkgs-unstable, ... }:
+let
+  unstable = import nixpkgs-unstable {
+    system = pkgs.system;
+  };
+in
 {
   nixpkgs.config.allowUnfree = true;
   services.nix-daemon.enable = true;
@@ -50,6 +55,32 @@
             config = builtins.readFile ./nvim-lspconfig.lua;
           }
         ];
+
+        programs.k9s.enable = true;
+        programs.k9s.package = unstable.k9s;
+        programs.k9s.plugin = {
+          db-connect = {
+            shortCut = "Ctrl-J";
+            description = "Open DB";
+            scopes =
+              [ "pod" ];
+            command = "kubectl";
+            background = "false";
+            args = [
+              "--context"
+              "$CONTEXT"
+              "-n"
+              "$NAMESPACE"
+              "exec"
+              "-it"
+              "$NAME"
+              "--"
+              "bash"
+              "-c"
+              "mysql -u $MARIADB_USER -p$MARIADB_PASSWORD $MARIADB_DATABASE"
+            ];
+          };
+        };
 
         # This value determines the home Manager release that your
         # configuration is compatible with. This helps avoid breakage
@@ -112,7 +143,6 @@
       pkgs.ripgrep
       pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
       pkgs.mycli
-      # pkgs.vscode # Managed via brew because it does not show up in spotlight
       pkgs.shellcheck
       pkgs.vale
       pkgs.bitwarden-cli
@@ -129,7 +159,7 @@
       pkgs.pass
       pkgs.parallel
       pkgs.kubectl
-      pkgs.k9s
+      unstable.k9s
       pkgs.nodejs
       pkgs.vault
       pkgs.jq

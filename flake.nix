@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
@@ -15,7 +16,7 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nix-bitcoin, nixpkgs-darwin, nix-darwin, ... }: {
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-bitcoin, nixpkgs-darwin, nix-darwin, ... }: {
     nixosConfigurations = {
       "schwalbe" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -55,8 +56,8 @@
           ./services/frigate.nix
 
           inputs.agenix.nixosModules.default
-	];
-    };
+        ];
+      };
       "schenkerpad" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
@@ -65,18 +66,18 @@
           home-manager.nixosModules.home-manager
           ./hosts/schenkerpad
           ./hosts/schenkerpad/configuration.nix
-	];
+        ];
+      };
     };
-  };
-  darwinConfigurations = {
+    darwinConfigurations = {
       "Felixs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
         system = "x86_64-darwin";
 
         specialArgs = inputs;
-	modules = [
+        modules = [
           home-manager.darwinModules.home-manager
           ./hosts/meshpad
-	];
+        ];
       };
     };
   };
