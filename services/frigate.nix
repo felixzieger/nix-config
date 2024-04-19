@@ -17,6 +17,8 @@ in
       basicAuthFile = config.age.secrets.frigate-basic-auth.path;
       forceSSL = true;
       enableACME = true;
+      http3 = true;
+      quic = true;
     };
 
 
