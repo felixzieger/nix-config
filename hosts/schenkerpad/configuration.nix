@@ -135,9 +135,6 @@
     enable = true;
     defaultEditor = true;
   };
-  nixpkgs.config.permittedInsecurePackages = [
-    "nix-2.15.3" # my nvim config depends on this version
-  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -1,6 +1,6 @@
 local lspconfig = require('lspconfig')
 
-lspconfig.nixd.setup {}
+lspconfig.nil_ls.setup {}
 lspconfig.yamlls.setup {}
 lspconfig.jsonls.setup {}
 lspconfig.bashls.setup {}

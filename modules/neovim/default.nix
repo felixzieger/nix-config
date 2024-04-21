@@ -6,8 +6,7 @@
     fd
     bat
 
-    rnix-lsp
-    nixd
+    nil
     nixpkgs-fmt
 
     lua-language-server
