@@ -30,6 +30,7 @@
           ./services/adguard.nix
           ./services/uptime-kuma.nix
           ./services/vaultwarden.nix
+          ./services/calibre.nix
 
           ./services/docker.nix
           ./services/ghost.nix
