@@ -1,7 +1,4 @@
 { pkgs, config, ... }:
-let
-  adguardPort = 3000;
-in
 {
   config = {
     networking = {
@@ -13,7 +10,7 @@ in
     services.nginx.virtualHosts."adguard.${config.networking.hostName}.local" = {
       rejectSSL = true;
       locations."/" = {
-        proxyPass = "http://localhost:${toString adguardPort}";
+        proxyPass = "http://localhost:${toString config.services.adguardhome.settings.bind_port}";
       };
     };
 
@@ -21,7 +18,7 @@ in
       adguardhome = {
         enable = true;
         settings = {
-          bind_port = adguardPort;
+          bind_port = 3000;
           schema_version = 20;
         };
       };
