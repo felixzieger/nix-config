@@ -66,3 +66,4 @@ For example, to restore the uptime-kuma backup run:
 - Nextcloud backup to Schwalbe
 - Encryption at rest for servers (password for decryption via SSH at boot; see https://www.return12.net/decrypt-nixos-via-ssh/)
 - Get rid of ../../ imports. Have a look at https://github.com/NotAShelf/nyx/
+- custom TLS authority https://xeiaso.net/blog/site-to-site-wireguard-part-3-2019-04-11/
