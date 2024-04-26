@@ -111,6 +111,20 @@
         ./../../modules/tmux
         ./../../modules/neovim
       ];
+      
+
+      programs.tmux = {
+        extraConfig = ''
+          # SSH agent forwarding for attached sessions
+          set-option -g -u update-environment[3]
+          set-environment -g SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
+        '';
+        home.file.".ssh/rc".text = ''
+          # SSH agent forwarding for attached sessions
+          if test "$SSH_AUTH_SOCK"; then
+            ln -sf "$SSH_AUTH_SOCK" $HOME/.ssh/ssh_auth_sock
+          fi
+        '';
 
       # This value determines the home Manager release that your
       # configuration is compatible with. This helps avoid breakage
