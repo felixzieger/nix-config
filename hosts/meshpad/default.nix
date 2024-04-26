@@ -3,6 +3,9 @@ let
   unstable = import nixpkgs-unstable {
     system = pkgs.system;
   };
+  gcloud = pkgs.google-cloud-sdk.withExtraComponents( with pkgs.google-cloud-sdk.components; [
+    gke-gcloud-auth-plugin
+  ]);
 in
 {
   nixpkgs.config.allowUnfree = true;
@@ -101,6 +104,9 @@ in
       # cleanup = "zap";
       upgrade = true;
     };
+    brews = [
+      "azure-cli"
+    ];
     casks = [
       # "firefox"
       "raycast"
@@ -172,9 +178,10 @@ in
       pkgs.cntlm
 
       # Cloud CLIs
+      pkgs.openshift
       pkgs.awscli2
-      # pkgs.google-cloud-sdk # Managed externally, because of plugin gke-gcloud-auth-plugin
-      # pkgs.azure-cli # Managed externall, because plugin installs fail otherwise
+      gcloud
+      # pkgs.azure-cli # Managed via brew, because plugin installs fail otherwise
     ]
     # I haven't figured out how to fix the dhall versions in the new flakes based setup yet
     # ++ import (./versions.nix)
