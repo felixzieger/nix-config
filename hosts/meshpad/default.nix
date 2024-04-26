@@ -49,8 +49,6 @@ in
           dhall-vim
           vim-terraform
 
-          null-ls-nvim # Part of vale setup, see https://bhupesh.me/writing-like-a-pro-with-vale-and-neovim/
-
           friendly-snippets
           {
             plugin = nvim-lspconfig;
@@ -101,7 +99,6 @@ in
     enable = true;
     onActivation = {
       autoUpdate = true;
-      # cleanup = "zap";
       upgrade = true;
     };
     brews = [
@@ -138,19 +135,17 @@ in
 
 
   environment.variables.EDITOR = "nvim";
-  environment.systemPackages = with pkgs;
+  environment.systemPackages = 
     [
       pkgs.btop
       pkgs.git
       pkgs.tig
       pkgs.tree
       pkgs.wget
-      pkgs.starship
       pkgs.ripgrep
       pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
       pkgs.mycli
       pkgs.shellcheck
-      pkgs.vale
       pkgs.bitwarden-cli
       pkgs.deno
       pkgs.gh
