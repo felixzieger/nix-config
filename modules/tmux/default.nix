@@ -3,8 +3,9 @@
   programs.tmux = {
     enable = true;
     extraConfig = ''
-      # Switch pane layout    CTRL+B SPACE
-      # Toggle focus for pane CTRL+B Z
+      # Switch pane layout    CTRL+b SPACE
+      # Toggle focus for pane CTRL+b z
+      # Swap pane with the active pane CTRL+b CTRL+o
 
       set -g mouse on
 
