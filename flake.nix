@@ -80,6 +80,15 @@
           ./hosts/meshpad
         ];
       };
+      "macpad" = nix-darwin.lib.darwinSystem {
+        system = "x86_64-darwin";
+
+        specialArgs = inputs;
+        modules = [
+          home-manager.darwinModules.home-manager
+          ./hosts/macpad
+        ];
+      };
     };
   };
 }

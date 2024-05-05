@@ -1,0 +1,18 @@
+alias ls='lsd'
+alias tree='ls --tree'
+
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+setopt PROMPT_SUBST
+PROMPT='%9c%{%F{green}%}$(parse_git_branch)%{%F{none}%} $ '
+
+export TERM=xterm-256color
+
+alias sm='smerge'
+
+# ssh-add -K ~/.ssh/id_rsa &> /dev/null
+if [ $(ssh-add -L | grep "felix@felix-meshpad" | wc -l) -eq 0 ]; then
+    ssh-add --apple-use-keychain ~/.ssh/id_rsa
+fi
