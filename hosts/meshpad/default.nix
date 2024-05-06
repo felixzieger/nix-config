@@ -2,6 +2,7 @@
 let
   unstable = import nixpkgs-unstable {
     system = pkgs.system;
+    config.allowUnfree = true;
   };
   gcloud = pkgs.google-cloud-sdk.withExtraComponents( with pkgs.google-cloud-sdk.components; [
     gke-gcloud-auth-plugin
@@ -160,9 +161,9 @@ in
       pkgs.pass
       pkgs.parallel
       pkgs.kubectl
-      unstable.k9s
+      unstable.k9s # untstable because plugins didn't work with 23.10
       pkgs.nodejs
-      pkgs.vault
+      unstable.vault-bin # untstable because stable in 23.10 had CVE-2024-2660
       pkgs.jq
       pkgs.yarn
       pkgs.kotlin
