@@ -108,6 +108,7 @@ in
     casks = [
       # "firefox"
       "raycast"
+      "logi-options-plus"
       "shottr"
       "rectangle"
       "spotify"
