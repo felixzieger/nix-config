@@ -155,9 +155,10 @@ in
       pkgs.watchman
 
       pkgs.go
+      pkgs.opentofu
       pkgs.terraform
       pkgs.terraform-docs
-      pkgs.terragrunt
+      unstable.terragrunt # unstable because support for opentofu got better after 23.10
       pkgs.pass
       pkgs.parallel
       pkgs.kubectl
