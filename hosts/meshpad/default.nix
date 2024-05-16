@@ -177,6 +177,8 @@ in
 
       # Cloud CLIs
       pkgs.openshift
+      pkgs.cloudfoundry-cli
+      pkgs.openstackclient
       pkgs.awscli2
       gcloud
       # pkgs.azure-cli # Managed via brew, because plugin installs fail otherwise
