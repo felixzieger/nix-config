@@ -33,7 +33,7 @@ in
           ./../../modules/zsh
           ./../../modules/git
           ./../../modules/neovim
-          ./../../modules/tmux
+          (import ./../../modules/tmux { inherit unstable; })
         ];
 
         programs.zsh.initExtra = builtins.readFile ./zshrc;
