@@ -2,7 +2,6 @@
 {
   programs.tmux = {
     enable = true;
-    plugins = [ unstable.tmuxPlugins.fzf-tmux-url ]; #  Open Hyperlink-Picker via CTRL+b u
     extraConfig = ''
       # Switch pane layout    CTRL+b SPACE
       # Toggle focus for pane CTRL+b z

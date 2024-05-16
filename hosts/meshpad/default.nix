@@ -33,10 +33,13 @@ in
           ./../../modules/zsh
           ./../../modules/git
           ./../../modules/neovim
-          (import ./../../modules/tmux { inherit unstable; })
+          ./../../modules/tmux
         ];
 
         programs.zsh.initExtra = builtins.readFile ./zshrc;
+
+        # Additional plugins for tmux
+        programs.tmux.plugins = [ unstable.tmuxPlugins.fzf-tmux-url ]; #  Open Hyperlink-Picker via CTRL+b u
 
         # Additional plugins for nvim
         home.packages = with pkgs; [
