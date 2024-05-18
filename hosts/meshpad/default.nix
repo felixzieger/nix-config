@@ -38,6 +38,9 @@ in
 
         programs.zsh.initExtra = builtins.readFile ./xilef/zshrc;
 
+        # Additional plugins for tmux
+        programs.tmux.plugins = [ unstable.tmuxPlugins.fzf-tmux-url ]; #  Open Hyperlink-Picker via CTRL+b u
+
         # Additional plugins for nvim
         home.packages = with pkgs; [
           nodePackages.vscode-langservers-extracted
