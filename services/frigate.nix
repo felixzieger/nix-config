@@ -9,6 +9,7 @@ in
         file = ../secrets/frigate-basic-auth.age;
         owner = "nginx";
       };
+      oauth2_proxy_key.file = ../secrets/oauth2_proxy_key.age;
     };
 
     # Frigate service module configures nginx virtualHost
@@ -60,6 +61,21 @@ in
           version_check = false;
         };
       };
+    };
+
+    services.oauth2_proxy = {
+      enable = true;
+      provider = "google";
+      keyFile = config.age.secrets.oauth2_proxy_key.path; # sets OAUTH2_PROXY_CLIENT_ID, OAUTH2_PROXY_CLIENT_SECRET, OAUTH2_PROXY_COOKIE_SECRET
+
+      nginx.virtualHosts = [
+        frigateHost
+      ];
+
+      redirectURL = "https://${frigateHost}/oauth2/callback";
+
+      email.domains = [ "gmail.com" ]; # I restrict login to the app via Google, no need to filter here
+      # google = { ... } only works with Google Workspace, which I don't use
     };
   };
 }

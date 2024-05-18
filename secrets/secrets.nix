@@ -28,4 +28,7 @@ in
   "ghost-restic-environment.age".publicKeys = [ schwalbe ];
 
   "watchtower-environment.age".publicKeys = [ schwalbe ];
+
+  "oauth2_proxy_key.age".publicKeys = [ systems ];
+
 }

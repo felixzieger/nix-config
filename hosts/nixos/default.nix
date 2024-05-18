@@ -119,6 +119,7 @@
           set-option -g -u update-environment[3]
           set-environment -g SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
         '';
+      };
         home.file.".ssh/rc".text = ''
           # SSH agent forwarding for attached sessions
           if test "$SSH_AUTH_SOCK"; then
