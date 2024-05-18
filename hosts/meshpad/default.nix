@@ -22,6 +22,45 @@ in
     {
       useGlobalPkgs = true;
       useUserPackages = true;
+            users.xilef = {
+        home.username = lib.mkForce "xilef";
+        home.homeDirectory = lib.mkForce "/Users/xilef";
+
+        programs.home-manager.enable = true;
+
+        imports = [
+          ./../../modules/fzf
+          ./../../modules/zsh
+          ./../../modules/git
+          ./../../modules/neovim
+          ./../../modules/tmux
+        ];
+
+        programs.zsh.initExtra = builtins.readFile ./xilef/zshrc;
+
+        # Additional plugins for nvim
+        home.packages = with pkgs; [
+          nodePackages.vscode-langservers-extracted
+        ];
+        programs.neovim.plugins = with pkgs.vimPlugins; [
+          friendly-snippets
+          {
+            plugin = nvim-lspconfig;
+            type = "lua";
+            config = builtins.readFile ./xilef/nvim-lspconfig.lua;
+          }
+        ];
+
+        # This value determines the home Manager release that your
+        # configuration is compatible with. This helps avoid breakage
+        # when a new home Manager release introduces backwards
+        # incompatible changes.
+        #
+        # You can update home Manager without changing this value. See
+        # the home Manager release notes for a list of state version
+        # changes in each release.
+        home.stateVersion = "23.11";
+      };
       users.fzieger = {
         home.username = lib.mkForce "fzieger";
         home.homeDirectory = lib.mkForce "/Users/fzieger";
@@ -36,7 +75,7 @@ in
           ./../../modules/tmux
         ];
 
-        programs.zsh.initExtra = builtins.readFile ./zshrc;
+        programs.zsh.initExtra = builtins.readFile ./fzieger/zshrc;
 
         # Additional plugins for tmux
         programs.tmux.plugins = [ unstable.tmuxPlugins.fzf-tmux-url ]; #  Open Hyperlink-Picker via CTRL+b u
@@ -57,7 +96,7 @@ in
           {
             plugin = nvim-lspconfig;
             type = "lua";
-            config = builtins.readFile ./nvim-lspconfig.lua;
+            config = builtins.readFile ./fzieger/nvim-lspconfig.lua;
           }
         ];
 
@@ -173,7 +212,6 @@ in
       pkgs.yarn
       pkgs.kotlin
       pkgs.jdk
-      pkgs.python39
       pkgs.pre-commit
 
       pkgs.cntlm
@@ -188,6 +226,13 @@ in
     ]
     # I haven't figured out how to fix the dhall versions in the new flakes based setup yet
     # ++ import (./versions.nix)
+    ++
+    [
+      # Python development environment
+      pkgs.python3
+      pkgs.nodePackages.pyright
+      pkgs.ruff-lsp
+    ]
   ;
 
   # Used for backwards compatibility, please read the changelog before changing.
