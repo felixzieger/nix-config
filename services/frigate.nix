@@ -67,6 +67,11 @@ in
         frigateHost
       ];
 
+      cookie = {
+        refresh = "360h0m0s";
+        expire = "720h0m0s";
+      };
+
       redirectURL = "https://${frigateHost}/oauth2/callback";
 
       email.domains = [ "gmail.com" ]; # I restrict login to the app via Google, no need to filter here
