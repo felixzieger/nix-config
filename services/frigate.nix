@@ -5,17 +5,12 @@ in
 {
   config = {
     age.secrets = {
-      frigate-basic-auth = {
-        file = ../secrets/frigate-basic-auth.age;
-        owner = "nginx";
-      };
       oauth2_proxy_key.file = ../secrets/oauth2_proxy_key.age;
     };
 
     # Frigate service module configures nginx virtualHost
-    # I only need to enforce SSL and Auth
+    # I only need to enforce SSL and Auth (via oauth2_proxy)
     services.nginx.virtualHosts."${frigateHost}" = {
-      basicAuthFile = config.age.secrets.frigate-basic-auth.path;
       forceSSL = true;
       enableACME = true;
       http3 = true;

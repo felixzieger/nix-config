@@ -11,7 +11,6 @@ in
   "plausible-keybase.age".publicKeys = [ schwalbe ];
   "plausible-admin-password.age".publicKeys = [ schwalbe ];
 
-  "frigate-basic-auth.age".publicKeys = [ cameron ];
   "tailscale-authkey.age".publicKeys = [ schwalbe ];
 
   "uptime-kuma-restic-password.age".publicKeys = [ schwalbe ];
@@ -29,6 +28,6 @@ in
 
   "watchtower-environment.age".publicKeys = [ schwalbe ];
 
-  "oauth2_proxy_key.age".publicKeys = [ systems ];
+  "oauth2_proxy_key.age".publicKeys = [ cameron ];
 
 }
