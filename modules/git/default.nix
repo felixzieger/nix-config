@@ -1,10 +1,17 @@
 { inputs, pkgs, ... }:
 {
-  programs.lazygit.enable = true;
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      git.paging = {
+          colorArg =  "always";
+          pager = "delta";
+      };
+    };
+  };
   programs.git = {
     enable = true;
     userName = "Felix Zieger";
-    #   userEmail = "github@felixzieger.de";
-    #   delta.enable = true;
+    delta.enable = true;
   };
 }
