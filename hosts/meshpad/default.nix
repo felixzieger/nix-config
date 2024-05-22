@@ -82,6 +82,38 @@ in
 
         # Additional plugins for tmux
         programs.tmux.plugins = [ unstable.tmuxPlugins.fzf-tmux-url ]; #  Open Hyperlink-Picker via CTRL+b u
+        programs.tmux.extraConfig = ''
+          set -g @fzf-url-history-limit '2000'
+        '';
+        home.file.".config/tmuxinator/mesh.yml".text = ''
+          name: mesh
+          root: ~/
+          
+          # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+          startup_window: me
+          
+          # Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
+          # startup_pane: 1
+          
+          # Controls whether the tmux session should be attached to automatically. Defaults to true.
+          # attach: false
+          
+          windows:
+            - nix:
+                root: ~/.nixpkgs
+                layout: even-horizontal
+                panes:
+                  - nvim -c "NvimTreeOpen"
+                  - lazygit
+            - mf:
+                root: ~/meshcloud/meshfed-release
+                layout: even-horizontal
+                panes:
+                  - nvim -c "NvimTreeOpen"
+                  - lazygit
+            - me: 
+                root: ~/meshcloud
+        '';
 
         # Additional plugins for nvim
         home.packages = with pkgs; [
