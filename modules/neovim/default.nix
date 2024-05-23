@@ -45,7 +45,12 @@
       git-blame-nvim # Git blame with lualine-nvim integration
       vim-sleuth # Work out tabs vs spaces etc. automatically.
       vim-commentary # gcc
-      fzf-lua # <leader>f/b/a
+      {
+        plugin = fzf-lua; # <leader>f/b/a/g
+        type = "lua";
+        config = builtins.readFile ./nvim-fzf-lua.lua;
+      }
+      
       {
         plugin = nvim-tree-lua; # <leader>n
         type = "lua";
