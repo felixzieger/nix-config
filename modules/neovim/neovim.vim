@@ -24,6 +24,10 @@ nnoremap <leader>r <cmd>Telescope live_grep<cr>
 nnoremap <leader>b <cmd>Telescope buffers<cr>
 nnoremap <leader>b <cmd>Telescope<cr>
 
+" Cheatsheet
+nnoremap <space>? <cmd>Cheatsheet<cr>
+nnoremap <space>ß <cmd>Cheatsheet<cr>
+
 
 map <leader>n :NvimTreeFindFileToggle<CR>
 
