@@ -106,17 +106,25 @@ in
           windows:
             - nix:
                 root: ~/.nixpkgs
-                layout: even-horizontal
+                layout: main-vertical
                 panes:
                   - nvim -c "NvimTreeOpen"
                   - lazygit
+                  - pwd
             - mf:
                 root: ~/meshcloud/meshfed-release
                 layout: even-horizontal
                 panes:
                   - nvim -c "NvimTreeOpen"
                   - lazygit
-            - me: 
+            - mdocs: 
+                root: ~/meshcloud/meshcloud-docs
+                layout: main-vertical
+                panes:
+                  - nvim -c "NvimTreeOpen"
+                  - lazygit
+                  - cd website
+            - me:
                 root: ~/meshcloud
         '';
 
