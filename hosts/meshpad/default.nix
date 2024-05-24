@@ -267,6 +267,7 @@ in
       pkgs.python3
       pkgs.nodePackages.pyright
       pkgs.ruff-lsp
+      pkgs.ngrok
     ]
   ;
 
