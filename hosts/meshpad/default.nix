@@ -265,6 +265,7 @@ in
     [
       # Python development environment
       pkgs.python3
+      pkgs.poetry
       pkgs.nodePackages.pyright
       pkgs.ruff-lsp
       pkgs.ngrok
