@@ -1,4 +1,4 @@
-{ inputs, home-manager, lib, config, pkgs, nixpkgs-unstable, ... }:
+{ inputs, home-manager, agenix, lib, config, pkgs, nixpkgs-unstable, ... }:
 let
   unstable = import nixpkgs-unstable {
     system = pkgs.system;
@@ -277,6 +277,8 @@ in
       pkgs.ruff-lsp
       pkgs.ngrok
       pkgs.flyctl
+
+      agenix.packages."${pkgs.system}".default
     ]
   ;
 

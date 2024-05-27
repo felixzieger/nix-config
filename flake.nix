@@ -79,6 +79,7 @@
         modules = [
           home-manager.darwinModules.home-manager
           ./hosts/meshpad
+          inputs.agenix.nixosModules.default
         ];
       };
     };
