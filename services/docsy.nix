@@ -11,6 +11,7 @@ in
       quic = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString docsyPort}";
+        proxyWebsockets = true;
       };
     };
 
@@ -28,7 +29,7 @@ in
             autoStart = true;
             image = "ghcr.io/felixzieger/docsy:latest";
             environment.TZ = "Europe/Berlin";
-            ports = [ "${builtins.toString docsyPort}:${builtins.toString docsyPort}" ];
+            ports = [ "${builtins.toString docsyPort}:3000" ];
             login = {
               registry = "ghcr.io";
               username = "felixzieger";
