@@ -273,6 +273,7 @@ in
       pkgs.nodePackages.pyright
       pkgs.ruff-lsp
       pkgs.ngrok
+      pkgs.flyctl
     ]
   ;
 
