@@ -187,6 +187,7 @@ in
     ];
     casks = [
       # "firefox"
+      "docker"
       "raycast"
       "logi-options-plus"
       "shottr"
