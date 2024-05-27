@@ -40,6 +40,8 @@ in
 
         programs.zsh.enable = false;
         programs.fish.enable = true;
+        programs.fish.shellInit = builtins.readFile ./xilef/fishrc;
+        programs.fish.shellAliases = { vi = "nvim"; vim = "nvim"; };
 
         # Additional plugins for tmux
         programs.tmux.plugins = [ unstable.tmuxPlugins.fzf-tmux-url ]; #  Open Hyperlink-Picker via CTRL+b u
