@@ -30,5 +30,6 @@ in
 
   "oauth2_proxy_key.age".publicKeys = [ cameron ];
 
-  "ghcr-secret.age".publicKeys = systems ++ [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMazmDwdBkj2wIP708JO84Wp/a31EpLWOI/Rwl1jrKS github@felixzieger.de"];
+  "ghcr-secret.age".publicKeys = systems;
+  "docsy-env.age".publicKeys = systems;
 }

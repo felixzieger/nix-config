@@ -4,29 +4,19 @@ let
 in
 {
   config = {
-    # This requires setting use_x_forwarded_for and trusted_proxies in configuration.yaml
-    # Check docker container logs for the address of the proxy. Was ::1 for me.
-    services.nginx.virtualHosts."docsy.${config.networking.hostName}.local" = {
-      rejectSSL = true;
+    services.nginx.virtualHosts."docsy.felixzieger.de" = {
+      forceSSL = true;
+      enableACME = true;
+      http3 = true;
+      quic = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString docsyPort}";
-        proxyWebsockets = true;
       };
     };
 
-#     services.nginx.virtualHosts."docsy.${config.networking.hostName}.felixzieger.de" = {
-#       forceSSL = true;
-#       enableACME = true;
-#       http3 = true;
-#       quic = true;
-#       locations."/" = {
-#         proxyPass = "http://localhost:${toString docsyPort}";
-#         proxyWebsockets = true;
-#       };
-#     };
-
     age.secrets = {
-      ghcr-secret.file = ../secrets/home-assistant-restic-environment.age;
+      ghcr-secret.file = ../secrets/ghcr-secret.age;
+      docsy-env.file = ../secrets/docsy-env.age;
     };
 
     virtualisation.docker.enable = true;
@@ -44,6 +34,7 @@ in
               username = "felixzieger";
               passwordFile = config.age.secrets.ghcr-secret.path;
             };
+            environmentFiles = [config.age.secrets.docsy-env.path];
           };
       };
     };
