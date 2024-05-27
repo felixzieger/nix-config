@@ -17,6 +17,9 @@ in
     };
   };
   programs.zsh.enable = true;
+  programs.fish.enable = true;
+
+  users.users.xilef.shell = pkgs.fish;
 
   home-manager =
     {
@@ -30,13 +33,13 @@ in
 
         imports = [
           ./../../modules/fzf
-          ./../../modules/zsh
           ./../../modules/git
           ./../../modules/neovim
           ./../../modules/tmux
         ];
 
-        programs.zsh.initExtra = builtins.readFile ./xilef/zshrc;
+        programs.zsh.enable = false;
+        programs.fish.enable = true;
 
         # Additional plugins for tmux
         programs.tmux.plugins = [ unstable.tmuxPlugins.fzf-tmux-url ]; #  Open Hyperlink-Picker via CTRL+b u
@@ -228,6 +231,7 @@ in
       pkgs.bitwarden-cli
       pkgs.deno
       pkgs.gh
+      pkgs.fish
 
 
       pkgs.watchman
