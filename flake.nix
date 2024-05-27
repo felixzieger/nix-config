@@ -35,6 +35,7 @@
           ./services/docker.nix
           ./services/ghost.nix
           ./services/home-assistant.nix
+          ./services/docsy.nix
 
           nix-bitcoin.nixosModules.default
           # (nix-bitcoin + "/modules/presets/enable-tor.nix")
