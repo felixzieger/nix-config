@@ -207,7 +207,9 @@ in
       "monitorcontrol"
       "kitty"
       "visual-studio-code"
-      "bruno"
+      "gather"
+      "arc"
+      "microsoft-teams"
     ];
   };
 
