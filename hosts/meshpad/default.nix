@@ -39,6 +39,7 @@ in {
       programs.fish.shellAliases = {
         vi = "nvim";
         vim = "nvim";
+        l = "ls";
         ls = "lsd";
         ll = "ls -l";
         la = "ls -la";
