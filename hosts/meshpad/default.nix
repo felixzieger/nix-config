@@ -4,7 +4,7 @@ let
     system = pkgs.system;
     config.allowUnfree = true;
   };
-  gcloud = pkgs.google-cloud-sdk.withExtraComponents( with pkgs.google-cloud-sdk.components; [
+  gcloud = pkgs.google-cloud-sdk.withExtraComponents (with pkgs.google-cloud-sdk.components; [
     gke-gcloud-auth-plugin
   ]);
 in
@@ -25,7 +25,7 @@ in
     {
       useGlobalPkgs = true;
       useUserPackages = true;
-            users.xilef = {
+      users.xilef = {
         home.username = lib.mkForce "xilef";
         home.homeDirectory = lib.mkForce "/Users/xilef";
 
@@ -230,7 +230,7 @@ in
 
 
   environment.variables.EDITOR = "nvim";
-  environment.systemPackages = 
+  environment.systemPackages =
     [
       pkgs.btop
       pkgs.git

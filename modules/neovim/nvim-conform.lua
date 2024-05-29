@@ -7,10 +7,9 @@ require("conform").setup({
     lsp_fallback = true,
   },
   formatters_by_ft = {
-    nix = { 'nixpkgs_fmt' },
+    nix = { 'nixfmt' },
 
     -- Fix common misspellings in source code on all filetypes
     -- ['*'] = { 'codespell' },
   },
 })
-

@@ -18,7 +18,7 @@ in {
     bat
 
     nil
-    nixpkgs-fmt
+    nixfmt
 
     lua-language-server
     nodePackages.vim-language-server
