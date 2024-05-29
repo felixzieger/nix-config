@@ -10,8 +10,7 @@ let   updated-cheatsheet-nvim = pkgs.vimUtils.buildVimPlugin {
     };
     meta.homepage = "https://github.com/doctorfree/cheatsheet.nvim/";
   };
-in
-{
+in {
   home.packages = with pkgs; [
     fzf
     ripgrep
@@ -33,6 +32,11 @@ in
     viAlias = true;
     vimAlias = true;
     plugins = with pkgs.vimPlugins; [
+      {
+        plugin = conform-nvim;
+        type = "lua";
+        config = builtins.readFile ./nvim-conform.lua;
+      }
       # Languages
       vim-nix
       # Completions
