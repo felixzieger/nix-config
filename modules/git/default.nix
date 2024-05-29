@@ -1,11 +1,10 @@
-{ inputs, pkgs, ... }:
-{
+{ inputs, pkgs, ... }: {
   programs.lazygit = {
     enable = true;
     settings = {
       git.paging = {
-          colorArg =  "always";
-          pager = "delta";
+        colorArg = "always";
+        pager = "delta";
       };
     };
   };

@@ -1,18 +1,16 @@
-{ pkgs, config, ... }:
-{
+{ pkgs, config, ... }: {
   config = {
-    networking = {
-      firewall = {
-        allowedUDPPorts = [ 53 ];
-      };
-    };
+    networking = { firewall = { allowedUDPPorts = [ 53 ]; }; };
 
-    services.nginx.virtualHosts."adguard.${config.networking.hostName}.local" = {
-      rejectSSL = true;
-      locations."/" = {
-        proxyPass = "http://localhost:${toString config.services.adguardhome.settings.bind_port}";
+    services.nginx.virtualHosts."adguard.${config.networking.hostName}.local" =
+      {
+        rejectSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${
+              toString config.services.adguardhome.settings.bind_port
+            }";
+        };
       };
-    };
 
     services = {
       adguardhome = {

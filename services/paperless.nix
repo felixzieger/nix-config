@@ -1,8 +1,6 @@
 { config, pkgs, lib, ... }:
-let
-  paperlessHost = "paperless.sonnenhof-zieger.de";
-in
-{
+let paperlessHost = "paperless.sonnenhof-zieger.de";
+in {
   config = {
     services.nginx.virtualHosts."${paperlessHost}" = {
       forceSSL = true;
@@ -10,7 +8,8 @@ in
       http3 = true;
       quic = true;
       locations."/" = {
-        proxyPass = "http://localhost:${toString config.services.paperless.port}";
+        proxyPass =
+          "http://localhost:${toString config.services.paperless.port}";
         proxyWebsockets = true;
       };
     };
@@ -24,7 +23,8 @@ in
     };
 
     age.secrets = {
-      paperless-restic-environment.file = ../secrets/paperless-restic-environment.age;
+      paperless-restic-environment.file =
+        ../secrets/paperless-restic-environment.age;
       paperless-restic-password.file = ../secrets/paperless-restic-password.age;
     };
 
@@ -43,11 +43,7 @@ in
           RandomizedDelaySec = "5min";
         };
 
-        pruneOpts = [
-          "--keep-daily 7"
-          "--keep-weekly 5"
-          "--keep-monthly 12"
-        ];
+        pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-monthly 12" ];
       };
     };
   };

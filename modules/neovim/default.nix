@@ -1,5 +1,6 @@
 { inputs, pkgs, ... }:
-let   updated-cheatsheet-nvim = pkgs.vimUtils.buildVimPlugin {
+let
+  updated-cheatsheet-nvim = pkgs.vimUtils.buildVimPlugin {
     pname = "cheatsheet.nvim";
     version = "2024-05-12";
     src = pkgs.fetchFromGitHub {
@@ -62,7 +63,6 @@ in {
       vim-sleuth # Work out tabs vs spaces etc. automatically.
       vim-commentary # gcc
 
-      
       {
         plugin = telescope-nvim; # <leader>f/b/g
         type = "lua";
@@ -89,13 +89,13 @@ in {
     ## lsp @quick @reference
     Hover Information               | <leader>h
     Signature Help                  | <C-h>
-    
+
     Go to Implementation            | <leader>gi
     Go to Definition                | <leader>gd
     Go to Declaration               | <leader>gD
     Go to Type Definition           | <leader>D
     Go to References                | <leader>gr
-    
+
     Rename Symbol                   | <leader>rn
     Format Code                     | <space>f
   '';

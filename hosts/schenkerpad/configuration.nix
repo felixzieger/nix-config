@@ -1,12 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./nvidia.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./nvidia.nix
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -14,13 +13,12 @@
   boot.loader.grub.useOSProber = true;
 
   # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
+  boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
 
   boot.loader.grub.enableCryptodisk = true;
 
-  boot.initrd.luks.devices."luks-326db574-8d3f-461d-a178-0ac45d8da7b7".keyFile = "/crypto_keyfile.bin";
+  boot.initrd.luks.devices."luks-326db574-8d3f-461d-a178-0ac45d8da7b7".keyFile =
+    "/crypto_keyfile.bin";
   networking.hostName = "schenkerpad"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -52,23 +50,21 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-photos
-    gnome-tour
-  ]) ++ (with pkgs.gnome; [
-    yelp # gnome help
-    cheese # webcam tool
-    simple-scan # document scanner
-    gnome-music
-    gedit # text editor
-    epiphany # web browser
-    # geary # email reader
-    totem # video player
-    tali # poker game
-    iagno # go game
-    hitori # sudoku game
-    atomix # puzzle game
-  ]);
+  environment.gnome.excludePackages = (with pkgs; [ gnome-photos gnome-tour ])
+    ++ (with pkgs.gnome; [
+      yelp # gnome help
+      cheese # webcam tool
+      simple-scan # document scanner
+      gnome-music
+      gedit # text editor
+      epiphany # web browser
+      # geary # email reader
+      totem # video player
+      tali # poker game
+      iagno # go game
+      hitori # sudoku game
+      atomix # puzzle game
+    ]);
 
   security.sudo.enable = true;
   security.sudo.wheelNeedsPassword = false;
@@ -113,21 +109,12 @@
     description = "felix";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
-    packages = with pkgs; [
-      bitwarden
-      spotify
-      nextcloud-client
-    ];
+    packages = with pkgs; [ bitwarden spotify nextcloud-client ];
   };
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-    git
-    neovim
-    tmux
-    rsync
-  ];
+  environment.systemPackages = with pkgs; [ git neovim tmux rsync ];
 
   programs.zsh.enable = true;
 

@@ -1,8 +1,5 @@
-{ pkgs, ... }:
-{
-  home.packages = with pkgs; [
-    zsh
-  ];
+{ pkgs, ... }: {
+  home.packages = with pkgs; [ zsh ];
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -12,13 +9,13 @@
       unsetopt BEEP
 
       HYPHEN_INSENSITIVE="true"
-      
+
       bindkey "^A" vi-beginning-of-line
       bindkey "^E" vi-end-of-line
 
       alias ..="cd .."
       alias ...="cd ../.."
-      
+
       alias l='ls'
       alias l='ls -l'
       alias la='ls -a'

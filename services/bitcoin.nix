@@ -1,5 +1,4 @@
-{ pkgs, config, nix-bitcoin, ... }:
-{
+{ pkgs, config, nix-bitcoin, ... }: {
   config = {
     # nix-bitcoin.useVersionLockedPkgs = true;
 
@@ -9,9 +8,7 @@
 
     # nodeinfo is a small helper script
     nix-bitcoin.nodeinfo.enable = true;
-    environment.systemPackages = with pkgs; [
-      jq
-    ];
+    environment.systemPackages = with pkgs; [ jq ];
 
     services.bitcoind = {
       enable = true;

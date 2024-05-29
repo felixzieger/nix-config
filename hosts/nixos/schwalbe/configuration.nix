@@ -1,11 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../../services/tailscale.nix
-    ];
+  imports = [ ./hardware-configuration.nix ../../../services/tailscale.nix ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -19,14 +15,12 @@
     ];
   };
 
-  programs.tmux =
-    {
-      enable = true;
-      extraConfig = ''
-        set -g status-bg blue
-      '';
-    };
-
+  programs.tmux = {
+    enable = true;
+    extraConfig = ''
+      set -g status-bg blue
+    '';
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

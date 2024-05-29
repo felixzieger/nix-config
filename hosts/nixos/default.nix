@@ -42,7 +42,6 @@
 
   systemd.enableEmergencyMode = false;
 
-
   security.sudo.enable = true;
   security.sudo.wheelNeedsPassword = false;
 
@@ -68,7 +67,6 @@
 
     agenix.packages."${system}".default
 
-
     systemctl-tui # view systemctl interactively
     sysz
   ];
@@ -91,53 +89,51 @@
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.users.felix =
-    {
-      home.username = "felix";
-      home.homeDirectory = "/home/felix";
+  home-manager.users.felix = {
+    home.username = "felix";
+    home.homeDirectory = "/home/felix";
 
-      programs.git = {
-        enable = true;
-        userName = "Felix Zieger";
-        userEmail = "github@felixzieger.de";
-        delta.enable = true;
-      };
-
-      programs.lazygit.enable = true;
-
-      imports = [
-        ./../../modules/fzf
-        ./../../modules/zsh
-        ./../../modules/tmux
-        ./../../modules/neovim
-      ];
-      
-
-      programs.tmux = {
-        extraConfig = ''
-          # SSH agent forwarding for attached sessions
-          set-option -g -u update-environment[3]
-          set-environment -g SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
-        '';
-      };
-        home.file.".ssh/rc".text = ''
-          # SSH agent forwarding for attached sessions
-          if test "$SSH_AUTH_SOCK"; then
-            ln -sf "$SSH_AUTH_SOCK" $HOME/.ssh/ssh_auth_sock
-          fi
-        '';
-
-      # This value determines the home Manager release that your
-      # configuration is compatible with. This helps avoid breakage
-      # when a new home Manager release introduces backwards
-      # incompatible changes.
-      #
-      # You can update home Manager without changing this value. See
-      # the home Manager release notes for a list of state version
-      # changes in each release.
-      home.stateVersion = "23.11";
-
-      # Let home Manager install and manage itself.
-      programs.home-manager.enable = true;
+    programs.git = {
+      enable = true;
+      userName = "Felix Zieger";
+      userEmail = "github@felixzieger.de";
+      delta.enable = true;
     };
+
+    programs.lazygit.enable = true;
+
+    imports = [
+      ./../../modules/fzf
+      ./../../modules/zsh
+      ./../../modules/tmux
+      ./../../modules/neovim
+    ];
+
+    programs.tmux = {
+      extraConfig = ''
+        # SSH agent forwarding for attached sessions
+        set-option -g -u update-environment[3]
+        set-environment -g SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
+      '';
+    };
+    home.file.".ssh/rc".text = ''
+      # SSH agent forwarding for attached sessions
+      if test "$SSH_AUTH_SOCK"; then
+        ln -sf "$SSH_AUTH_SOCK" $HOME/.ssh/ssh_auth_sock
+      fi
+    '';
+
+    # This value determines the home Manager release that your
+    # configuration is compatible with. This helps avoid breakage
+    # when a new home Manager release introduces backwards
+    # incompatible changes.
+    #
+    # You can update home Manager without changing this value. See
+    # the home Manager release notes for a list of state version
+    # changes in each release.
+    home.stateVersion = "23.11";
+
+    # Let home Manager install and manage itself.
+    programs.home-manager.enable = true;
+  };
 }

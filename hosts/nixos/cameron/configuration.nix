@@ -1,23 +1,19 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  imports = [ ./hardware-configuration.nix ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "cameron";
 
-  programs.tmux =
-    {
-      enable = true;
-      extraConfig = ''
-        set -g status-bg purple
-      '';
-    };
+  programs.tmux = {
+    enable = true;
+    extraConfig = ''
+      set -g status-bg purple
+    '';
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

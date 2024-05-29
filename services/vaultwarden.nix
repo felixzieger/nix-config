@@ -1,8 +1,6 @@
 { config, pkgs, lib, ... }:
-let
-  vaultwardenHost = "bitwarden.sonnenhof-zieger.de";
-in
-{
+let vaultwardenHost = "bitwarden.sonnenhof-zieger.de";
+in {
   config = {
     services.nginx.virtualHosts."${vaultwardenHost}" = {
       forceSSL = true;
@@ -10,7 +8,9 @@ in
       http3 = true;
       quic = true;
       locations."/" = {
-        proxyPass = "http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}";
+        proxyPass = "http://localhost:${
+            toString config.services.vaultwarden.config.ROCKET_PORT
+          }";
         proxyWebsockets = true;
       };
     };
@@ -46,10 +46,11 @@ in
       };
     };
 
-
     age.secrets = {
-      vaultwarden-restic-environment.file = ../secrets/vaultwarden-restic-environment.age;
-      vaultwarden-restic-password.file = ../secrets/vaultwarden-restic-password.age;
+      vaultwarden-restic-environment.file =
+        ../secrets/vaultwarden-restic-environment.age;
+      vaultwarden-restic-password.file =
+        ../secrets/vaultwarden-restic-password.age;
     };
 
     services.restic.backups = {
@@ -59,7 +60,8 @@ in
         paths = [ config.services.vaultwarden.backupDir ];
 
         repository = "b2:${config.networking.hostName}-vaultwarden";
-        environmentFile = config.age.secrets.vaultwarden-restic-environment.path;
+        environmentFile =
+          config.age.secrets.vaultwarden-restic-environment.path;
         passwordFile = config.age.secrets.vaultwarden-restic-password.path;
 
         timerConfig = {
@@ -70,11 +72,7 @@ in
           RandomizedDelaySec = "5min";
         };
 
-        pruneOpts = [
-          "--keep-daily 7"
-          "--keep-weekly 5"
-          "--keep-monthly 12"
-        ];
+        pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-monthly 12" ];
       };
     };
   };
