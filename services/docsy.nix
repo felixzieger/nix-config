@@ -27,6 +27,7 @@ in {
           image = "ghcr.io/felixzieger/docsy:latest";
           environment.TZ = "Europe/Berlin";
           ports = [ "${builtins.toString docsyPort}:3000" ];
+          volumes = [ "/data/docsy/data:/app/data" ];
           login = {
             registry = "ghcr.io";
             username = "felixzieger";
