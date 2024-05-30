@@ -34,15 +34,18 @@ in {
       ];
 
       programs.zsh.enable = false;
-      programs.fish.enable = true;
-      programs.fish.shellInit = builtins.readFile ./xilef/fishrc;
-      programs.fish.shellAliases = {
-        vi = "nvim";
-        vim = "nvim";
-        l = "ls";
-        ls = "lsd";
-        ll = "ls -l";
-        la = "ls -la";
+      programs.fish = {
+        enable = true;
+        shellInit = builtins.readFile ./xilef/fishrc;
+        shellAliases = {
+          vi = "nvim";
+          vim = "nvim";
+          l = "ls";
+          ls = "lsd";
+          ll = "ls -l";
+          la = "ls -la";
+        };
+        shellAbbrs = { unset = "set --erase"; };
       };
 
       # Additional plugins for tmux
