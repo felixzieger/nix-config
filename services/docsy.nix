@@ -2,7 +2,7 @@
 let docsyPort = 8080;
 in {
   config = {
-    services.nginx.virtualHosts."docsy.felixzieger.de" = {
+    services.nginx.virtualHosts."app.getdocsy.com" = {
       forceSSL = true;
       enableACME = true;
       http3 = true;
@@ -24,7 +24,7 @@ in {
       containers = {
         docsy = {
           autoStart = true;
-          image = "ghcr.io/felixzieger/docsy:latest";
+          image = "ghcr.io/felixzieger/docsy:v0.2.0";
           environment.TZ = "Europe/Berlin";
           ports = [ "${builtins.toString docsyPort}:3000" ];
           volumes = [ "/data/docsy/data:/app/data" ];
