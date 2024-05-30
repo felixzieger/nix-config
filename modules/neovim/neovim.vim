@@ -22,7 +22,7 @@ let mapleader="ö"
 nnoremap <leader>f <cmd>Telescope find_files<cr>
 nnoremap <leader>r <cmd>Telescope live_grep<cr>
 nnoremap <leader>b <cmd>Telescope buffers<cr>
-nnoremap <leader>b <cmd>Telescope<cr>
+nnoremap <leader>g <cmd>Telescope<cr>
 
 " Cheatsheet
 nnoremap <space>? <cmd>Cheatsheet<cr>
