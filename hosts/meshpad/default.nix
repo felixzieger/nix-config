@@ -252,7 +252,6 @@ in {
 
     pkgs.go
     pkgs.opentofu
-    pkgs.terraform
     pkgs.terraform-docs
     unstable.terragrunt # unstable because support for opentofu got better after 23.10
     pkgs.pass
@@ -286,7 +285,7 @@ in {
       pkgs.nodePackages.pyright
       pkgs.ruff-lsp
       pkgs.ngrok
-      pkgs.flyctl
+      pkgs.python312Packages.mkdocs-material
 
       agenix.packages."${pkgs.system}".default
     ];
