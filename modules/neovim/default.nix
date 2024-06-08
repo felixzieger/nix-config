@@ -19,7 +19,7 @@ in {
     bat
 
     nil
-    nixfmt
+    nixfmt-classic
 
     lua-language-server
     nodePackages.vim-language-server
