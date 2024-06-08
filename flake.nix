@@ -11,7 +11,7 @@
     nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
     nix-bitcoin.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-23.11-darwin";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.05-darwin";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
   };
