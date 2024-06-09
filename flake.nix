@@ -55,7 +55,6 @@
             ./hosts/nixos
             ./hosts/nixos/cameron/configuration.nix
             ./services/nginx.nix
-            ./services/adguard.nix
             ./services/frigate.nix
 
             inputs.agenix.nixosModules.default
