@@ -6,19 +6,15 @@
       {
         rejectSSL = true;
         locations."/" = {
-          proxyPass = "http://localhost:${
-              toString config.services.adguardhome.settings.bind_port
-            }";
+          proxyPass =
+            "http://localhost:${toString config.services.adguardhome.port}";
         };
       };
 
     services = {
       adguardhome = {
         enable = true;
-        settings = {
-          bind_port = 3000;
-          schema_version = 20;
-        };
+        settings = { schema_version = 20; };
       };
     };
   };

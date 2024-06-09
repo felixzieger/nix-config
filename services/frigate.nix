@@ -45,13 +45,14 @@ in {
       };
     };
 
-    services.oauth2_proxy = {
+    services.oauth2-proxy = {
       enable = true;
       provider = "google";
       keyFile =
         config.age.secrets.oauth2_proxy_key.path; # sets OAUTH2_PROXY_CLIENT_ID, OAUTH2_PROXY_CLIENT_SECRET, OAUTH2_PROXY_COOKIE_SECRET
 
-      nginx.virtualHosts = [ frigateHost ];
+      nginx.domain = frigateHost;
+      nginx.virtualHosts.frigateHost.allowed_email_domains = [ "gmail.com" ];
 
       cookie = {
         refresh = "360h0m0s";
