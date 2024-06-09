@@ -21,6 +21,9 @@ in {
 
         record = { enabled = true; };
 
+        # The object detection for the 1 stream is already using 50% CPU most of the time
+        # Frigate supports Coral AI; before adding more streams, I will get a Coral AI extension card
+        # https://buyzero.de/products/google-coral-m-2-accelerator-a-e-key
         objects = { track = [ "person" "car" ]; };
 
         snapshots.enabled = true;
