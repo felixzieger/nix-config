@@ -285,7 +285,7 @@ in {
       pkgs.nodePackages.pyright
       pkgs.ruff-lsp
       pkgs.ngrok
-      pkgs.python312Packages.mkdocs-material
+      pkgs.mkdocs
 
       agenix.packages."${pkgs.system}".default
     ];
