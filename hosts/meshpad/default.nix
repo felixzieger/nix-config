@@ -31,22 +31,11 @@ in {
         ./../../modules/git
         ./../../modules/neovim
         ./../../modules/tmux
+        ./../../modules/fish
       ];
 
       programs.zsh.enable = false;
-      programs.fish = {
-        enable = true;
-        shellInit = builtins.readFile ./xilef/fishrc;
-        shellAliases = {
-          vi = "nvim";
-          vim = "nvim";
-          l = "ls";
-          ls = "lsd";
-          ll = "ls -l";
-          la = "ls -la";
-        };
-        shellAbbrs = { unset = "set --erase"; };
-      };
+      programs.fish = { shellInit = builtins.readFile ./xilef/fishrc; };
 
       # Additional plugins for tmux
       programs.tmux.plugins = [
