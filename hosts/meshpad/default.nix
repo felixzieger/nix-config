@@ -16,6 +16,7 @@ in {
   programs.fish.enable = true;
 
   users.users.xilef.shell = pkgs.fish;
+  users.users.fzieger.shell = pkgs.fish;
 
   home-manager = {
     useGlobalPkgs = true;
@@ -71,13 +72,31 @@ in {
 
       imports = [
         ./../../modules/fzf
-        ./../../modules/zsh
+        ./../../modules/fish
         ./../../modules/git
         ./../../modules/neovim
         ./../../modules/tmux
       ];
 
-      programs.zsh.initExtra = builtins.readFile ./fzieger/zshrc;
+      programs.zsh.enable = false;
+      programs.fish = {
+        shellInit = builtins.readFile ./fzieger/fishrc;
+        shellAliases = {
+          me = "cd $HOME/meshcloud";
+          mf = "cd $HOME/meshcloud/meshfed-release";
+          mi = "cd $HOME/meshcloud/infrastructure";
+          md = "cd $HOME/meshcloud/deployments";
+          mdocs = "cd $HOME/meshcloud/meshcloud-docs";
+          chub = "cd $HOME/meshcloud/collie-hub";
+          ccli = "cd $HOME/meshcloud/collie-cli";
+          validate-dhall = "mf && deployment/test/validate.sh";
+          validate-override = "mf && ci/deployment/overrides-idempotent.sh";
+          format-dhall = "mf && deployment/bin/format-all-osx.sh";
+          fk = "fly -t k";
+          sm = "smerge";
+          vault-forward = "mi && meshstack-infra-k8s/vault-forward.sh";
+        };
+      };
 
       # Additional plugins for tmux
       programs.tmux.plugins = [
