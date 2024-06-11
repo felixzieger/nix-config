@@ -17,7 +17,6 @@ in {
   programs.fish.enable = true;
 
   users.users.xilef.shell = pkgs.fish;
-  users.users.fzieger.shell = pkgs.fish;
 
   home-manager = {
     useGlobalPkgs = true;
@@ -75,12 +74,12 @@ in {
       imports = [
         ./../../modules/fzf
         ./../../modules/fish
+        ./../../modules/zsh
         ./../../modules/git
         ./../../modules/neovim
         ./../../modules/tmux
       ];
 
-      programs.zsh.enable = false;
       programs.fish = {
         shellInit = builtins.readFile ./fzieger/fishrc;
         shellAliases = {
@@ -99,6 +98,7 @@ in {
           vault-forward = "mi && meshstack-infra-k8s/vault-forward.sh";
         };
       };
+      programs.zsh.initExtra = builtins.readFile ./fzieger/zshrc;
 
       # Additional plugins for tmux
       programs.tmux.plugins = [
