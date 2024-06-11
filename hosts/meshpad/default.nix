@@ -256,7 +256,8 @@ in {
     pkgs.monitorcontrol
     pkgs.vscode
     pkgs.teams
-    # pkgs.kitty
+    pkgs.kitty
+    pkgs.slack
     pkgs.watchman
 
     pkgs.go
