@@ -1,4 +1,5 @@
-{ inputs, home-manager, agenix, lib, config, pkgs, nixpkgs-unstable, ... }:
+{ inputs, home-manager, agenix, lib, config, pkgs, nixpkgs-unstable
+, mac-app-util, ... }:
 let
   unstable = import nixpkgs-unstable {
     system = pkgs.system;
@@ -21,6 +22,7 @@ in {
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+    sharedModules = [ mac-app-util.homeManagerModules.default ];
     users.xilef = {
       home.username = lib.mkForce "xilef";
       home.homeDirectory = lib.mkForce "/Users/xilef";
@@ -200,30 +202,22 @@ in {
     };
   };
 
-  homebrew = {
-    enable = true;
-    onActivation = {
-      autoUpdate = true;
-      upgrade = true;
-    };
-    brews = [ "azure-cli" ];
-    casks = [
-      # "firefox"
-      "docker"
-      "raycast"
-      "logi-options-plus"
-      "shottr"
-      "rectangle"
-      "spotify"
-      "bitwarden"
-      "monitorcontrol"
-      "kitty"
-      "visual-studio-code"
-      "gather"
-      "arc"
-      "microsoft-teams"
-    ];
-  };
+  # homebrew = {
+  #   enable = true;
+  #   onActivation = {
+  #     autoUpdate = true;
+  #     upgrade = true;
+  #   };
+  #   brews = [ ];
+  #   casks = [
+  #     "docker"
+  #     "logi-options-plus"
+  #     "shottr"
+  #     "bitwarden"
+  #     "gather"
+  #     "arc"
+  #   ];
+  # };
 
   system.defaults = {
     finder = {
@@ -256,6 +250,13 @@ in {
     pkgs.gh
     pkgs.fish
 
+    pkgs.raycast
+    pkgs.rectangle
+    pkgs.spotify
+    pkgs.monitorcontrol
+    pkgs.vscode
+    pkgs.teams
+    # pkgs.kitty
     pkgs.watchman
 
     pkgs.go
@@ -282,7 +283,7 @@ in {
     pkgs.openstackclient
     pkgs.awscli2
     gcloud
-    # pkgs.azure-cli # Managed via brew, because plugin installs fail otherwise
+    pkgs.azure-cli
   ]
   # I haven't figured out how to fix the dhall versions in the new flakes based setup yet
   # ++ import (./versions.nix)

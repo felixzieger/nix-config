@@ -14,10 +14,13 @@
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.05-darwin";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
+
+    mac-app-util.url =
+      "github:hraban/mac-app-util"; # https://discourse.nixos.org/t/mac-applications-installed-by-nix-are-not-loaded-by-spotlight/14129/16
   };
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-bitcoin
-    , nixpkgs-darwin, nix-darwin, ... }: {
+    , nixpkgs-darwin, nix-darwin, mac-app-util, ... }: {
       nixosConfigurations = {
         "schwalbe" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -78,6 +81,7 @@
           specialArgs = inputs;
           modules = [
             home-manager.darwinModules.home-manager
+            mac-app-util.darwinModules.default
             ./hosts/meshpad
             inputs.agenix.nixosModules.default
           ];
