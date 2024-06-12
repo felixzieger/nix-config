@@ -285,20 +285,17 @@ in {
     pkgs.awscli2
     gcloud
     pkgs.azure-cli
-  ]
-  # I haven't figured out how to fix the dhall versions in the new flakes based setup yet
-  # ++ import (./versions.nix)
-    ++ [
-      # Python development environment
-      pkgs.python3
-      pkgs.poetry
-      pkgs.nodePackages.pyright
-      pkgs.ruff-lsp
-      pkgs.ngrok
-      pkgs.mkdocs
+  ] ++ [
+    # Python development environment
+    pkgs.python3
+    pkgs.poetry
+    pkgs.nodePackages.pyright
+    pkgs.ruff-lsp
+    pkgs.ngrok
+    pkgs.mkdocs
 
-      agenix.packages."${pkgs.system}".default
-    ];
+    agenix.packages."${pkgs.system}".default
+  ];
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
