@@ -255,7 +255,7 @@ in {
     pkgs.spotify
     pkgs.monitorcontrol
     pkgs.vscode
-    pkgs.teams
+    # pkgs.teams # Still the old version
     pkgs.kitty
     pkgs.slack
     pkgs.watchman
