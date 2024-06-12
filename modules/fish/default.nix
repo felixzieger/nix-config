@@ -13,4 +13,5 @@
     };
     shellAbbrs = { unset = "set --erase"; };
   };
+  programs.zoxide.enable = true;
 }
