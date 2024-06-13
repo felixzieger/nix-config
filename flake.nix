@@ -8,9 +8,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
 
-    nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
-    nix-bitcoin.inputs.nixpkgs.follows = "nixpkgs";
-
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.05-darwin";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
@@ -19,7 +16,7 @@
       "github:hraban/mac-app-util"; # https://discourse.nixos.org/t/mac-applications-installed-by-nix-are-not-loaded-by-spotlight/14129/16
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nix-bitcoin
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager
     , nixpkgs-darwin, nix-darwin, mac-app-util, ... }: {
       nixosConfigurations = {
         "schwalbe" = nixpkgs.lib.nixosSystem {
@@ -40,10 +37,6 @@
             ./services/ghost.nix
             ./services/home-assistant.nix
             ./services/docsy.nix
-
-            nix-bitcoin.nixosModules.default
-            # (nix-bitcoin + "/modules/presets/enable-tor.nix")
-            ./services/bitcoin.nix
 
             inputs.agenix.nixosModules.default
 
