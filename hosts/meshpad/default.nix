@@ -1,10 +1,5 @@
-{ inputs, home-manager, agenix, lib, config, pkgs, nixpkgs-unstable
-, mac-app-util, ... }:
+{ inputs, home-manager, agenix, lib, config, pkgs, mac-app-util, ... }:
 let
-  unstable = import nixpkgs-unstable {
-    system = pkgs.system;
-    config.allowUnfree = true;
-  };
   gcloud = pkgs.google-cloud-sdk.withExtraComponents
     (with pkgs.google-cloud-sdk.components; [ gke-gcloud-auth-plugin ]);
 in {
@@ -40,9 +35,8 @@ in {
       programs.fish = { shellInit = builtins.readFile ./xilef/fishrc; };
 
       # Additional plugins for tmux
-      programs.tmux.plugins = [
-        unstable.tmuxPlugins.fzf-tmux-url
-      ]; # Open Hyperlink-Picker via CTRL+b u
+      programs.tmux.plugins =
+        [ pkgs.tmuxPlugins.fzf-tmux-url ]; # Open Hyperlink-Picker via CTRL+b u
 
       # Additional plugins for nvim
       home.packages = with pkgs; [ nodePackages.vscode-langservers-extracted ];
@@ -101,9 +95,8 @@ in {
       programs.zsh.initExtra = builtins.readFile ./fzieger/zshrc;
 
       # Additional plugins for tmux
-      programs.tmux.plugins = [
-        unstable.tmuxPlugins.fzf-tmux-url
-      ]; # Open Hyperlink-Picker via CTRL+b u
+      programs.tmux.plugins =
+        [ pkgs.tmuxPlugins.fzf-tmux-url ]; # Open Hyperlink-Picker via CTRL+b u
       programs.tmux.extraConfig = ''
         set -g @fzf-url-history-limit '2000'
       '';
@@ -166,7 +159,7 @@ in {
       ];
 
       programs.k9s.enable = true;
-      programs.k9s.package = unstable.k9s;
+      programs.k9s.package = pkgs.k9s;
       programs.k9s.plugin = {
         db-connect = {
           shortCut = "Ctrl-J";
@@ -201,23 +194,6 @@ in {
       home.stateVersion = "23.11";
     };
   };
-
-  # homebrew = {
-  #   enable = true;
-  #   onActivation = {
-  #     autoUpdate = true;
-  #     upgrade = true;
-  #   };
-  #   brews = [ ];
-  #   casks = [
-  #     "docker"
-  #     "logi-options-plus"
-  #     "shottr"
-  #     "bitwarden"
-  #     "gather"
-  #     "arc"
-  #   ];
-  # };
 
   system.defaults = {
     finder = {
@@ -263,13 +239,12 @@ in {
     pkgs.go
     pkgs.opentofu
     pkgs.terraform-docs
-    unstable.terragrunt # unstable because support for opentofu got better after 23.10
+    pkgs.terragrunt
     pkgs.pass
     pkgs.parallel
     pkgs.kubectl
-    unstable.k9s # untstable because plugins didn't work with 23.10
     pkgs.nodejs
-    unstable.vault-bin # untstable because stable in 23.10 had CVE-2024-2660
+    pkgs.vault-bin
     pkgs.jq
     pkgs.yarn
     pkgs.kotlin

@@ -1,4 +1,4 @@
-{ unstable, ... }: {
+{ ... }: {
   programs.tmux = {
     enable = true;
     extraConfig = ''

@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
@@ -16,8 +15,8 @@
       "github:hraban/mac-app-util"; # https://discourse.nixos.org/t/mac-applications-installed-by-nix-are-not-loaded-by-spotlight/14129/16
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager
-    , nixpkgs-darwin, nix-darwin, mac-app-util, ... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, nixpkgs-darwin, nix-darwin
+    , mac-app-util, ... }: {
       nixosConfigurations = {
         "schwalbe" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
