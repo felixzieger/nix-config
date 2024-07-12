@@ -10,7 +10,7 @@
       ll = "ls -l";
       la = "ls -la";
       tree = "ls --tree";
-      dog = "doggo";
+      dog = "doggo"; # doesn't work. don't know why
       dig = "dog";
     };
     shellAbbrs = { unset = "set --erase"; };
