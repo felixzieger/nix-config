@@ -161,26 +161,29 @@ in {
       programs.k9s.enable = true;
       programs.k9s.package = pkgs.k9s;
       programs.k9s.plugin = {
-        db-connect = {
-          shortCut = "Ctrl-J";
-          description = "Open DB";
-          scopes = [ "pod" ];
-          command = "kubectl";
-          background = "false";
-          args = [
-            "--context"
-            "$CONTEXT"
-            "-n"
-            "$NAMESPACE"
-            "exec"
-            "-it"
-            "$NAME"
-            "--"
-            "bash"
-            "-c"
-            "mysql -u $MARIADB_USER -p$MARIADB_PASSWORD $MARIADB_DATABASE"
-          ];
-        };
+        plugins =
+          { # Repeat the plugins key here, because k9s doesn't load the plugin otherwise
+            db-connect = {
+              shortCut = "Ctrl-J";
+              description = "Open DB";
+              scopes = [ "pod" ];
+              command = "kubectl";
+              background = false;
+              args = [
+                "--context"
+                "$CONTEXT"
+                "-n"
+                "$NAMESPACE"
+                "exec"
+                "-it"
+                "$NAME"
+                "--"
+                "bash"
+                "-c"
+                "mysql -u $MARIADB_USER -p$MARIADB_PASSWORD $MARIADB_DATABASE"
+              ];
+            };
+          };
       };
 
       # This value determines the home Manager release that your
@@ -214,12 +217,11 @@ in {
   environment.systemPackages = [
     pkgs.btop
     pkgs.git
-    pkgs.tig
+    pkgs.doggo
     pkgs.tree
     pkgs.wget
     pkgs.ripgrep
     pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
-    pkgs.mycli
     pkgs.shellcheck
     pkgs.bitwarden-cli
     pkgs.deno
