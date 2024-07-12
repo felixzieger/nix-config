@@ -134,8 +134,6 @@ in {
                 - nvim -c "NvimTreeOpen"
                 - lazygit
                 - cd website
-          - me:
-              root: ~/meshcloud
       '';
 
       # Additional plugins for nvim

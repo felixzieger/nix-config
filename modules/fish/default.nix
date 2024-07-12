@@ -10,6 +10,8 @@
       ll = "ls -l";
       la = "ls -la";
       tree = "ls --tree";
+      dog = "doggo";
+      dig = "dog";
     };
     shellAbbrs = { unset = "set --erase"; };
   };
