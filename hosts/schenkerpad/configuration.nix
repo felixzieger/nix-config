@@ -56,7 +56,6 @@
       cheese # webcam tool
       simple-scan # document scanner
       gnome-music
-      gedit # text editor
       epiphany # web browser
       # geary # email reader
       totem # video player
@@ -71,8 +70,8 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "de";
-    xkbVariant = "";
+    xkb.layout = "de";
+    xkb.variant = "";
   };
 
   # Configure console keymap
