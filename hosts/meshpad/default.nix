@@ -154,6 +154,8 @@ in {
           type = "lua";
           config = builtins.readFile ./fzieger/nvim-lspconfig.lua;
         }
+
+        copilot-vim
       ];
 
       programs.k9s.enable = true;
