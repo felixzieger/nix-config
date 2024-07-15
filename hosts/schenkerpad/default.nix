@@ -8,15 +8,6 @@
     home.username = "felix";
     home.homeDirectory = "/home/felix";
 
-    programs.git = {
-      enable = true;
-      userName = "Felix Zieger";
-      userEmail = "github@felixzieger.de";
-      delta.enable = true;
-    };
-
-    programs.lazygit.enable = true;
-
     programs.firefox = {
       enable = true;
       policies = {
@@ -47,6 +38,7 @@
       ./../../modules/zsh
       ./../../modules/tmux
       ./../../modules/neovim
+      ./../../modules/git
     ];
 
     # This value determines the home Manager release that your
