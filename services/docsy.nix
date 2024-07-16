@@ -2,6 +2,9 @@
 let docsyPort = 8080;
 in {
   config = {
+    # Inspect sqlite database without docker exec
+    environment.systemPackages = with pkgs; [ sqlite ];
+
     services.nginx.virtualHosts."app.getdocsy.com" = {
       forceSSL = true;
       enableACME = true;
