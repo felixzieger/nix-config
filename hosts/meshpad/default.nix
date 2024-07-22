@@ -262,6 +262,7 @@ in {
     pkgs.awscli2
     gcloud
     pkgs.azure-cli
+    pkgs.azure-storage-azcopy
   ] ++ [
     # Python development environment
     pkgs.python3
