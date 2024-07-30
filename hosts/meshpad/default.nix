@@ -142,21 +142,26 @@ in {
         nodePackages.vscode-langservers-extracted
         gopls
       ];
-      programs.neovim.plugins = with pkgs.vimPlugins; [
-        # Languages
-        kotlin-vim
-        dhall-vim
-        vim-terraform
+      programs.neovim = {
+        plugins = with pkgs.vimPlugins; [
+          # Languages
+          kotlin-vim
+          dhall-vim
+          vim-terraform
 
-        friendly-snippets
-        {
-          plugin = nvim-lspconfig;
-          type = "lua";
-          config = builtins.readFile ./fzieger/nvim-lspconfig.lua;
-        }
+          friendly-snippets
+          {
+            plugin = nvim-lspconfig;
+            type = "lua";
+            config = builtins.readFile ./fzieger/nvim-lspconfig.lua;
+          }
 
-        copilot-vim
-      ];
+          copilot-vim
+          CopilotChat-nvim
+        ];
+
+        extraConfig = builtins.readFile ./neovim.vim;
+      };
 
       programs.k9s.enable = true;
       programs.k9s.package = pkgs.k9s;
