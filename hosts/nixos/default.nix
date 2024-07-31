@@ -41,6 +41,8 @@
   };
 
   systemd.enableEmergencyMode = false;
+  services.journald.extraConfig =
+    "SystemMaxUse=1000M"; # Reduce journald log size
 
   security.sudo.enable = true;
   security.sudo.wheelNeedsPassword =
