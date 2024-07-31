@@ -37,6 +37,8 @@
             ./services/home-assistant.nix
             ./services/docsy.nix
 
+            ./services/systemd-email-notify.nix
+
             inputs.agenix.nixosModules.default
 
           ];
