@@ -79,6 +79,7 @@ in {
       };
     };
 
+    # Msmtp provides the sendmail command
     programs.msmtp = {
       enable = true;
       accounts = {
