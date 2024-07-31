@@ -27,7 +27,7 @@ in {
       containers = {
         docsy = {
           autoStart = true;
-          image = "ghcr.io/felixzieger/docsy:v0.5.4";
+          image = "ghcr.io/felixzieger/docsy:v0.6.0";
           environment.TZ = "Europe/Berlin";
           ports = [ "${builtins.toString docsyPort}:3000" ];
           volumes = [ "/data/docsy/data:/app/data" ];
