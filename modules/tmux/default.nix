@@ -3,7 +3,6 @@
     enable = true;
     extraConfig = ''
       # Switch pane layout    CTRL+b SPACE
-      # Toggle focus for pane CTRL+b z
       # Swap pane with the active pane CTRL+b CTRL+o
 
       set -g mouse on
@@ -18,6 +17,16 @@
 
       # nvim :healthcheck recommends setting escape-time
       set-option -sg escape-time 10
+
+      # CTRL+b z frequently lead to accidentally suspending tmux
+      # Toggle focus for pane CTRL+b m(aximize)
+      bind-key m resize-pane -Z
+
+      # Pane navigation
+      bind-key h select-pane -L
+      bind-key j select-pane -D
+      bind-key k select-pane -U
+      bind-key l select-pane -R
     '';
   };
 
