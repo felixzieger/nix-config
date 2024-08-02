@@ -13,6 +13,10 @@ in {
 
   users.users.xilef.shell = pkgs.fish;
 
+  security.sudo.extraConfig = ''
+    Defaults timestamp_timeout=20
+  '';
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
