@@ -1,57 +1,10 @@
 { ... }: {
   programs.tmux = {
     enable = true;
-    extraConfig = ''
-      # Switch pane layout    CTRL+b SPACE
-      # Swap pane with the active pane CTRL+b CTRL+o
-
-      set -g mouse on
-
-      # Split panes start in current path
-      bind '"' split-window -c "#{pane_current_path}"
-      bind % split-window -h -c "#{pane_current_path}"
-
-      # True color settings
-      set -g default-terminal "$TERM"
-      set -ag terminal-overrides ",$TERM:Tc"
-
-      # nvim :healthcheck recommends setting escape-time
-      set-option -sg escape-time 10
-
-      # CTRL+b z frequently lead to accidentally suspending tmux
-      # Toggle focus for pane CTRL+b m(aximize)
-      bind-key m resize-pane -Z
-
-      # Pane navigation
-      bind-key h select-pane -L
-      bind-key j select-pane -D
-      bind-key k select-pane -U
-      bind-key l select-pane -R
-    '';
+    extraConfig = builtins.readFile ./tmux.conf;
   };
 
   programs.tmux.tmuxinator.enable = true;
-  home.file.".config/tmuxinator/nix-config.yml".text = ''
-    name: nix-config
-    root: /etc/nixos
-
-    # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
-    startup_window: nix
-
-    # Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
-    # startup_pane: 1
-
-    # Controls whether the tmux session should be attached to automatically. Defaults to true.
-    # attach: false
-
-    windows:
-      - top: btop
-      - nix:
-          layout: even-horizontal
-          panes:
-            - sudo -E nvim -c "NvimTreeOpen"
-            - 
-      - git: sudo -E lazygit
-  '';
+  home.file.".config/tmuxinator/nix-config.yml".source = ./tmuxinator.yml;
 }
 
