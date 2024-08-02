@@ -11,13 +11,7 @@ require('CopilotChat').setup {
 }
 
 -- AI shortcuts start with <leader>a
--- vim.api.nvim_set_keymap('n', '<Leader>a', ':CopilotChatToggle<CR>', { noremap = true }) -- toggle
-vim.api.nvim_set_keymap('v', '<Leader>ae', ':CopilotChatExplain<CR>', { noremap = true })  -- explain
-vim.api.nvim_set_keymap('v', '<Leader>af', ':CopilotChatFix<CR>', { noremap = true })      -- fix
-vim.api.nvim_set_keymap('v', '<Leader>ao', ':CopilotChatOptimize<CR>', { noremap = true }) -- optimize
-vim.api.nvim_set_keymap('v', '<Leader>ad', ':CopilotChateDocs<CR>', { noremap = true })    -- docs
-vim.api.nvim_set_keymap('v', '<Leader>at', ':CopilotChatTests<CR>', { noremap = true })    -- tests
-
+vim.api.nvim_set_keymap('v', '<Leader>aa', ':CopilotChat ', { noremap = true })
 
 -- Quick chat
 vim.api.nvim_set_keymap('n', '<leader>aa', [[:lua QuickChat()<CR>]], { noremap = true, silent = true })
