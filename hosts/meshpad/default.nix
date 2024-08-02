@@ -157,10 +157,13 @@ in {
           }
 
           copilot-vim
-          CopilotChat-nvim
+          {
+            plugin = CopilotChat-nvim;
+            type = "lua";
+            config = builtins.readFile ./fzieger/nvim-copilotchat.lua;
+          }
+          plenary-nvim # Dependency for CopilotChat-nvim
         ];
-
-        extraConfig = builtins.readFile ./neovim.vim;
       };
 
       programs.k9s.enable = true;
