@@ -34,4 +34,6 @@ in {
 
   "ghcr-secret.age".publicKeys = systems;
   "docsy-env.age".publicKeys = systems;
+  "docsy-restic-password.age".publicKeys = [ schwalbe ];
+  "docsy-restic-environment.age".publicKeys = [ schwalbe ];
 }

@@ -1,5 +1,7 @@
 { pkgs, config, ... }:
-let docsyPort = 8080;
+let
+  docsyPort = 8080;
+  docsyDataDir = "/data/docsy/data";
 in {
   config = {
     # Inspect sqlite database without docker exec
@@ -30,7 +32,7 @@ in {
           image = "ghcr.io/felixzieger/docsy:v0.6.0";
           environment.TZ = "Europe/Berlin";
           ports = [ "${builtins.toString docsyPort}:3000" ];
-          volumes = [ "/data/docsy/data:/app/data" ];
+          volumes = [ "${docsyDataDir}:/app/data" ];
           login = {
             registry = "ghcr.io";
             username = "felixzieger";
@@ -38,6 +40,29 @@ in {
           };
           environmentFiles = [ config.age.secrets.docsy-env.path ];
         };
+      };
+    };
+    age.secrets = {
+      docsy-restic-environment.file = ../secrets/docsy-restic-environment.age;
+      docsy-restic-password.file = ../secrets/docsy-restic-password.age;
+    };
+
+    services.restic.backups = {
+      docsy = {
+        initialize = true;
+
+        paths = [ docsyDataDir ];
+
+        repository = "b2:${config.networking.hostName}-docsy";
+        environmentFile = config.age.secrets.docsy-restic-environment.path;
+        passwordFile = config.age.secrets.docsy-restic-password.path;
+
+        timerConfig = {
+          OnCalendar = "19:00";
+          RandomizedDelaySec = "5min";
+        };
+
+        pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-monthly 12" ];
       };
     };
   };
