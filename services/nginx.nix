@@ -1,7 +1,7 @@
 { pkgs, config, lib, ... }:
 let
-  access_logs_root =
-    "/var/www/nginx.${config.networking.hostName}.felixzieger.de";
+  goaccess_host = "nginx.${config.networking.hostName}.felixzieger.de";
+  goaccess_root = "/var/www/${goaccess_host}";
 in {
   config = {
     networking = {
@@ -38,10 +38,20 @@ in {
 
     systemd.services.goaccess-html = {
       enable = true;
+      restartIfChanged = true;
       description = "Serves Nginx access logs as HTML file.";
       path = [ pkgs.goaccess ];
-      script =
-        "goaccess /var/log/nginx/access.log -o ${access_logs_root}/index.html --log-format=COMBINED --real-time-html";
+      script = ''
+        goaccess /var/log/nginx/access.log \
+          -o ${goaccess_root}/index.html \
+          --log-format=COMBINED \
+          --real-time-html \
+          --html-report-title="${config.networking.hostName} nginx logs" \
+          --ws-url=wss://${goaccess_host}:443/ws \
+          --port=7890 \
+          --no-global-config \
+          --origin=https://${goaccess_host}
+      '';
       serviceConfig = {
         Type = "simple";
         User = config.services.nginx.user;
@@ -50,17 +60,22 @@ in {
     };
 
     system.activationScripts.makeWwwDir = lib.stringAfter [ "var" ] ''
-      mkdir -p ${access_logs_root}
-      chown ${config.services.nginx.user}:${config.services.nginx.group} ${access_logs_root}
+      mkdir -p ${goaccess_root}
+      chown ${config.services.nginx.user}:${config.services.nginx.group} ${goaccess_root}
     '';
 
-    services.nginx.virtualHosts."nginx.${config.networking.hostName}.felixzieger.de" = # TODO restrict access; e.g. via oauth2-proxy
+    services.nginx.virtualHosts."${goaccess_host}" = # TODO restrict access; e.g. via oauth2-proxy
       {
         forceSSL = true;
         enableACME = true;
         http3 = true;
         quic = true;
-        root = access_logs_root;
+        root = goaccess_root;
+        locations."/ws" = {
+          proxyPass =
+            "http://127.0.0.1:7890"; # GoAccess serves websocket on port 7890 by default
+          proxyWebsockets = true;
+        };
       };
   };
 }
