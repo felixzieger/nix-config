@@ -267,6 +267,8 @@ in {
 
     pkgs.cntlm
 
+    pkgs.powershell
+
     # Cloud CLIs
     pkgs.openshift
     pkgs.cloudfoundry-cli
