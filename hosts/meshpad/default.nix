@@ -240,6 +240,8 @@ in {
     pkgs.gh
     pkgs.fish
 
+    # pkgs.elia # Add this once https://github.com/NixOS/nixpkgs/pull/317782 is merged
+
     pkgs.raycast
     pkgs.rectangle
     pkgs.spotify
