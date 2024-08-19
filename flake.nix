@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
@@ -16,7 +17,7 @@
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, nixpkgs-darwin, nix-darwin
-    , mac-app-util, ... }: {
+    , nixpkgs-unstable, mac-app-util, ... }: {
       nixosConfigurations = {
         "schwalbe" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -37,6 +38,7 @@
             ./services/home-assistant.nix
             ./services/docsy.nix
 
+            ./services/netdata.nix
             ./services/systemd-email-notify.nix
 
             inputs.agenix.nixosModules.default

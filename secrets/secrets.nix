@@ -15,6 +15,8 @@ in {
 
   "tailscale-authkey.age".publicKeys = [ schwalbe ];
 
+  "netdata-basic-auth.age".publicKeys = systems;
+
   "uptime-kuma-restic-password.age".publicKeys = [ schwalbe ];
   "uptime-kuma-restic-environment.age".publicKeys = [ schwalbe ];
   "home-assistant-restic-password.age".publicKeys = [ schwalbe ];
