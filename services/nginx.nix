@@ -26,6 +26,16 @@ in {
       recommendedOptimisation = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
+
+      # This log format is compatible with GoAccess VCOMBINED
+      commonHttpConfig = ''
+        log_format vcombined '$host:$server_port '
+            '$remote_addr - $remote_user [$time_local] '
+            '"$request" $status $body_bytes_sent '
+            '"$http_referer" "$http_user_agent"';
+
+        access_log /var/log/nginx/access.log vcombined;
+      '';
     };
 
     services.nginx.virtualHosts."_" = {
@@ -44,14 +54,17 @@ in {
       script = ''
         goaccess /var/log/nginx/access.log \
           -o ${goaccess_root}/index.html \
-          --log-format=COMBINED \
           --real-time-html \
+          --origin=https://${goaccess_host} \
           --html-report-title="${config.networking.hostName} nginx logs" \
           --ws-url=wss://${goaccess_host}:443/ws \
           --port=7890 \
-          --no-global-config \
-          --origin=https://${goaccess_host}
+          --log-format='%v %h - %^[%d:%t %^] "%r" %s %b "%R" "%u"' \
+          --date-format=%d/%b/%Y --time-format=%T \
+          --no-global-config
       '';
+      # --log-format=VCOMBINED
+      # --config-file="/etc/goaccess/goaccess.conf" \
       serviceConfig = {
         Type = "simple";
         User = config.services.nginx.user;
@@ -64,17 +77,25 @@ in {
       chown ${config.services.nginx.user}:${config.services.nginx.group} ${goaccess_root}
     '';
 
+    # environment.etc."goaccess/goaccess.conf".text = ''
+    #   time-format %H:%M:%S
+    #   date-format %d/%b/%Y
+    #   log-format VCOMBINED
+    # '';
+
+    services.nginx.upstreams.gwsocket.servers = { "127.0.0.1:7890" = { }; };
     services.nginx.virtualHosts."${goaccess_host}" = # TODO restrict access; e.g. via oauth2-proxy
       {
         forceSSL = true;
         enableACME = true;
-        http3 = true;
-        quic = true;
         root = goaccess_root;
         locations."/ws" = {
-          proxyPass =
-            "http://127.0.0.1:7890"; # GoAccess serves websocket on port 7890 by default
+          proxyPass = "http://gwsocket";
           proxyWebsockets = true;
+          extraConfig = ''
+            proxy_read_timeout 7d;
+            proxy_buffering off;
+          '';
         };
       };
   };
