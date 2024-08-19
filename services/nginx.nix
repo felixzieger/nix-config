@@ -1,8 +1,4 @@
-{ pkgs, config, lib, ... }:
-let
-  goaccess_host = "nginx.${config.networking.hostName}.felixzieger.de";
-  goaccess_root = "/var/www/${goaccess_host}";
-in {
+{ pkgs, config, lib, ... }: {
   config = {
     networking = {
       firewall = {
@@ -26,77 +22,11 @@ in {
       recommendedOptimisation = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
-
-      # This log format is compatible with GoAccess VCOMBINED
-      commonHttpConfig = ''
-        log_format vcombined '$host:$server_port '
-            '$remote_addr - $remote_user [$time_local] '
-            '"$request" $status $body_bytes_sent '
-            '"$http_referer" "$http_user_agent"';
-
-        access_log /var/log/nginx/access.log vcombined;
-      '';
     };
 
     services.nginx.virtualHosts."_" = {
       default = true;
       extraConfig = "deny all;";
     };
-
-    # Nginx Access logs HTML page via GoAccess
-    environment.systemPackages = with pkgs; [ goaccess ];
-
-    systemd.services.goaccess-html = {
-      enable = true;
-      restartIfChanged = true;
-      description = "Serves Nginx access logs as HTML file.";
-      path = [ pkgs.goaccess ];
-      script = ''
-        goaccess /var/log/nginx/access.log \
-          -o ${goaccess_root}/index.html \
-          --real-time-html \
-          --origin=https://${goaccess_host} \
-          --html-report-title="${config.networking.hostName} nginx logs" \
-          --ws-url=wss://${goaccess_host}:443/ws \
-          --port=7890 \
-          --log-format='%v %h - %^[%d:%t %^] "%r" %s %b "%R" "%u"' \
-          --date-format=%d/%b/%Y --time-format=%T \
-          --no-global-config
-      '';
-      # --log-format=VCOMBINED
-      # --config-file="/etc/goaccess/goaccess.conf" \
-      serviceConfig = {
-        Type = "simple";
-        User = config.services.nginx.user;
-        Group = config.services.nginx.group;
-      };
-    };
-
-    system.activationScripts.makeWwwDir = lib.stringAfter [ "var" ] ''
-      mkdir -p ${goaccess_root}
-      chown ${config.services.nginx.user}:${config.services.nginx.group} ${goaccess_root}
-    '';
-
-    # environment.etc."goaccess/goaccess.conf".text = ''
-    #   time-format %H:%M:%S
-    #   date-format %d/%b/%Y
-    #   log-format VCOMBINED
-    # '';
-
-    services.nginx.upstreams.gwsocket.servers = { "127.0.0.1:7890" = { }; };
-    services.nginx.virtualHosts."${goaccess_host}" = # TODO restrict access; e.g. via oauth2-proxy
-      {
-        forceSSL = true;
-        enableACME = true;
-        root = goaccess_root;
-        locations."/ws" = {
-          proxyPass = "http://gwsocket";
-          proxyWebsockets = true;
-          extraConfig = ''
-            proxy_read_timeout 7d;
-            proxy_buffering off;
-          '';
-        };
-      };
   };
 }
