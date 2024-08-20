@@ -241,6 +241,7 @@ in {
     pkgs.fish
 
     # pkgs.elia # Add this once https://github.com/NixOS/nixpkgs/pull/317782 is merged
+    # pkgs.posting # Like postman but for CLI; no PR available in nxpkgs yet. https://github.com/darrenburns/posting
 
     pkgs.raycast
     pkgs.rectangle
