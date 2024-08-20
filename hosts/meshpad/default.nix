@@ -247,6 +247,7 @@ in {
     pkgs.ruff-lsp
     pkgs.ngrok
     pkgs.mkdocs
+    pkgs.litecli
 
     agenix.packages."${pkgs.system}".default
   ];

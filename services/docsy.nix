@@ -5,7 +5,7 @@ let
 in {
   config = {
     # Inspect sqlite database without docker exec
-    environment.systemPackages = with pkgs; [ sqlite ];
+    environment.systemPackages = with pkgs; [ litecli ];
 
     services.nginx.virtualHosts."app.getdocsy.com" = {
       forceSSL = true;
