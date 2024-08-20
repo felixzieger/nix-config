@@ -21,48 +21,7 @@ in {
     useGlobalPkgs = true;
     useUserPackages = true;
     sharedModules = [ mac-app-util.homeManagerModules.default ];
-    users.xilef = {
-      home.username = lib.mkForce "xilef";
-      home.homeDirectory = lib.mkForce "/Users/xilef";
 
-      programs.home-manager.enable = true;
-
-      imports = [
-        ./../../modules/fzf
-        ./../../modules/git
-        ./../../modules/neovim
-        ./../../modules/tmux
-        ./../../modules/fish
-      ];
-
-      programs.zsh.enable = false;
-      programs.fish = { shellInit = builtins.readFile ./xilef/fishrc; };
-
-      # Additional plugins for tmux
-      programs.tmux.plugins =
-        [ pkgs.tmuxPlugins.fzf-tmux-url ]; # Open Hyperlink-Picker via CTRL+b u
-
-      # Additional plugins for nvim
-      home.packages = with pkgs; [ nodePackages.vscode-langservers-extracted ];
-      programs.neovim.plugins = with pkgs.vimPlugins; [
-        friendly-snippets
-        {
-          plugin = nvim-lspconfig;
-          type = "lua";
-          config = builtins.readFile ./xilef/nvim-lspconfig.lua;
-        }
-      ];
-
-      # This value determines the home Manager release that your
-      # configuration is compatible with. This helps avoid breakage
-      # when a new home Manager release introduces backwards
-      # incompatible changes.
-      #
-      # You can update home Manager without changing this value. See
-      # the home Manager release notes for a list of state version
-      # changes in each release.
-      home.stateVersion = "23.11";
-    };
     users.fzieger = {
       home.username = lib.mkForce "fzieger";
       home.homeDirectory = lib.mkForce "/Users/fzieger";
