@@ -8,11 +8,17 @@ Relod config via `darwin-rebuild switch --flake ~/.nixpkgs `
 
 ## Add a new machine
 
-- install git
+- `mv /etc/nixos /etc/old_nixos`
+- `nix-shell -p git`
 - ssh-keygen
-- Add public key to github repo
-- git clone
-- nix-rebuild switch
+- add public key to github repo
+- `git clone git@github.com:felixzieger/nix-config.git /etc/nixos`
+- `mkdir hosts/<path-to-new-host-config>`
+- `cp /etc/old_nixos/*.nix hosts/<path-to-new-host-config>`
+- `git add hosts/<path-to-new-host-config>`
+- add `<hostname>` config to flake.nix
+- `nixos-rebuild switch --flake .#<hostname>`
+- rm -rf /etc/old_nixos
 
 ## Update inputs
 
