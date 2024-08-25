@@ -59,6 +59,16 @@
             inputs.agenix.nixosModules.default
           ];
         };
+        "hedwig" = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+
+          specialArgs = inputs;
+          modules = [
+            home-manager.nixosModules.home-manager
+            ./hosts/nixos
+            ./hosts/nixos/hedwig/configuration.nix
+          ];
+        };
         "schenkerpad" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
 
