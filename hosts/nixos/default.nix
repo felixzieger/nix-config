@@ -75,7 +75,7 @@
       PermitRootLogin = "no";
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
-      logLevel =
+      LogLevel =
         "VERBOSE"; # fail2ban requires a log level that shows failed login attempts
     };
   };
