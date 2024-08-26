@@ -1,7 +1,11 @@
 { self, pkgs, agenix, home-manager, ... }: {
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.trusted-users = [ "felix" ];
+  nix.settings.trusted-users =
+    # Needed for pushing changes via `nixos-rebuild --target-host felix@<host>.felixzieger.de switch`
+    # Adding a user equals password-less sudo. See https://github.com/NixOS/nix/issues/2127#issuecomment-2214837817
+    # TODO separate deployment users
+    [ "felix" ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.optimise.automatic = true;
   nix.gc = {
