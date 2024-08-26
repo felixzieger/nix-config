@@ -7,7 +7,9 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHunIW8dfsxIcafgHHG/lNBW55Tk6aS7Qy86x3TFQG3X";
   cameron =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMPgvfVIcLInSlxUxdU/X0roocVNzEu6FPSOvkhkiLnQ";
-  systems = [ schwalbe cameron ];
+  hedwig =
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIBqSDXUVcrS7OnDVFfYdcnMU24m+6USTJRudXVV8aNK";
+  systems = [ schwalbe cameron hedwig ];
 in {
   "email-password-bot-sonnenhof-zieger.age".publicKeys = [ schwalbe ];
   "plausible-keybase.age".publicKeys = [ schwalbe ];
@@ -17,8 +19,8 @@ in {
 
   "netdata-basic-auth.age".publicKeys = systems;
 
-  "uptime-kuma-restic-password.age".publicKeys = [ schwalbe ];
-  "uptime-kuma-restic-environment.age".publicKeys = [ schwalbe ];
+  "uptime-kuma-restic-password.age".publicKeys = [ schwalbe hedwig ];
+  "uptime-kuma-restic-environment.age".publicKeys = [ schwalbe hedwig ];
   "home-assistant-restic-password.age".publicKeys = [ schwalbe ];
   "home-assistant-restic-environment.age".publicKeys = [ schwalbe ];
 

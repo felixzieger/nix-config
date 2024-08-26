@@ -67,6 +67,10 @@
             home-manager.nixosModules.home-manager
             ./hosts/nixos
             ./hosts/nixos/hedwig/configuration.nix
+            ./services/nginx.nix
+            # ./services/uptime-kuma.nix
+
+            inputs.agenix.nixosModules.default
           ];
         };
         "schenkerpad" = nixpkgs.lib.nixosSystem {

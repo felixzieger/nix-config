@@ -8,6 +8,8 @@ Relod config via `darwin-rebuild switch --flake ~/.nixpkgs `
 
 ## Add a new machine
 
+Working on the machine itself:
+
 - `mv /etc/nixos /etc/old_nixos`
 - `nix-shell -p git`
 - ssh-keygen
@@ -19,6 +21,10 @@ Relod config via `darwin-rebuild switch --flake ~/.nixpkgs `
 - add `<hostname>` config to flake.nix
 - `nixos-rebuild switch --flake .#<hostname>`
 - rm -rf /etc/old_nixos
+
+Remotely:
+
+- `nixos-rebuild --target-host felix@address-of-new-host> switch`´
 
 ## Update inputs
 
