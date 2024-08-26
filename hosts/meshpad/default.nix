@@ -104,6 +104,7 @@ in {
         terraform-ls
         nodePackages.vscode-langservers-extracted
         gopls
+        kotlin-language-server
       ];
       programs.neovim = {
         plugins = with pkgs.vimPlugins; [
@@ -119,6 +120,8 @@ in {
             config = builtins.readFile ./fzieger/nvim-lspconfig.lua;
           }
 
+          # Potential successor for copilot-vim: avante
+          # https://github.com/yetone/avante.nvim
           copilot-vim
           {
             plugin = CopilotChat-nvim;
@@ -196,13 +199,11 @@ in {
     pkgs.shellcheck
     pkgs.bitwarden-cli
     pkgs.deno
-    pkgs.gh
     pkgs.fish
 
     # pkgs.elia # Add this once https://github.com/NixOS/nixpkgs/pull/317782 is merged
     # pkgs.posting # Like postman but for CLI; no PR available in nxpkgs yet. https://github.com/darrenburns/posting
 
-    pkgs.raycast
     pkgs.rectangle
     pkgs.spotify
     pkgs.monitorcontrol
