@@ -64,12 +64,15 @@
     defaultEditor = true;
   };
 
+  services.fail2ban.enable = true; # comes with a default jail for SSH
   services.openssh = {
     enable = true;
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
+      logLevel =
+        "VERBOSE"; # fail2ban requires a log level that shows failed login attempts
     };
   };
 
