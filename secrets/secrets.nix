@@ -11,7 +11,7 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIBqSDXUVcrS7OnDVFfYdcnMU24m+6USTJRudXVV8aNK";
   systems = [ schwalbe cameron hedwig ];
 in {
-  "email-password-bot-sonnenhof-zieger.age".publicKeys = [ schwalbe ];
+  "email-password-bot-sonnenhof-zieger.age".publicKeys = systems;
   "plausible-keybase.age".publicKeys = [ schwalbe ];
   "plausible-admin-password.age".publicKeys = [ schwalbe ];
 
@@ -19,8 +19,8 @@ in {
 
   "netdata-basic-auth.age".publicKeys = systems;
 
-  "uptime-kuma-restic-password.age".publicKeys = [ schwalbe hedwig ];
-  "uptime-kuma-restic-environment.age".publicKeys = [ schwalbe hedwig ];
+  "uptime-kuma-restic-password.age".publicKeys = systems;
+  "uptime-kuma-restic-environment.age".publicKeys = systems;
   "home-assistant-restic-password.age".publicKeys = [ schwalbe ];
   "home-assistant-restic-environment.age".publicKeys = [ schwalbe ];
 
@@ -34,10 +34,10 @@ in {
 
   "watchtower-environment.age".publicKeys = [ schwalbe ];
 
-  "oauth2_proxy_key.age".publicKeys = [ cameron ];
+  # "oauth2_proxy_key.age".publicKeys = [ cameron ];
 
   "ghcr-secret.age".publicKeys = systems;
   "docsy-env.age".publicKeys = systems;
-  "docsy-restic-password.age".publicKeys = [ schwalbe ];
-  "docsy-restic-environment.age".publicKeys = [ schwalbe ];
+  "docsy-restic-password.age".publicKeys = systems;
+  "docsy-restic-environment.age".publicKeys = systems;
 }
