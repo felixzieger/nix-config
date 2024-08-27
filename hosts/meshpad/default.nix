@@ -201,8 +201,9 @@ in {
     pkgs.deno
     pkgs.fish
 
-    # pkgs.elia # Add this once https://github.com/NixOS/nixpkgs/pull/317782 is merged
-    # pkgs.posting # Like postman but for CLI; no PR available in nxpkgs yet. https://github.com/darrenburns/posting
+    # pkgs.jan # LLM gui; currently only packaged for linux on nixos
+    # pkgs.elia # llm tui https://github.com/NixOS/nixpkgs/pull/317782 
+    # pkgs.posting # HTTP tui https://github.com/NixOS/nixpkgs/pull/325971
 
     pkgs.rectangle
     pkgs.spotify
@@ -217,7 +218,6 @@ in {
     pkgs.opentofu
     pkgs.terraform-docs
     pkgs.terragrunt
-    pkgs.pass
     pkgs.parallel
     pkgs.kubectl
     pkgs.nodejs
@@ -239,7 +239,6 @@ in {
     pkgs.awscli2
     gcloud
     pkgs.azure-cli
-    pkgs.azure-storage-azcopy
   ] ++ [
     # Python development environment
     pkgs.python3
