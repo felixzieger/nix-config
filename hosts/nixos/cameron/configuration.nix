@@ -14,6 +14,9 @@
       set -g status-bg purple
     '';
   };
+  home-manager.users.felix = {
+    programs.btop.settings = { color_theme = "horizon"; };
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

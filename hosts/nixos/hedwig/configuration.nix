@@ -19,4 +19,7 @@
       set -g status-bg orange
     '';
   };
+  home-manager.users.felix = {
+    programs.btop.settings = { color_theme = "dusklight"; };
+  };
 }
