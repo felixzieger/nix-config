@@ -75,6 +75,7 @@ For example, to restore the uptime-kuma backup run:
 
 # Up next
 
+- Impermanence https://lantian.pub/en/article/modify-computer/nixos-impermanence.lantian/
 - Observability https://xeiaso.net/blog/prometheus-grafana-loki-nixos-2020-11-20/
 - Deploying to remote hosts https://nixos-and-flakes.thiscute.world/best-practices/remote-deployment (colema or nixos-rebuild)
 - Write proper modules (with options and all). See https://guekka.github.io/nixos-server-2/ for an example
