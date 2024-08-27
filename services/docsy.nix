@@ -1,7 +1,9 @@
 { pkgs, config, ... }:
 let
-  docsyPort = 8080;
+  docsySlackPort = 8080;
+  docsyDashboardPort = 8050;
   docsyDataDir = "/data/docsy/data";
+  docsyVersion = "v0.6.6";
 in {
   config = {
     # Inspect sqlite database without docker exec
@@ -13,8 +15,11 @@ in {
       http3 = true;
       quic = true;
       locations."/" = {
-        proxyPass = "http://localhost:${toString docsyPort}";
+        proxyPass = "http://localhost:${toString docsySlackPort}";
         proxyWebsockets = true;
+      };
+      locations."/dashboard" = {
+        proxyPass = "http://localhost:${toString docsyDashboardPort}/dashboard";
       };
     };
 
@@ -29,9 +34,9 @@ in {
       containers = {
         docsy = {
           autoStart = true;
-          image = "ghcr.io/felixzieger/docsy:v0.6.4";
+          image = "ghcr.io/felixzieger/docsy:${docsyVersion}";
           environment.TZ = "Europe/Berlin";
-          ports = [ "${builtins.toString docsyPort}:3000" ];
+          ports = [ "${builtins.toString docsySlackPort}:3000" ];
           volumes = [ "${docsyDataDir}:/app/data" ];
           login = {
             registry = "ghcr.io";
@@ -40,8 +45,31 @@ in {
           };
           environmentFiles = [ config.age.secrets.docsy-env.path ];
         };
+        docsy_dashboard = {
+          autoStart = true;
+          image = "ghcr.io/felixzieger/docsy:${docsyVersion}";
+          environment.TZ = "Europe/Berlin";
+          ports = [ "${builtins.toString docsyDashboardPort}:8050" ];
+          volumes = [ "${docsyDataDir}:/app/data" ];
+          login = {
+            registry = "ghcr.io";
+            username = "felixzieger";
+            passwordFile = config.age.secrets.ghcr-secret.path;
+          };
+          entrypoint = "poetry";
+          cmd = [
+            "run"
+            "gunicorn"
+            "-w"
+            "1"
+            "-b"
+            "0.0.0.0:8050"
+            "docsy.dashboard:flask_app"
+          ];
+        };
       };
     };
+
     age.secrets = {
       docsy-restic-environment.file = ../secrets/docsy-restic-environment.age;
       docsy-restic-password.file = ../secrets/docsy-restic-password.age;
