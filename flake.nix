@@ -73,6 +73,16 @@
             inputs.agenix.nixosModules.default
           ];
         };
+        "blausieb" = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+
+          specialArgs = inputs;
+          modules = [
+            home-manager.nixosModules.home-manager
+            ./hosts/nixos
+            ./hosts/nixos/blausieb/configuration.nix
+          ];
+        };
         "schenkerpad" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
 
