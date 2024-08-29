@@ -12,9 +12,7 @@ Working on the machine itself:
 
 - `mv /etc/nixos /etc/old_nixos`
 - `nix-shell -p git`
-- ssh-keygen
-- add public key to github repo
-- `git clone git@github.com:felixzieger/nix-config.git /etc/nixos`
+- `git clone git@github.com:felixzieger/nix-config.git /etc/nixos` (use agent forwarding to clone via SSH)
 - `mkdir hosts/<path-to-new-host-config>`
 - `cp /etc/old_nixos/*.nix hosts/<path-to-new-host-config>`
 - `git add hosts/<path-to-new-host-config>`
