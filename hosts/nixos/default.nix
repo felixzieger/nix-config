@@ -66,7 +66,10 @@
     defaultEditor = true;
   };
 
-  services.fail2ban.enable = true; # comes with a default jail for SSH
+  services.fail2ban = {
+    enable = true; # comes with a default jail for SSH
+    jails.sshd.settings = { maxretry = 10; };
+  };
   services.openssh = {
     enable = true;
     settings = {
