@@ -52,8 +52,6 @@
     tree
     git
     btop # monitor resources like cpu, memory, disk
-    # dig # DNS lookup
-    # sad # batch find and replace; use like find "$FIND_ARGS" | sad '<pattern>' '<replacement>'; select edits with "tab"
 
     agenix.packages."${system}".default
 
