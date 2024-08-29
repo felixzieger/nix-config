@@ -13,8 +13,8 @@ resource "oci_core_security_list" "ampere_security_list" {
     source   = "0.0.0.0/0"
 
     tcp_options {
-      max = "22"
-      min = "22"
+      max = "33111"
+      min = "33111"
     }
   }
 
