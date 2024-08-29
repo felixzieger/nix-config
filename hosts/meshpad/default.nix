@@ -237,6 +237,7 @@ in {
     pkgs.cloudfoundry-cli
     pkgs.openstackclient
     pkgs.awscli2
+    pkgs.oci-cli
     gcloud
     pkgs.azure-cli
   ] ++ [
