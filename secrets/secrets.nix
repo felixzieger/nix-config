@@ -3,17 +3,20 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOTTX+nJfoLV+smER/g7CbqZQNN0W++HwCK8EP4oggCJ";
   users = [ felix ];
 
+  blausieb =
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB6l59mQ8I0u6laoKksbh1HcD/iHmjujta+XTBbPPiBb";
+
   schwalbe =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHunIW8dfsxIcafgHHG/lNBW55Tk6aS7Qy86x3TFQG3X";
   cameron =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMPgvfVIcLInSlxUxdU/X0roocVNzEu6FPSOvkhkiLnQ";
   hedwig =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIBqSDXUVcrS7OnDVFfYdcnMU24m+6USTJRudXVV8aNK";
-  systems = [ schwalbe cameron hedwig ];
+  systems = [ schwalbe cameron hedwig blausieb ];
 in {
   "email-password-bot-sonnenhof-zieger.age".publicKeys = systems;
-  "plausible-keybase.age".publicKeys = [ schwalbe ];
-  "plausible-admin-password.age".publicKeys = [ schwalbe ];
+  "plausible-keybase.age".publicKeys = [ blausieb ];
+  "plausible-admin-password.age".publicKeys = [ blausieb ];
 
   "tailscale-authkey.age".publicKeys = [ schwalbe ];
 
