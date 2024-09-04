@@ -18,8 +18,9 @@ resource "oci_core_instance" "ampere_a1" {
     ocpus         = var.ampere_a1_cpu_core_count
   }
   source_details {
-    source_type = "image"
-    source_id   = local.os_images["ubuntu2204"].os_image_id
+    boot_volume_size_in_gbs = 199
+    source_type             = "image"
+    source_id               = local.os_images["ubuntu2204"].os_image_id
   }
 
   metadata = {
