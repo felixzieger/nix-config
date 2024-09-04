@@ -81,6 +81,9 @@
             home-manager.nixosModules.home-manager
             ./hosts/nixos
             ./hosts/nixos/blausieb/configuration.nix
+            ./services/nginx.nix
+            ./services/paperless-sonnenhof-zieger-de.nix
+            inputs.agenix.nixosModules.default
           ];
         };
         "schenkerpad" = nixpkgs.lib.nixosSystem {

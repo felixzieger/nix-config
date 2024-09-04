@@ -43,4 +43,8 @@ in {
   "docsy-env.age".publicKeys = systems;
   "docsy-restic-password.age".publicKeys = systems;
   "docsy-restic-environment.age".publicKeys = systems;
+
+  "paperless-sonnenhof-zieger-de-restic-environment.age".publicKeys =
+    [ blausieb ];
+  "paperless-sonnenhof-zieger-de-restic-password.age".publicKeys = [ blausieb ];
 }
