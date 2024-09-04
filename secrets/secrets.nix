@@ -17,6 +17,7 @@ in {
   "email-password-bot-sonnenhof-zieger.age".publicKeys = systems;
   "plausible-keybase.age".publicKeys = [ blausieb ];
   "plausible-admin-password.age".publicKeys = [ blausieb ];
+  "plausible-conf-env.age".publicKeys = [ blausieb ];
 
   "tailscale-authkey.age".publicKeys = [ schwalbe ];
 
