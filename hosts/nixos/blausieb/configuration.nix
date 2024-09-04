@@ -15,6 +15,8 @@
 
   networking.hostName = "blausieb";
 
+  time.timeZone = "Europe/Berlin";
+
   programs.tmux = {
     enable = true;
     extraConfig = ''
