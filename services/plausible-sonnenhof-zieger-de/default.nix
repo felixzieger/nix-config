@@ -1,6 +1,6 @@
 { pkgs, config, lib, ... }:
 let
-  plausibleHost = "plausible.felixzieger.de";
+  plausibleHost = "plausible.sonnenhof-zieger.de";
   plausiblePort = 8000;
 in {
   config = {
@@ -22,11 +22,6 @@ in {
     };
 
     virtualisation.docker.enable = true;
-    # virtualisation.docker.extraOptions = ''
-    #   ulimits:
-    #     nofile:
-    #       soft: 262144
-    #       hard: 262144'';
     virtualisation.oci-containers = {
       backend = "docker";
       containers = {
@@ -35,6 +30,7 @@ in {
           image = "postgres:16-alpine";
           environment = { POSTGRES_PASSWORD = "postgres"; };
           volumes = [ "/data/plausible/db-data:/var/lib/postgresql/data" ];
+          extraOptions = [ "--network=plausible-bridge" ];
         };
 
         plausible_events_db = {
@@ -46,30 +42,51 @@ in {
             "/etc/clickhouse/clickhouse-config.xml:/etc/clickhouse-server/config.d/logging.xml:ro"
             "/etc/clickhouse/clickhouse-user-config.xml:/etc/clickhouse-server/users.d/logging.xml:ro"
           ];
+          extraOptions =
+            [ "--ulimit" "nofile=262144:262144" "--network=plausible-bridge" ];
         };
 
         plausible = {
           autoStart = true;
           image = "ghcr.io/plausible/community-edition:v2.1.1";
+          entrypoint = "sh";
           cmd = [
-            ''
-              sh -c "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh run"''
+            "-c"
+            "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh run"
           ];
           dependsOn = [ "plausible_db" "plausible_events_db" ];
           ports = [ "127.0.0.1:${toString plausiblePort}:8000" ];
           environment = {
-            BASE_URL = plausibleHost;
+            BASE_URL = "https://${plausibleHost}";
             MAILER_EMAIL = "bot@sonnenhof-zieger.de";
             SMTP_HOST_ADDR = "smtp.strato.de";
             SMTP_HOST_PORT = toString 465;
             SMTP_USER_NAME = "bot@sonnenhof-zieger.de";
             SMTP_HOST_SSL_ENABLED = toString true;
-            # DISABLE_REGISTRATION = "invite_only";
           };
           environmentFiles = [ config.age.secrets.plausible-conf-env.path ];
+          extraOptions = [ "--network=plausible-bridge" ];
         };
       };
 
+    };
+
+    systemd.services.init-plausible-network = {
+      description = "Create the network plausible-bridge for Plausible.";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+
+      serviceConfig.Type = "oneshot";
+      script =
+        let dockercli = "${config.virtualisation.docker.package}/bin/docker";
+        in ''
+          check=$(${dockercli} network ls | grep "plausible-bridge" || true)
+          if [ -z "$check" ]; then
+            ${dockercli} network create plausible-bridge
+          else
+            echo "plausible-bridge already exists in docker"
+          fi
+        '';
     };
 
     environment.etc."clickhouse/clickhouse-config.xml".source =

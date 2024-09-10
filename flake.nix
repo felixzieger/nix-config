@@ -82,7 +82,8 @@
             ./hosts/nixos
             ./hosts/nixos/blausieb/configuration.nix
             ./services/nginx.nix
-            ./services/paperless-sonnenhof-zieger-de.nix
+            ./services/docker.nix
+            ./services/plausible-sonnenhof-zieger-de
             inputs.agenix.nixosModules.default
           ];
         };
