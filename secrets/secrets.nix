@@ -35,7 +35,7 @@ in {
   "ghost-restic-password.age".publicKeys = [ schwalbe ];
   "ghost-restic-environment.age".publicKeys = [ schwalbe ];
 
-  "watchtower-environment.age".publicKeys = [ schwalbe ];
+  "watchtower-environment.age".publicKeys = systems;
 
   # "oauth2_proxy_key.age".publicKeys = [ cameron ];
 
