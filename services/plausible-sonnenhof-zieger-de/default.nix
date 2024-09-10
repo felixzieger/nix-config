@@ -16,9 +16,12 @@ in {
     age.secrets = {
       email-password-bot-sonnenhof-zieger.file =
         ../../secrets/email-password-bot-sonnenhof-zieger.age;
-      plausible-admin-password.file =
-        ../../secrets/plausible-admin-password.age;
-      plausible-conf-env.file = ../../secrets/plausible-conf-env.age;
+      plausible-sonnenhof-zieger-de-conf-env.file =
+        ../../secrets/plausible-sonnenhof-zieger-de-conf-env.age;
+      plausible-sonnenhof-zieger-de-restic-environment.file =
+        ../../secrets/plausible-sonnenhof-zieger-de-restic-environment.age;
+      plausible-sonnenhof-zieger-de-restic-password.file =
+        ../../secrets/plausible-sonnenhof-zieger-de-restic-password.age;
     };
 
     virtualisation.docker.enable = true;
@@ -64,7 +67,8 @@ in {
             SMTP_USER_NAME = "bot@sonnenhof-zieger.de";
             SMTP_HOST_SSL_ENABLED = toString true;
           };
-          environmentFiles = [ config.age.secrets.plausible-conf-env.path ];
+          environmentFiles =
+            [ config.age.secrets.plausible-sonnenhof-zieger-de-conf-env.path ];
           extraOptions = [ "--network=plausible-bridge" ];
         };
       };
@@ -94,5 +98,24 @@ in {
 
     environment.etc."clickhouse/clickhouse-user-config.xml".source =
       ./clickhouse-user-config.xml;
+
+    services.restic.backups.plausible = {
+      initialize = true;
+
+      paths = [ "/data/plausible" ];
+
+      repository = "b2:plausible-sonnenhof-zieger-de";
+      environmentFile =
+        config.age.secrets.plausible-sonnenhof-zieger-de-restic-environment.path;
+      passwordFile =
+        config.age.secrets.plausible-sonnenhof-zieger-de-restic-password.path;
+
+      timerConfig = {
+        OnCalendar = "19:00";
+        RandomizedDelaySec = "5min";
+      };
+
+      pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-monthly 12" ];
+    };
   };
 }

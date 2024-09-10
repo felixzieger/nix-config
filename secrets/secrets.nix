@@ -15,9 +15,6 @@ let
   systems = [ schwalbe cameron hedwig blausieb ];
 in {
   "email-password-bot-sonnenhof-zieger.age".publicKeys = systems;
-  "plausible-keybase.age".publicKeys = [ blausieb ];
-  "plausible-admin-password.age".publicKeys = [ blausieb ];
-  "plausible-conf-env.age".publicKeys = [ blausieb ];
 
   "tailscale-authkey.age".publicKeys = [ schwalbe ];
 
@@ -48,4 +45,9 @@ in {
   "paperless-sonnenhof-zieger-de-restic-environment.age".publicKeys =
     [ blausieb ];
   "paperless-sonnenhof-zieger-de-restic-password.age".publicKeys = [ blausieb ];
+
+  "plausible-sonnenhof-zieger-de--conf-env.age".publicKeys = [ blausieb ];
+  "plausible-sonnenhof-zieger-de-restic-environment.age".publicKeys =
+    [ blausieb ];
+  "plausible-sonnenhof-zieger-de-restic-password.age".publicKeys = [ blausieb ];
 }
