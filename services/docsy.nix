@@ -44,6 +44,9 @@ in {
             passwordFile = config.age.secrets.ghcr-secret.path;
           };
           environmentFiles = [ config.age.secrets.docsy-env.path ];
+          labels = {
+            "com.centurylinklabs.watchtower.enable" = "false";
+          }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
         };
         docsy_dashboard = {
           autoStart = true;
@@ -66,6 +69,9 @@ in {
             "0.0.0.0:8050"
             "docsy.dashboard:flask_app"
           ];
+          labels = {
+            "com.centurylinklabs.watchtower.enable" = "false";
+          }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
         };
       };
     };
