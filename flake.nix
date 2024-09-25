@@ -34,7 +34,6 @@
             ./services/calibre.nix
 
             ./services/docker.nix
-            ./services/ghost.nix
             ./services/home-assistant.nix
             ./services/docsy.nix
 
