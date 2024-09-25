@@ -2,7 +2,7 @@
 let
   ghostHost = "blog.felixzieger.de";
   ghostPort = 2368;
-  ghostDataDir = "/data/ghost/data";
+  ghostDataDir = "/data/blog-felixzieger-de/data";
 in {
   config = {
     services.nginx.virtualHosts."${ghostHost}" = {
@@ -14,7 +14,8 @@ in {
     };
 
     age.secrets = {
-      ghost-environment.file = ../secrets/ghost-environment.age;
+      blog-felixzieger-de-environment.file =
+        ../secrets/blog-felixzieger-de-environment.age;
     };
 
     virtualisation.docker.enable = true;
@@ -54,14 +55,17 @@ in {
             privacy__useTinfoil = toString true;
             logging__path = "/var/lib/ghost/content/logs";
           };
-          environmentFiles = [ config.age.secrets.ghost-environment.path ];
+          environmentFiles =
+            [ config.age.secrets.blog-felixzieger-de-environment.path ];
         };
       };
     };
 
     age.secrets = {
-      ghost-restic-environment.file = ../secrets/ghost-restic-environment.age;
-      ghost-restic-password.file = ../secrets/ghost-restic-password.age;
+      blog-felixzieger-de-restic-environment.file =
+        ../secrets/blog-felixzieger-de-restic-environment.age;
+      blog-felixzieger-de-restic-password.file =
+        ../secrets/blog-felixzieger-de-restic-password.age;
     };
 
     services.restic.backups = {
@@ -70,9 +74,11 @@ in {
 
         paths = [ ghostDataDir ];
 
-        repository = "b2:${config.networking.hostName}-ghost";
-        environmentFile = config.age.secrets.ghost-restic-environment.path;
-        passwordFile = config.age.secrets.ghost-restic-password.path;
+        repository = "b2:blog-felixzieger-de";
+        environmentFile =
+          config.age.secrets.blog-felixzieger-de-restic-environment.path;
+        passwordFile =
+          config.age.secrets.blog-felixzieger-de-restic-password.path;
 
         timerConfig = {
           OnCalendar = "15:00";
