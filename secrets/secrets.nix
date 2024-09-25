@@ -29,9 +29,9 @@ in {
   "vaultwarden-restic-password.age".publicKeys = [ schwalbe ];
   "vaultwarden-restic-environment.age".publicKeys = [ schwalbe ];
 
-  "ghost-environment.age".publicKeys = [ schwalbe ];
-  "ghost-restic-password.age".publicKeys = [ schwalbe ];
-  "ghost-restic-environment.age".publicKeys = [ schwalbe ];
+  "ghost-environment.age".publicKeys = [ schwalbe blausieb ];
+  "ghost-restic-password.age".publicKeys = [ schwalbe blausieb ];
+  "ghost-restic-environment.age".publicKeys = [ schwalbe blausieb ];
 
   "watchtower-environment.age".publicKeys = systems;
 
