@@ -249,6 +249,7 @@ in {
     pkgs.ngrok
     pkgs.mkdocs
     pkgs.litecli
+    pkgs.just
 
     agenix.packages."${pkgs.system}".default
   ];
