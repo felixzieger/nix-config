@@ -30,7 +30,6 @@
             ./services/nginx.nix
             ./services/adguard.nix
             ./services/uptime-kuma.nix
-            ./services/vaultwarden.nix
             ./services/calibre.nix
 
             ./services/docker.nix
@@ -85,6 +84,7 @@
             ./services/paperless-sonnenhof-zieger-de.nix
             ./services/blog-felixzieger-de.nix
             ./services/app-getdocsy-com.nix
+            ./services/vaultwarden.nix
             inputs.agenix.nixosModules.default
           ];
         };
