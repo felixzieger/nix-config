@@ -25,7 +25,7 @@ in {
 
     age.secrets = {
       ghcr-secret.file = ../secrets/ghcr-secret.age;
-      docsy-env.file = ../secrets/docsy-env.age;
+      app-getdocsy-com-env.file = ../secrets/app-getdocsy-com-env.age;
     };
 
     virtualisation.docker.enable = true;
@@ -43,7 +43,7 @@ in {
             username = "felixzieger";
             passwordFile = config.age.secrets.ghcr-secret.path;
           };
-          environmentFiles = [ config.age.secrets.docsy-env.path ];
+          environmentFiles = [ config.age.secrets.app-getdocsy-com-env.path ];
           labels = {
             "com.centurylinklabs.watchtower.enable" = "false";
           }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
