@@ -3,7 +3,7 @@ let
   docsySlackPort = 8080;
   docsyDashboardPort = 8050;
   docsyDataDir = "/data/docsy/data";
-  docsyVersion = "v0.7.1";
+  docsyVersion = "v0.7.3";
 in {
   config = {
     # Inspect sqlite database without docker exec
