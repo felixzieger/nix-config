@@ -16,14 +16,16 @@ in {
     };
 
     age.secrets = {
-      vaultwarden-environment.file = ../secrets/vaultwarden-environment.age;
+      bitwarden-sonnenhof-zieger-de-environment.file =
+        ../secrets/bitwarden-sonnenhof-zieger-de-environment.age;
     };
 
     services = {
       vaultwarden = {
         enable = true;
         backupDir = "/data/vaultwarden/backup";
-        environmentFile = config.age.secrets.vaultwarden-environment.path;
+        environmentFile =
+          config.age.secrets.bitwarden-sonnenhof-zieger-de-environment.path;
         config = {
           DOMAIN = "https://${vaultwardenHost}";
           WEBSOCKET_ENABLED = "true";
@@ -47,22 +49,23 @@ in {
     };
 
     age.secrets = {
-      vaultwarden-restic-environment.file =
-        ../secrets/vaultwarden-restic-environment.age;
-      vaultwarden-restic-password.file =
-        ../secrets/vaultwarden-restic-password.age;
+      bitwarden-sonnenhof-zieger-de-restic-environment.file =
+        ../secrets/bitwarden-sonnenhof-zieger-de-restic-environment.age;
+      bitwarden-sonnenhof-zieger-de-restic-password.file =
+        ../secrets/bitwarden-sonnenhof-zieger-de-restic-password.age;
     };
 
     services.restic.backups = {
-      vaultwarden = {
+      bitwarden = {
         initialize = true;
 
         paths = [ config.services.vaultwarden.backupDir ];
 
         repository = "b2:schwalbe-vaultwarden";
         environmentFile =
-          config.age.secrets.vaultwarden-restic-environment.path;
-        passwordFile = config.age.secrets.vaultwarden-restic-password.path;
+          config.age.secrets.bitwarden-sonnenhof-zieger-de-restic-environment.path;
+        passwordFile =
+          config.age.secrets.bitwarden-sonnenhof-zieger-de-restic-password.path;
 
         timerConfig = {
           # Ideally, this would always run directly after systemd.services.backup-vaultwarden

@@ -80,11 +80,11 @@
             ./hosts/nixos/blausieb/configuration.nix
             ./services/nginx.nix
             ./services/docker.nix
-            ./services/plausible-sonnenhof-zieger-de
-            ./services/paperless-sonnenhof-zieger-de.nix
             ./services/blog-felixzieger-de.nix
             ./services/app-getdocsy-com.nix
-            ./services/vaultwarden.nix
+            ./services/plausible-sonnenhof-zieger-de
+            ./services/bitwarden-sonnenhof-zieger-de.nix
+            ./services/paperless-sonnenhof-zieger-de.nix
             inputs.agenix.nixosModules.default
           ];
         };

@@ -25,9 +25,12 @@ in {
   "home-assistant-restic-password.age".publicKeys = [ schwalbe ];
   "home-assistant-restic-environment.age".publicKeys = [ schwalbe ];
 
-  "vaultwarden-environment.age".publicKeys = [ schwalbe blausieb ];
-  "vaultwarden-restic-password.age".publicKeys = [ schwalbe blausieb ];
-  "vaultwarden-restic-environment.age".publicKeys = [ schwalbe blausieb ];
+  "bitwarden-sonnenhof-zieger-de-environment.age".publicKeys =
+    [ schwalbe blausieb ];
+  "bitwarden-sonnenhof-zieger-de-restic-password.age".publicKeys =
+    [ schwalbe blausieb ];
+  "bitwarden-sonnenhof-zieger-de-restic-environment.age".publicKeys =
+    [ schwalbe blausieb ];
 
   "blog-felixzieger-de-environment.age".publicKeys = [ schwalbe blausieb ];
   "blog-felixzieger-de-restic-password.age".publicKeys = [ schwalbe blausieb ];
