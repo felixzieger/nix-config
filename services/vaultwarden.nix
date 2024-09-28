@@ -59,7 +59,7 @@ in {
 
         paths = [ config.services.vaultwarden.backupDir ];
 
-        repository = "b2:${config.networking.hostName}-vaultwarden";
+        repository = "b2:schwalbe-vaultwarden";
         environmentFile =
           config.age.secrets.vaultwarden-restic-environment.path;
         passwordFile = config.age.secrets.vaultwarden-restic-password.path;
