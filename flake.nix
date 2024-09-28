@@ -84,7 +84,7 @@
             ./services/plausible-sonnenhof-zieger-de
             ./services/paperless-sonnenhof-zieger-de.nix
             ./services/blog-felixzieger-de.nix
-            ./services/docsy.nix
+            ./services/app-getdocsy-com.nix
             inputs.agenix.nixosModules.default
           ];
         };

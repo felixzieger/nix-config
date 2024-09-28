@@ -77,8 +77,10 @@ in {
     };
 
     age.secrets = {
-      docsy-restic-environment.file = ../secrets/docsy-restic-environment.age;
-      docsy-restic-password.file = ../secrets/docsy-restic-password.age;
+      app-getdocsy-com-restic-environment.file =
+        ../secrets/app-getdocsy-com-restic-environment.age;
+      app-getdocsy-com-restic-password.file =
+        ../secrets/app-getdocsy-com-restic-password.age;
     };
 
     services.restic.backups = {
@@ -87,9 +89,10 @@ in {
 
         paths = [ docsyDataDir ];
 
-        repository = "b2:schwalbe-docsy";
-        environmentFile = config.age.secrets.docsy-restic-environment.path;
-        passwordFile = config.age.secrets.docsy-restic-password.path;
+        repository = "b2:app-getdocsy-com";
+        environmentFile =
+          config.age.secrets.app-getdocsy-com-restic-environment.path;
+        passwordFile = config.age.secrets.app-getdocsy-com-restic-password.path;
 
         timerConfig = {
           OnCalendar = "19:00";

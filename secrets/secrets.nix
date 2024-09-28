@@ -39,9 +39,9 @@ in {
   # "oauth2_proxy_key.age".publicKeys = [ cameron ];
 
   "ghcr-secret.age".publicKeys = systems;
-  "docsy-env.age".publicKeys = systems;
-  "docsy-restic-password.age".publicKeys = systems;
-  "docsy-restic-environment.age".publicKeys = systems;
+  "app-getdocsy-com-env.age".publicKeys = systems;
+  "app-getdocsy-com-restic-password.age".publicKeys = systems;
+  "app-getdocsy-com-restic-environment.age".publicKeys = systems;
 
   "paperless-sonnenhof-zieger-de-restic-environment.age".publicKeys =
     [ blausieb ];
