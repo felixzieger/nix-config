@@ -35,7 +35,6 @@
 
             ./services/docker.nix
             ./services/home-assistant.nix
-            ./services/docsy.nix
 
             ./services/netdata.nix
             ./services/systemd-email-notify.nix
