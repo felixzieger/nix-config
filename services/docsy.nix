@@ -3,7 +3,7 @@ let
   docsySlackPort = 8080;
   docsyDashboardPort = 8050;
   docsyDataDir = "/data/docsy/data";
-  docsyVersion = "v0.6.6";
+  docsyVersion = "v0.7.1";
 in {
   config = {
     # Inspect sqlite database without docker exec
@@ -87,7 +87,7 @@ in {
 
         paths = [ docsyDataDir ];
 
-        repository = "b2:${config.networking.hostName}-docsy";
+        repository = "b2:schwalbe-docsy";
         environmentFile = config.age.secrets.docsy-restic-environment.path;
         passwordFile = config.age.secrets.docsy-restic-password.path;
 
