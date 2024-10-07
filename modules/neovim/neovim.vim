@@ -16,7 +16,7 @@ noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
 
-let mapleader="ö"
+let mapleader=" "
 
 " Telescope
 nnoremap <leader>f <cmd>Telescope find_files<cr>
