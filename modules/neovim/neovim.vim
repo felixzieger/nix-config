@@ -27,7 +27,7 @@ nnoremap <leader>g <cmd>Telescope<cr>
 map <leader>n :NvimTreeFindFileToggle<CR>
 
 " Switch to last buffer
-map <leader>ö :e#<CR>
+map <leader><leader> :e#<CR>
 " Copy paste from system clipboard
 vmap <leader>y "+y
 nmap <leader>p "+p
