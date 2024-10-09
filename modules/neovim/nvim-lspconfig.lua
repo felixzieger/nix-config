@@ -48,6 +48,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references, opts)
 
     -- vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts) -- Makes <leader>r slow to appear
-    vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, opts)
+    vim.keymap.set('n', '<leader>F', function() vim.lsp.buf.format { async = true } end, opts)
   end
 })
