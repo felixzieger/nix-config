@@ -31,6 +31,7 @@
             ./services/adguard.nix
             ./services/uptime-kuma.nix
             ./services/calibre.nix
+            ./services/frigate-sonnenhof-zieger-de.nix
 
             ./services/docker.nix
             ./services/home-assistant.nix
@@ -51,7 +52,6 @@
             ./hosts/nixos
             ./hosts/nixos/cameron/configuration.nix
             ./services/nginx.nix
-            ./services/frigate.nix
 
             inputs.agenix.nixosModules.default
           ];
