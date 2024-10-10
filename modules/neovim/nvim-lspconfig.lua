@@ -1,6 +1,14 @@
 local lspconfig = require('lspconfig')
 
-lspconfig.nil_ls.setup {}
+lspconfig.nil_ls.setup {
+  settings = {
+    ['nil'] = {
+      formatting = {
+            command = { "nixfmt" },
+          },
+        },
+      },
+    }
 lspconfig.yamlls.setup {}
 lspconfig.jsonls.setup {}
 lspconfig.bashls.setup {}
