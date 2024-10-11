@@ -80,6 +80,10 @@
         "VERBOSE"; # fail2ban requires a log level that shows failed login attempts
     };
   };
+  services.eternalterminal = {
+    enable = true;
+    port = 2022;
+  };
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;

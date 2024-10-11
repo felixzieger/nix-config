@@ -31,4 +31,10 @@ EOF
     user_data = "${base64encode(file("${local.cloud_init_template_file}"))}"
 
   }
+
+  lifecycle {
+    ignore_changes = [
+      source_details, # ignore changes, because we use nixos to manage the system after initial setup
+    ]
+  }
 }

@@ -41,6 +41,18 @@ resource "oci_core_security_list" "ampere_security_list" {
     }
   }
 
+  # eternal-terminal
+  ingress_security_rules {
+    protocol = "6"
+    source   = "0.0.0.0/0"
+
+    tcp_options {
+      max = "2022"
+      min = "2022"
+    }
+  }
+
+  # http3
   ingress_security_rules {
     protocol = "17"
     source   = "0.0.0.0/0"
