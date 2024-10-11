@@ -1,4 +1,4 @@
-{ self, pkgs, agenix, home-manager, ... }: {
+{ self, pkgs, agenix, config, ... }: {
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.trusted-users =
@@ -84,6 +84,11 @@
     enable = true;
     port = 2022;
   };
+  networking = {
+      firewall = {
+        allowedTCPPorts = [ config.services.eternal-terminal.port ];
+      };
+    };
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
