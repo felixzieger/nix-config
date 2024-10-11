@@ -80,7 +80,7 @@
         "VERBOSE"; # fail2ban requires a log level that shows failed login attempts
     };
   };
-  services.eternalterminal = {
+  services.eternal-terminal = {
     enable = true;
     port = 2022;
   };
