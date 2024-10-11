@@ -200,6 +200,7 @@ in {
     pkgs.bitwarden-cli
     pkgs.deno
     pkgs.fish
+    pkgs.eternal-terminal
 
     # pkgs.jan # LLM gui; currently only packaged for linux on nixos
     # pkgs.elia # llm tui https://github.com/NixOS/nixpkgs/pull/317782 
