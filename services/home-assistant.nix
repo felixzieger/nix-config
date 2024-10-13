@@ -28,6 +28,13 @@ in {
         };
       };
 
+    networking = {
+      firewall = {
+        allowedTCPPorts = [ 1400 ]; # Sonos integration uses TCP port 1400 for push based updates
+        allowedUDPPorts = [ 5353 ]; # Home assistant uses UDP port 5353 for mDNS based auto-discovery
+      };
+    };
+
     virtualisation.docker.enable = true;
     virtualisation.oci-containers = {
       backend = "docker";
