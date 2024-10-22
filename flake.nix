@@ -107,7 +107,7 @@
           modules = [
             home-manager.darwinModules.home-manager
             mac-app-util.darwinModules.default
-            ./hosts/meshpad
+            ./hosts/macbook
             inputs.agenix.nixosModules.default
           ];
         };

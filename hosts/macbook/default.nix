@@ -1,8 +1,4 @@
-{ inputs, home-manager, agenix, lib, config, pkgs, mac-app-util, ... }:
-let
-  gcloud = pkgs.google-cloud-sdk.withExtraComponents
-    (with pkgs.google-cloud-sdk.components; [ gke-gcloud-auth-plugin ]);
-in {
+{ inputs, home-manager, agenix, lib, config, pkgs, mac-app-util, ... }: {
   nixpkgs.config.allowUnfree = true;
   services.nix-daemon.enable = true;
   nix = {
@@ -22,9 +18,9 @@ in {
     useUserPackages = true;
     sharedModules = [ mac-app-util.homeManagerModules.default ];
 
-    users.fzieger = {
-      home.username = lib.mkForce "fzieger";
-      home.homeDirectory = lib.mkForce "/Users/fzieger";
+    users.felix = {
+      home.username = lib.mkForce "felix";
+      home.homeDirectory = lib.mkForce "/Users/felix";
 
       programs.home-manager.enable = true;
 
@@ -38,24 +34,10 @@ in {
       ];
 
       programs.fish = {
-        shellInit = builtins.readFile ./fzieger/fishrc;
-        shellAliases = {
-          me = "cd $HOME/meshcloud";
-          mf = "cd $HOME/meshcloud/meshfed-release";
-          mi = "cd $HOME/meshcloud/infrastructure";
-          md = "cd $HOME/meshcloud/deployments";
-          mdocs = "cd $HOME/meshcloud/meshcloud-docs";
-          chub = "cd $HOME/meshcloud/collie-hub";
-          ccli = "cd $HOME/meshcloud/collie-cli";
-          validate-dhall = "mf && deployment/test/validate.sh";
-          validate-override = "mf && ci/deployment/overrides-idempotent.sh";
-          format-dhall = "mf && deployment/bin/format-all-osx.sh";
-          fk = "fly -t k";
-          sm = "smerge";
-          vault-forward = "mi && meshstack-infra-k8s/vault-forward.sh";
-        };
+        shellInit = builtins.readFile ./fishrc;
+        shellAliases = { sm = "smerge"; };
       };
-      programs.zsh.initExtra = builtins.readFile ./fzieger/zshrc;
+      programs.zsh.initExtra = builtins.readFile ./zshrc;
 
       # Additional plugins for tmux
       programs.tmux.plugins =
@@ -63,12 +45,12 @@ in {
       programs.tmux.extraConfig = ''
         set -g @fzf-url-history-limit '2000'
       '';
-      home.file.".config/tmuxinator/mesh.yml".text = ''
-        name: mesh
+      home.file.".config/tmuxinator/sys.yml".text = ''
+        name: sys
         root: ~/
 
         # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
-        startup_window: me
+        startup_window: nix
 
         # Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
         # startup_pane: 1
@@ -77,6 +59,9 @@ in {
         # attach: false
 
         windows:
+          - btop:
+              panes:
+                - btop
           - nix:
               root: ~/.nixpkgs
               layout: main-vertical
@@ -84,40 +69,22 @@ in {
                 - nvim -c "NvimTreeOpen"
                 - lazygit
                 - pwd
-          - mf:
-              root: ~/meshcloud/meshfed-release
-              layout: even-horizontal
-              panes:
-                - nvim -c "NvimTreeOpen"
-                - lazygit
-          - mdocs: 
-              root: ~/meshcloud/meshcloud-docs
-              layout: main-vertical
-              panes:
-                - nvim -c "NvimTreeOpen"
-                - lazygit
-                - cd website
       '';
 
       # Additional plugins for nvim
       home.packages = with pkgs; [
         terraform-ls
         nodePackages.vscode-langservers-extracted
-        gopls
-        kotlin-language-server
       ];
       programs.neovim = {
         plugins = with pkgs.vimPlugins; [
-          # Languages
-          kotlin-vim
-          dhall-vim
           vim-terraform
 
           friendly-snippets
           {
             plugin = nvim-lspconfig;
             type = "lua";
-            config = builtins.readFile ./fzieger/nvim-lspconfig.lua;
+            config = builtins.readFile ./nvim-lspconfig.lua;
           }
 
           # Potential successor for copilot-vim: avante
@@ -126,38 +93,10 @@ in {
           {
             plugin = CopilotChat-nvim;
             type = "lua";
-            config = builtins.readFile ./fzieger/nvim-copilotchat.lua;
+            config = builtins.readFile ./nvim-copilotchat.lua;
           }
           plenary-nvim # Dependency for CopilotChat-nvim
         ];
-      };
-
-      programs.k9s.enable = true;
-      programs.k9s.package = pkgs.k9s;
-      programs.k9s.plugin = {
-        plugins =
-          { # Repeat the plugins key here, because k9s doesn't load the plugin otherwise
-            db-connect = {
-              shortCut = "Ctrl-J";
-              description = "Open DB";
-              scopes = [ "pod" ];
-              command = "kubectl";
-              background = false;
-              args = [
-                "--context"
-                "$CONTEXT"
-                "-n"
-                "$NAMESPACE"
-                "exec"
-                "-it"
-                "$NAME"
-                "--"
-                "bash"
-                "-c"
-                "mysql -u $MARIADB_USER -p$MARIADB_PASSWORD $MARIADB_DATABASE"
-              ];
-            };
-          };
       };
 
       # This value determines the home Manager release that your
@@ -197,51 +136,20 @@ in {
     pkgs.ripgrep
     pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
     pkgs.shellcheck
-    pkgs.bitwarden-cli
-    pkgs.deno
     pkgs.fish
     pkgs.eternal-terminal
 
     # pkgs.jan # LLM gui; currently only packaged for linux on nixos
     # pkgs.elia # llm tui https://github.com/NixOS/nixpkgs/pull/317782 
     # pkgs.posting # HTTP tui https://github.com/NixOS/nixpkgs/pull/325971
-
     pkgs.rectangle
     pkgs.spotify
     pkgs.monitorcontrol
     pkgs.vscode
-    # pkgs.teams # Still the old version
     pkgs.kitty
-    pkgs.slack
     pkgs.watchman
-
-    pkgs.go
     pkgs.opentofu
-    pkgs.terraform-docs
-    pkgs.terragrunt
-    pkgs.parallel
-    pkgs.kubectl
-    pkgs.nodejs
-    pkgs.vault-bin
-    pkgs.jq
-    pkgs.yarn
-    pkgs.kotlin
-    pkgs.jdk
-    pkgs.pre-commit
 
-    pkgs.cntlm
-
-    pkgs.powershell
-
-    # Cloud CLIs
-    pkgs.openshift
-    pkgs.cloudfoundry-cli
-    pkgs.openstackclient
-    pkgs.awscli2
-    pkgs.oci-cli
-    gcloud
-    pkgs.azure-cli
-  ] ++ [
     # Python development environment
     pkgs.python3
     pkgs.poetry
@@ -251,6 +159,7 @@ in {
     pkgs.mkdocs
     pkgs.litecli
     pkgs.just
+    pkgs.oci-cli
 
     agenix.packages."${pkgs.system}".default
   ];
