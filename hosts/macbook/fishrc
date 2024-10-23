@@ -6,8 +6,4 @@ end
 
 set -U fish_greeting
 
-export VAULT_ADDR=http://localhost:8200
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$HOME/.deno/bin:$PATH
-export DENO_NO_UPDATE_CHECK=1
-export USE_GKE_GCLOUD_AUTH_PLUGIN=True

@@ -7,7 +7,7 @@
   programs.zsh.enable = true;
   programs.fish.enable = true;
 
-  users.users.felix.shell = pkgs.fish;
+  users.users.felix.shell = pkgs.zsh;
 
   security.sudo.extraConfig = ''
     Defaults timestamp_timeout=20
@@ -26,18 +26,27 @@
 
       imports = [
         ./../../modules/fzf
-        ./../../modules/fish
-        ./../../modules/zsh
+        # ./../../modules/fish
+        # ./../../modules/zsh
         ./../../modules/git
         ./../../modules/neovim
         ./../../modules/tmux
       ];
 
-      programs.fish = {
-        shellInit = builtins.readFile ./fishrc;
-        shellAliases = { sm = "smerge"; };
-      };
-      programs.zsh.initExtra = builtins.readFile ./zshrc;
+      # programs.fish = {
+      #   shellInit = builtins.readFile ./fishrc;
+      #   shellAliases = { sm = "smerge"; };
+      # };
+      # programs.zsh.initExtra = builtins.readFile ./zshrc;
+programs.zsh = {
+  initExtra = ''
+    if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
+    then
+        exec fish -l
+    fi
+  '';
+};
+
 
       # Additional plugins for tmux
       programs.tmux.plugins =
@@ -126,6 +135,7 @@
     };
   };
 
+  environment.shells = [ pkgs.zsh pkgs.fish ];
   environment.variables.EDITOR = "nvim";
   environment.systemPackages = [
     pkgs.btop
