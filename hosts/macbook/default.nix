@@ -26,7 +26,7 @@
 
       imports = [
         ./../../modules/fzf
-        # ./../../modules/fish
+        ./../../modules/fish
         # ./../../modules/zsh
         ./../../modules/git
         ./../../modules/neovim
@@ -38,15 +38,14 @@
       #   shellAliases = { sm = "smerge"; };
       # };
       # programs.zsh.initExtra = builtins.readFile ./zshrc;
-programs.zsh = {
-  initExtra = ''
-    if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
-    then
-        exec fish -l
-    fi
-  '';
-};
-
+      programs.zsh = {
+        initExtra = ''
+          if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
+          then
+              exec fish -l
+          fi
+        '';
+      };
 
       # Additional plugins for tmux
       programs.tmux.plugins =

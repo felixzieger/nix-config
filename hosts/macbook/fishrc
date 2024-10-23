@@ -1,7 +1,7 @@
 export TERM=xterm-256color
 
 if test (ssh-add -L | grep "felix@felix-meshpad" | wc -l) -eq 0
-    ssh-add --apple-use-keychain ~/.ssh/id_rsa
+    ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 end
 
 set -U fish_greeting
