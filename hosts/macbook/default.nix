@@ -7,7 +7,7 @@
   programs.zsh.enable = true;
   programs.fish.enable = true;
 
-  users.users.xilef.shell = pkgs.fish;
+  users.users.felix.shell = pkgs.fish;
 
   security.sudo.extraConfig = ''
     Defaults timestamp_timeout=20
@@ -46,7 +46,7 @@
         set -g @fzf-url-history-limit '2000'
       '';
       home.file.".config/tmuxinator/sys.yml".text = ''
-        name: sys
+        name: macos-config
         root: ~/
 
         # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
