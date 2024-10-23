@@ -53,31 +53,6 @@
       programs.tmux.extraConfig = ''
         set -g @fzf-url-history-limit '2000'
       '';
-      home.file.".config/tmuxinator/sys.yml".text = ''
-        name: macos-config
-        root: ~/
-
-        # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
-        startup_window: nix
-
-        # Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
-        # startup_pane: 1
-
-        # Controls whether the tmux session should be attached to automatically. Defaults to true.
-        # attach: false
-
-        windows:
-          - btop:
-              panes:
-                - btop
-          - nix:
-              root: ~/.nixpkgs
-              layout: main-vertical
-              panes:
-                - nvim -c "NvimTreeOpen"
-                - lazygit
-                - pwd
-      '';
 
       # Additional plugins for nvim
       home.packages = with pkgs; [

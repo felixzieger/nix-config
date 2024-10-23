@@ -5,6 +5,7 @@
   };
 
   programs.tmux.tmuxinator.enable = true;
-  home.file.".config/tmuxinator/nix-config.yml".source = ./tmuxinator.yml;
+  home.file.".config/tmuxinator/nixos.yml".source = ./tmuxinator.nixos.yml;
+  home.file.".config/tmuxinator/macos.yml".source = ./tmuxinator.macos.yml;
 }
 
