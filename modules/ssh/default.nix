@@ -1,12 +1,19 @@
 { ... }: {
   # eternal terminal requires host config
-  programs.ssh.extraConfig = ''
-    Host blausieb.felixzieger.de
+    home.file.".ssh/config".text = ''
+    Host blausieb
+        HostName blausieb.felixzieger.de
         Port 33111
         ForwardAgent yes
-    
-    Host schwalbe.felixzieger.de
+
+    Host schwalbe
+        HostName schwalbe.felixzieger.de
         Port 33111
-        ForwardAgen
+        ForwardAgent yes
+
+    Host sonnenhofserver
+        HostName nextcloud.sonnenhof-zieger.de
+        Port 33111
+        ForwardAgent yes
     '';
 }

@@ -31,6 +31,7 @@
         ./../../modules/git
         ./../../modules/neovim
         ./../../modules/tmux
+        ./../../modules/ssh
       ];
 
       # programs.fish = {
