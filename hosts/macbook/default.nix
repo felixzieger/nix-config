@@ -146,6 +146,9 @@
     pkgs.just
     pkgs.oci-cli
 
+    # Landing page
+    pkgs.nodejs
+
     agenix.packages."${pkgs.system}".default
   ];
 
