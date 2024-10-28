@@ -119,7 +119,7 @@
     pkgs.tree
     pkgs.wget
     pkgs.ripgrep
-    pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199#issuecomment-494218334
+    pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199
     pkgs.shellcheck
     pkgs.fish
     pkgs.eternal-terminal
@@ -147,7 +147,8 @@
     pkgs.oci-cli
 
     # Landing page
-    pkgs.nodejs
+    pkgs.nodejs_22
+    pkgs.bun
     pkgs.typescript
     pkgs.pnpm
 
