@@ -148,6 +148,8 @@
 
     # Landing page
     pkgs.nodejs
+    pkgs.typescript
+    pkgs.pnpm
 
     agenix.packages."${pkgs.system}".default
   ];
