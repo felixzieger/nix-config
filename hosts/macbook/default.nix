@@ -59,6 +59,7 @@
       home.packages = with pkgs; [
         terraform-ls
         nodePackages.vscode-langservers-extracted
+        nodePackages.typescript-language-server # provides tsserver for nvim lsp
       ];
       programs.neovim = {
         plugins = with pkgs.vimPlugins; [
