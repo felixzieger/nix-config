@@ -36,6 +36,7 @@
       # Completions
       nvim-cmp
       cmp-nvim-lsp
+      lspkind-nvim # icons in cmp dropwdown
       luasnip
       cmp_luasnip
       friendly-snippets
