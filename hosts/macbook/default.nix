@@ -1,4 +1,10 @@
-{ inputs, home-manager, agenix, lib, config, pkgs, mac-app-util, ... }: {
+{ agenix, lib, pkgs, mac-app-util, nixpkgs-unstable, ... }:
+let
+  unstable = import nixpkgs-unstable {
+    system = pkgs.system;
+    config.allowUnfree = true;
+  };
+in {
   nixpkgs.config.allowUnfree = true;
   services.nix-daemon.enable = true;
   nix = {
@@ -128,6 +134,7 @@
     # pkgs.jan # LLM gui; currently only packaged for linux on nixos
     # pkgs.elia # llm tui https://github.com/NixOS/nixpkgs/pull/317782 
     # pkgs.posting # HTTP tui https://github.com/NixOS/nixpkgs/pull/325971
+    unstable.aider-chat
     pkgs.rectangle
     pkgs.spotify
     pkgs.monitorcontrol
