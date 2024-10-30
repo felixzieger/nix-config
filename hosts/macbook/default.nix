@@ -144,7 +144,8 @@ in {
     pkgs.opentofu
 
     # Python development environment
-    pkgs.python3
+    pkgs.python311
+    pkgs.python311Packages.flake8
     pkgs.poetry
     pkgs.nodePackages.pyright
     pkgs.ruff-lsp
