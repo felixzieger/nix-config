@@ -19,6 +19,9 @@ in {
     Defaults timestamp_timeout=20
   '';
 
+  fonts.packages = with pkgs;
+    [ (nerdfonts.override { fonts = [ "SourceCodePro" ]; }) ];
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
@@ -89,6 +92,11 @@ in {
           }
           plenary-nvim # Dependency for CopilotChat-nvim
         ];
+      };
+
+      programs.kitty = {
+        enable = true;
+        settings = { font_family = "SourceCodePro"; };
       };
 
       # This value determines the home Manager release that your
