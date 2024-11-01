@@ -34,7 +34,11 @@
       # Languages
       vim-nix
       # Completions
-      nvim-cmp
+      {
+        plugin = nvim-cmp;
+        type = "lua";
+        config = builtins.readFile ./nvim-cmp.lua;
+      }
       cmp-nvim-lsp
       lspkind-nvim # icons in cmp dropwdown
       luasnip
