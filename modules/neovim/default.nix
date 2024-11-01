@@ -40,7 +40,7 @@
         config = builtins.readFile ./nvim-cmp.lua;
       }
       cmp-nvim-lsp
-      lspkind-nvim # icons in cmp dropwdown
+      lspkind-nvim # icons in cmp dropwdown; requires nerdfont
       luasnip
       cmp_luasnip
       friendly-snippets
