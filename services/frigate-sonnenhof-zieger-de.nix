@@ -1,7 +1,30 @@
 { pkgs, config, lib, ... }:
-let frigateHost = "frigate.sonnenhof-zieger.de";
+let
+  frigateHost = "frigate.sonnenhof-zieger.de";
+  setApexPermissionsScript = pkgs.writeShellScript "set-apex-permissions" ''
+    chown frigate:frigate /dev/apex_0
+    chmod 660 /dev/apex_0
+  '';
+  libedgetpu = pkgs.callPackage ./libedgetpu.nix { };
 in {
   config = {
+
+    # Hardware accelleration with coral edge tpu
+    # Copied from https://github.com/bcotton/nix-config/blob/a4171d340334532a0c75cf489ba9729ec33309b1/modules/frigate/default.nix#L142
+    systemd.services.frigate.environment.LD_LIBRARY_PATH =
+      lib.makeLibraryPath [ libedgetpu ];
+
+    systemd.services.set-apex-permissions = {
+      description = "Set permissions for /dev/apex_0";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${setApexPermissionsScript}";
+      };
+      wantedBy = [ "multi-user.target" ];
+    };
+
+    systemd.services.frigate = { wants = [ "set-apex-permissions.service" ]; };
+
     age.secrets = { oauth2_proxy_key.file = ../secrets/oauth2_proxy_key.age; };
 
     # Frigate service module configures nginx virtualHost
@@ -17,6 +40,14 @@ in {
       enable = true;
       hostname = frigateHost;
       settings = {
+
+        detectors = {
+          coral = {
+            type = "edgetpu";
+            device = "pci";
+          };
+        };
+
         mqtt.enabled = false;
 
         record = { enabled = true; };

@@ -29,7 +29,7 @@
     [ "xhci_pci" "ahci" "ehci_pci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.extraModulePackages = [ pkgs.linuxKernel.packages.linux_6_6.gasket ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/7dfe4ec9-8818-436e-ab68-12b79462ce12";
