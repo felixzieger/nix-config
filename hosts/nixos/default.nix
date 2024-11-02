@@ -1,5 +1,6 @@
 { self, pkgs, agenix, config, ... }: {
   nixpkgs.config.allowUnfree = true;
+  boot.loader.systemd-boot.configurationLimit = 30; # prevent boot partition running out of disk space
 
   nix.settings.trusted-users =
     # Needed for pushing changes via `nixos-rebuild --target-host felix@<host>.felixzieger.de switch`
