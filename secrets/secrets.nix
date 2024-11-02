@@ -39,7 +39,7 @@ in {
 
   "watchtower-environment.age".publicKeys = systems;
 
-  # "oauth2_proxy_key.age".publicKeys = [ cameron ];
+  "oauth2_proxy_key.age".publicKeys = systems;
 
   "ghcr-secret.age".publicKeys = systems;
   "app-getdocsy-com-env.age".publicKeys = systems;

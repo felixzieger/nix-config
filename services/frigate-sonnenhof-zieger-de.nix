@@ -27,6 +27,28 @@ in {
 
     age.secrets = { oauth2_proxy_key.file = ../secrets/oauth2_proxy_key.age; };
 
+    services.oauth2-proxy = {
+      enable = true;
+      provider = "google";
+      keyFile =
+        config.age.secrets.oauth2_proxy_key.path; # sets OAUTH2_PROXY_CLIENT_ID, OAUTH2_PROXY_CLIENT_SECRET, OAUTH2_PROXY_COOKIE_SECRET
+
+      nginx.domain = frigateHost;
+      nginx.virtualHosts."${frigateHost}".allowed_email_domains = [ "gmail.com" ];
+
+      cookie = {
+        refresh = "360h0m0s";
+        expire = "720h0m0s";
+      };
+
+      redirectURL = "https://${frigateHost}/oauth2/callback";
+
+      email.domains = [
+        "gmail.com"
+      ]; # I restrict login to the app via Google, no need to filter here
+      # google = { ... } only works with Google Workspace, which I don't use
+    };
+
     # Frigate service module configures nginx virtualHost
     # I only need to enforce SSL and Auth (via oauth2_proxy)
     services.nginx.virtualHosts."${frigateHost}" = {
@@ -77,28 +99,6 @@ in {
 
         telemetry = { version_check = false; };
       };
-    };
-
-    services.oauth2-proxy = {
-      enable = true;
-      provider = "google";
-      keyFile =
-        config.age.secrets.oauth2_proxy_key.path; # sets OAUTH2_PROXY_CLIENT_ID, OAUTH2_PROXY_CLIENT_SECRET, OAUTH2_PROXY_COOKIE_SECRET
-
-      nginx.domain = frigateHost;
-      nginx.virtualHosts.frigateHost.allowed_email_domains = [ "gmail.com" ];
-
-      cookie = {
-        refresh = "360h0m0s";
-        expire = "720h0m0s";
-      };
-
-      redirectURL = "https://${frigateHost}/oauth2/callback";
-
-      email.domains = [
-        "gmail.com"
-      ]; # I restrict login to the app via Google, no need to filter here
-      # google = { ... } only works with Google Workspace, which I don't use
     };
   };
 }

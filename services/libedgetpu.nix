@@ -1,3 +1,4 @@
+# remove once libedgetpu is available in a channel
 {
   lib,
   stdenv,
