@@ -53,7 +53,8 @@
     which
     tree
     git
-    btop # monitor resources like cpu, memory, disk
+    btop
+    just
 
     agenix.packages."${system}".default
 
