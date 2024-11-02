@@ -43,9 +43,7 @@ in {
         ./../../modules/ssh
       ];
 
-      programs.fish = {
-        shellInit = builtins.readFile ./fishrc;
-      };
+      programs.fish = { shellInit = builtins.readFile ./fishrc; };
       # programs.zsh.initExtra = builtins.readFile ./zshrc;
       programs.zsh = {
         initExtra = ''
@@ -152,8 +150,7 @@ in {
     pkgs.opentofu
 
     # Python development environment
-    pkgs.python311
-    pkgs.python311Packages.flake8
+    (pkgs.python311.withPackages (python-pkgs: [ python-pkgs.flake8 ]))
     pkgs.poetry
     pkgs.nodePackages.pyright
     pkgs.ruff-lsp
