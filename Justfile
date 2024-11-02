@@ -10,7 +10,7 @@ hostname := `hostname | cut -d "." -f 1`
 [macos]
 build target_host=hostname flags="":
   @echo "Building nix-darwin config..."
-  nix fmt
+  # nix fmt # my flake doesn't offer a formatter, so I leave it out for now
   nix --extra-experimental-features 'nix-command flakes'  build ".#darwinConfigurations.{{target_host}}.system" {{flags}}
 
 # Build the nix-darwin config with the --show-trace flag set
