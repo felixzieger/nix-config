@@ -34,7 +34,8 @@ in {
         config.age.secrets.oauth2_proxy_key.path; # sets OAUTH2_PROXY_CLIENT_ID, OAUTH2_PROXY_CLIENT_SECRET, OAUTH2_PROXY_COOKIE_SECRET
 
       nginx.domain = frigateHost;
-      nginx.virtualHosts."${frigateHost}".allowed_email_domains = [ "gmail.com" ];
+      nginx.virtualHosts."${frigateHost}".allowed_email_domains =
+        [ "gmail.com" ];
 
       cookie = {
         refresh = "360h0m0s";
@@ -72,7 +73,11 @@ in {
 
         mqtt.enabled = false;
 
-        record = { enabled = true; };
+        record = {
+          enabled = true;
+          retain.days = 2;
+          events.retain.default = 5;
+        };
 
         # The object detection for the 1 stream is already using 50% CPU most of the time
         # Frigate supports Coral AI; before adding more streams, I will get a Coral AI extension card
