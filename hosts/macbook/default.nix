@@ -43,10 +43,9 @@ in {
         ./../../modules/ssh
       ];
 
-      # programs.fish = {
-      #   shellInit = builtins.readFile ./fishrc;
-      #   shellAliases = { sm = "smerge"; };
-      # };
+      programs.fish = {
+        shellInit = builtins.readFile ./fishrc;
+      };
       # programs.zsh.initExtra = builtins.readFile ./zshrc;
       programs.zsh = {
         initExtra = ''
