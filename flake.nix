@@ -99,7 +99,7 @@
         };
       };
       darwinConfigurations = {
-        "Felixs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+        "macbook" = nix-darwin.lib.darwinSystem {
           system = "x86_64-darwin";
 
           specialArgs = inputs;
