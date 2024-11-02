@@ -1,20 +1,8 @@
-{ pkgs, ... }:
-let
-  tmux-window-name = pkgs.tmuxPlugins.mkTmuxPlugin {
-    pluginName = "tmux-window-name";
-    version = "head";
-    src = pkgs.fetchFromGitHub {
-      owner = "bcotton";
-      repo = "tmux-window-name";
-      rev = "0bb0148623782dbfb5c15741111f0402609f516f";
-      sha256 = "sha256-xb0GGBZ4Ox3LQjKZJ8MzJluElxRJm3BB73F2CMFJEa0=";
-    };
-  };
-in {
+{ ... }: {
   programs.tmux = {
+    # Look into tmux-window-name plugin https://github.com/bcotton/nix-config/blob/a4171d340334532a0c75cf489ba9729ec33309b1/home/bcotton.nix#L9C1-L20C7
     enable = true;
     extraConfig = builtins.readFile ./tmux.conf;
-    plugins = [{ plugin = tmux-window-name; }];
   };
 
   programs.tmux.tmuxinator.enable = true;
