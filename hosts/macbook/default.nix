@@ -92,7 +92,7 @@ in {
       };
 
       programs.kitty = {
-        enable = true;
+        enable = false;
         settings = { font_family = "SourceCodePro"; };
       };
 
@@ -145,7 +145,7 @@ in {
     pkgs.spotify
     pkgs.monitorcontrol
     pkgs.vscode
-    pkgs.kitty
+    # pkgs.kitty / broken for macos 15.1. see https://forums.developer.apple.com/forums/thread/767509
     pkgs.watchman
     pkgs.opentofu
 
