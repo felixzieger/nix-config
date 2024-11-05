@@ -11,7 +11,7 @@ startup_window: nix
 # attach: false
 
 windows:
-  - top: top
+  - top: btop
   - nix:
       layout: main-vertical
       panes:
