@@ -150,7 +150,7 @@ in {
     pkgs.opentofu
 
     # Python development environment
-    (pkgs.python311.withPackages (python-pkgs: [ python-pkgs.flake8 ]))
+    (pkgs.python311.withPackages (python-pkgs: [ python-pkgs.flake8 python-pkgs.black  ]))
     pkgs.poetry
     pkgs.nodePackages.pyright
     pkgs.ruff-lsp
