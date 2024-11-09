@@ -1,11 +1,14 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, nixpkgs-unstable, config, lib, ... }:
 let
   frigateHost = "frigate.sonnenhof-zieger.de";
   setApexPermissionsScript = pkgs.writeShellScript "set-apex-permissions" ''
     chown frigate:frigate /dev/apex_0
     chmod 660 /dev/apex_0
   '';
-  libedgetpu = pkgs.callPackage ./libedgetpu.nix { };
+  unstable = import nixpkgs-unstable {
+    system = pkgs.system;
+    config.allowUnfree = true;
+  };
 in {
   config = {
 
@@ -61,9 +64,9 @@ in {
 
     services.frigate = {
       enable = true;
+      package = unstable.frigate;
       hostname = frigateHost;
       settings = {
-
         detectors = {
           coral = {
             type = "edgetpu";
