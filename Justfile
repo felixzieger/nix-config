@@ -25,8 +25,7 @@ switch target_host=hostname: (build target_host)
 
 [macos]
 switch-linux target_host:
-  @echo "switching to new config for {{target_host}}"
-  nixos-rebuild switch --flake ".#{{target_host}}" --fast --use-remote-sudo --use-substitutes
+  nixos-rebuild switch --fast --flake .#{{target_host}} --target-host {{target_host}} --use-remote-sudo --use-substitutes
 
 
 ### linux
