@@ -11,7 +11,9 @@ let
   cameron =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMPgvfVIcLInSlxUxdU/X0roocVNzEu6FPSOvkhkiLnQ";
   hedwig =
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIBqSDXUVcrS7OnDVFfYdcnMU24m+6USTJRudXVV8aNK";
+    # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIBqSDXUVcrS7OnDVFfYdcnMU24m+6USTJRudXVV8aNK";
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILS4TPSLCkMkxXH+fhqXo1XgVBZhnpyJSbPqS2vPyiJI";
+
   systems = [ schwalbe cameron hedwig blausieb ];
 in {
   "email-password-bot-sonnenhof-zieger.age".publicKeys = systems;
