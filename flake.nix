@@ -64,7 +64,7 @@
             ./hosts/nixos
             ./hosts/nixos/hedwig/configuration.nix
             ./services/nginx.nix
-            # ./services/uptime-kuma.nix
+            ./services/up-sonnenhof-zieger-de.nix
 
             inputs.agenix.nixosModules.default
           ];

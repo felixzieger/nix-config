@@ -46,6 +46,10 @@ in {
   "app-getdocsy-com-restic-password.age".publicKeys = systems;
   "app-getdocsy-com-restic-environment.age".publicKeys = systems;
 
+  "up-sonnenhof-zieger-de-restic-environment.age".publicKeys =
+    [ hedwig ];
+  "up-sonnenhof-zieger-de-restic-password.age".publicKeys = [ hedwig ];
+
   "paperless-sonnenhof-zieger-de-restic-environment.age".publicKeys =
     [ blausieb ];
   "paperless-sonnenhof-zieger-de-restic-password.age".publicKeys = [ blausieb ];
