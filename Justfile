@@ -23,6 +23,12 @@ switch target_host=hostname: (build target_host)
   @echo "switching to new config for {{target_host}}"
   ./result/sw/bin/darwin-rebuild switch --flake ".#{{target_host}}"
 
+[macos]
+switch-linux target_host:
+  @echo "switching to new config for {{target_host}}"
+  nixos-rebuild switch --flake ".#{{target_host}}" --fast --use-remote-sudo --use-substitutes
+
+
 ### linux
 # Build the NixOS configuration without switching to it
 [linux]

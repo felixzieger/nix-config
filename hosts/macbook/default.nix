@@ -9,7 +9,25 @@ in {
   services.nix-daemon.enable = true;
   nix = {
     settings = { "extra-experimental-features" = [ "nix-command" "flakes" ]; };
+
+    # build linux hosts from darwin
+    linux-builder = {
+      enable = true;
+      ephemeral = true;
+      maxJobs = 4;
+      config = {
+        virtualisation = {
+          darwin-builder = {
+            diskSize = 40 * 1024;
+            memorySize = 8 * 1024;
+          };
+          cores = 4;
+        };
+      };
+    };
+    settings.trusted-users = [ "@admin" ];
   };
+
   programs.zsh.enable = true;
   programs.fish.enable = true;
 
@@ -126,6 +144,8 @@ in {
   environment.shells = [ pkgs.zsh pkgs.fish ];
   environment.variables.EDITOR = "nvim";
   environment.systemPackages = [
+    pkgs.nixos-rebuild # deploy to linux machines; https://nixcademy.com/posts/macos-linux-builder/
+
     pkgs.btop
     pkgs.git
     pkgs.doggo
@@ -150,7 +170,8 @@ in {
     pkgs.opentofu
 
     # Python development environment
-    (pkgs.python311.withPackages (python-pkgs: [ python-pkgs.flake8 python-pkgs.black  ]))
+    (pkgs.python311.withPackages
+      (python-pkgs: [ python-pkgs.flake8 python-pkgs.black ]))
     pkgs.poetry
     pkgs.nodePackages.pyright
     pkgs.ruff-lsp

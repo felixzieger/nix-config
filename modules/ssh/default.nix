@@ -22,6 +22,6 @@
 
     Host hedwig
         HostName hedwig.felixzieger.de
-        Port 33111
+        Port 22
     '';
 }
