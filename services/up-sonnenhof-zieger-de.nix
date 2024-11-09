@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   uptimeKumaPort = 3001;
-  uptimeKumaHost = "up.sonnenfhof-zieger.de";
+  uptimeKumaHost = "up.sonnenhof-zieger.de";
 in {
   config = {
     services.nginx.virtualHosts."${uptimeKumaHost}" = {
