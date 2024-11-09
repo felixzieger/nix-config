@@ -15,7 +15,7 @@ in {
     # Hardware accelleration with coral edge tpu
     # Copied from https://github.com/bcotton/nix-config/blob/a4171d340334532a0c75cf489ba9729ec33309b1/modules/frigate/default.nix#L142
     systemd.services.frigate.environment.LD_LIBRARY_PATH =
-      lib.makeLibraryPath [ libedgetpu ];
+      lib.makeLibraryPath [ unstable.libedgetpu ];
 
     systemd.services.set-apex-permissions = {
       description = "Set permissions for /dev/apex_0";
