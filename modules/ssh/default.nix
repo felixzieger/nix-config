@@ -19,5 +19,9 @@
     Host sonnenhofserver
         HostName nextcloud.sonnenhof-zieger.de
         Port 33111
+
+    Host hedwig
+        HostName hedwig.felixzieger.de
+        Port 33111
     '';
 }
