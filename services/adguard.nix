@@ -15,6 +15,7 @@
       adguardhome = {
         enable = true;
         settings = { schema_version = 20; };
+        port = 3000;
       };
     };
   };
