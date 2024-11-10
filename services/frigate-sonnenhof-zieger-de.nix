@@ -1,32 +1,12 @@
 { pkgs, nixpkgs-unstable, config, lib, ... }:
 let
   frigateHost = "frigate.sonnenhof-zieger.de";
-  setApexPermissionsScript = pkgs.writeShellScript "set-apex-permissions" ''
-    chown frigate:frigate /dev/apex_0
-    chmod 660 /dev/apex_0
-  '';
   unstable = import nixpkgs-unstable {
     system = pkgs.system;
     config.allowUnfree = true;
   };
 in {
   config = {
-
-    # Hardware accelleration with coral edge tpu
-    # Copied from https://github.com/bcotton/nix-config/blob/a4171d340334532a0c75cf489ba9729ec33309b1/modules/frigate/default.nix#L142
-    systemd.services.frigate.environment.LD_LIBRARY_PATH =
-      lib.makeLibraryPath [ unstable.libedgetpu ];
-
-    systemd.services.set-apex-permissions = {
-      description = "Set permissions for /dev/apex_0";
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${setApexPermissionsScript}";
-      };
-      wantedBy = [ "multi-user.target" ];
-    };
-
-    systemd.services.frigate = { wants = [ "set-apex-permissions.service" ]; };
 
     age.secrets = { oauth2_proxy_key.file = ../secrets/oauth2_proxy_key.age; };
 
@@ -64,7 +44,6 @@ in {
 
     services.frigate = {
       enable = true;
-      package = unstable.frigate;
       hostname = frigateHost;
       settings = {
         detectors = {
@@ -119,6 +98,26 @@ in {
         telemetry = { version_check = false; };
       };
     };
+
+    # Hardware accelleration for detection with coral edge tpu
+    # Copied from https://github.com/bcotton/nix-config/blob/a4171d340334532a0c75cf489ba9729ec33309b1/modules/frigate/default.nix#L142
+    systemd.services.frigate.environment.LD_LIBRARY_PATH =
+      lib.makeLibraryPath [ unstable.libedgetpu ];
+
+    systemd.services.set-apex-permissions = {
+      description = "Set permissions for /dev/apex_0";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = pkgs.writeShellScript "set-apex-permissions" ''
+          chown frigate:frigate /dev/apex_0
+          chmod 660 /dev/apex_0
+        '';
+
+      };
+      wantedBy = [ "multi-user.target" ];
+    };
+    systemd.services.frigate = { wants = [ "set-apex-permissions.service" ]; };
+
     # Hardware accelleration for video decoding via VAAPI (on AMD GPU)
     # gives frigate access to /dev/dri/redner128
     users.users.frigate.extraGroups = [ "render" ];
