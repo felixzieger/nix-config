@@ -49,11 +49,6 @@
 
   services.nginx.statusPage = true; # nginx exporter scrapes from this page
 
-  age.secrets = {
-    all-buckets-read-only-restic-environment.file =
-      ../../secrets/all-buckets-read-only-restic-environment.age;
-  };
-
   services.prometheus = {
     enable = true;
     port = 9090;
@@ -74,15 +69,6 @@
         enable = true;
         port = 20102;
       };
-
-      restic = {
-        enable = true;
-        port = 20103;
-        environmentFile =
-          config.age.secrets.all-buckets-read-only-restic-environment.path;
-        repository = config.services.restic.backups.home-assistant.repository;
-        passwordFile = config.services.restic.backups.home-assistant.passwordFile;
-      };
     };
     scrapeConfigs = [{
       job_name = "job ${config.networking.hostName}";
@@ -94,9 +80,6 @@
           }"
           "127.0.0.1:${
             toString config.services.prometheus.exporters.systemd.port
-          }"
-          "127.0.0.1:${
-            toString config.services.prometheus.exporters.restic.port
           }"
         ];
       }];
@@ -112,12 +95,6 @@
   environment.etc."grafana-dashboards/nginx.json" = {
     # https://github.com/nginxinc/nginx-prometheus-exporter/blob/main/grafana/dashboard.json 
     source = ./dashboards/nginx.json;
-    group = "grafana";
-    user = "grafana";
-  };
-  environment.etc."grafana-dashboards/restic.json" = {
-    # https://github.com/ngosang/restic-exporter/blob/main/grafana/grafana_dashboard.json
-    source = ./dashboards/restic.json;
     group = "grafana";
     user = "grafana";
   };
