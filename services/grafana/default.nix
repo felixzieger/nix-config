@@ -41,11 +41,13 @@
           }";
       }];
       datasources.settings.deleteDatasources = [{
-        name = "Prometheus";
+        name = "Prometheus schwalbe";
         orgId = 1;
       }];
     };
   };
+
+  services.nginx.statusPage = true; # nginx exporter scrapes from this page
 
   services.prometheus = {
     enable = true;
@@ -89,7 +91,14 @@
   };
 
   environment.etc."grafana-dashboards/node-exporter-full.json" = {
+    # https://github.com/rfmoz/grafana-dashboards/blob/master/prometheus/node-exporter-full.json
     source = ./dashboards/node-exporter-full.json;
+    group = "grafana";
+    user = "grafana";
+  };
+  environment.etc."grafana-dashboards/nginx.json" = {
+    # https://github.com/nginxinc/nginx-prometheus-exporter/blob/main/grafana/dashboard.json 
+    source = ./dashboards/nginx.json;
     group = "grafana";
     user = "grafana";
   };
