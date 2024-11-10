@@ -76,6 +76,8 @@ in {
 
         mqtt.enabled = false;
 
+        ffmpeg.hwaccel_args = "preset-vaapi";
+
         record = {
           enabled = true;
           retain.days = 2;
@@ -117,5 +119,9 @@ in {
         telemetry = { version_check = false; };
       };
     };
+    # Hardware accelleration for video decoding via VAAPI (on AMD GPU)
+    # gives frigate access to /dev/dri/redner128
+    users.users.frigate.extraGroups = [ "render" ];
+    systemd.services.frigate.environment.LIBVA_DRIVER_NAME = "radeonsi";
   };
 }
