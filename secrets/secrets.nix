@@ -60,4 +60,6 @@ in {
   "plausible-sonnenhof-zieger-de-restic-environment.age".publicKeys =
     [ blausieb ];
   "plausible-sonnenhof-zieger-de-restic-password.age".publicKeys = [ blausieb ];
+
+  "all-buckets-read-only-restic-environment.age".publicKeys = systems;
 }
