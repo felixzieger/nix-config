@@ -32,6 +32,7 @@
             ./services/uptime-kuma.nix
             ./services/calibre.nix
             ./services/frigate-sonnenhof-zieger-de.nix
+            ./services/grafana
 
             ./services/docker.nix
             ./services/home-assistant.nix
