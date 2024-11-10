@@ -16,6 +16,10 @@
         HostName schwalbe.felixzieger.de
         Port 33111
 
+    Host cameron
+        HostName cameron.felixzieger.de
+        Port 33112 # Same public IP as sonnenhof-server so we use another port
+
     Host sonnenhofserver
         HostName nextcloud.sonnenhof-zieger.de
         Port 33111
