@@ -165,7 +165,7 @@ in {
     pkgs.spotify
     pkgs.monitorcontrol
     pkgs.vscode
-    # pkgs.kitty / broken for macos 15.1. see https://forums.developer.apple.com/forums/thread/767509
+    # pkgs.kitty / broken for macos 15.1. see https://github.com/NixOS/nixpkgs/pull/352795
     pkgs.watchman
     pkgs.opentofu
 
