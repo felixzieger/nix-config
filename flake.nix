@@ -50,7 +50,6 @@
             home-manager.nixosModules.home-manager
             ./hosts/nixos
             ./hosts/nixos/cameron/configuration.nix
-            ./services/nginx.nix
 
             inputs.agenix.nixosModules.default
           ];
