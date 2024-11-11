@@ -149,6 +149,7 @@ in {
     pkgs.rectangle
     pkgs.spotify
     pkgs.monitorcontrol
+    unstable.signal-desktop # darwin support got added in October
     # pkgs.kitty / broken for macos 15.1. see https://github.com/NixOS/nixpkgs/pull/352795
     pkgs.watchman
     pkgs.opentofu
