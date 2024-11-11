@@ -16,5 +16,12 @@
     port = 41641;
     openFirewall = true;
   };
+  networking = {
+    networkmanager = {
+      # workaround for systemd-networkd-wait-online.service timing out on generation activation
+      # https://github.com/NixOS/nixpkgs/issues/180175
+      unmanaged = [ "tailscale0" ];
+    };
+  };
 }
 
