@@ -25,6 +25,7 @@
           specialArgs = inputs;
           modules = [
             home-manager.nixosModules.home-manager
+            ./hosts/common
             ./hosts/nixos
             ./hosts/nixos/schwalbe/configuration.nix
             ./services/nginx.nix
@@ -49,6 +50,7 @@
           specialArgs = inputs;
           modules = [
             home-manager.nixosModules.home-manager
+            ./hosts/common
             ./hosts/nixos
             ./hosts/nixos/cameron/configuration.nix
 
@@ -61,6 +63,7 @@
           specialArgs = inputs;
           modules = [
             home-manager.nixosModules.home-manager
+            ./hosts/common
             ./hosts/nixos
             ./hosts/nixos/hedwig/configuration.nix
             ./services/nginx.nix
@@ -75,6 +78,7 @@
           specialArgs = inputs;
           modules = [
             home-manager.nixosModules.home-manager
+            ./hosts/common
             ./hosts/nixos
             ./hosts/nixos/blausieb/configuration.nix
             ./services/nginx.nix
@@ -93,6 +97,7 @@
           specialArgs = inputs;
           modules = [
             home-manager.nixosModules.home-manager
+            ./hosts/common
             ./hosts/schenkerpad
             ./hosts/schenkerpad/configuration.nix
           ];
@@ -104,9 +109,10 @@
 
           specialArgs = inputs;
           modules = [
+            ./hosts/common
+            ./hosts/macbook
             home-manager.darwinModules.home-manager
             mac-app-util.darwinModules.default
-            ./hosts/macbook
             inputs.agenix.nixosModules.default
           ];
         };

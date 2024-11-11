@@ -114,7 +114,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [ git neovim tmux rsync ];
+  environment.systemPackages = with pkgs; [ rsync ];
 
   programs.zsh.enable = true;
 

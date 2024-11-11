@@ -1,4 +1,4 @@
-{ self, pkgs, agenix, config, ... }: {
+{ self, pkgs, config, ... }: {
   nixpkgs.config.allowUnfree = true;
   boot.loader.systemd-boot.configurationLimit = 30; # prevent boot partition running out of disk space
 
@@ -50,14 +50,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    which
-    tree
-    git
-    btop
-    just
-
-    agenix.packages."${system}".default
-
     # systemctl-tui # view systemctl interactively
     # sysz
   ];
@@ -100,11 +92,7 @@
     home.homeDirectory = "/home/felix";
 
     imports = [
-      ./../../modules/fzf
       ./../../modules/zsh
-      ./../../modules/tmux
-      ./../../modules/neovim
-      ./../../modules/git
     ];
 
     programs.tmux = {
@@ -130,8 +118,5 @@
     # the home Manager release notes for a list of state version
     # changes in each release.
     home.stateVersion = "23.11";
-
-    # Let home Manager install and manage itself.
-    programs.home-manager.enable = true;
   };
 }

@@ -41,28 +41,18 @@ in {
     [ (nerdfonts.override { fonts = [ "SourceCodePro" ]; }) ];
 
   home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
     sharedModules = [ mac-app-util.homeManagerModules.default ];
 
     users.felix = {
       home.username = lib.mkForce "felix";
       home.homeDirectory = lib.mkForce "/Users/felix";
 
-      programs.home-manager.enable = true;
-
       imports = [
-        ./../../modules/fzf
         ./../../modules/fish
-        # ./../../modules/zsh
-        ./../../modules/git
-        ./../../modules/neovim
-        ./../../modules/tmux
         ./../../modules/ssh
       ];
 
       programs.fish = { shellInit = builtins.readFile ./fishrc; };
-      # programs.zsh.initExtra = builtins.readFile ./zshrc;
       programs.zsh = {
         initExtra = ''
           if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
@@ -142,17 +132,14 @@ in {
   };
 
   environment.shells = [ pkgs.zsh pkgs.fish ];
-  environment.variables.EDITOR = "nvim";
   environment.systemPackages = [
     pkgs.nixos-rebuild # deploy to linux machines; https://nixcademy.com/posts/macos-linux-builder/
 
     pkgs.btop
     pkgs.git
     pkgs.doggo
-    pkgs.tree
     pkgs.wget
     pkgs.ripgrep
-    pkgs.lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199
     pkgs.shellcheck
     pkgs.fish
     pkgs.eternal-terminal
@@ -178,7 +165,6 @@ in {
     pkgs.ngrok
     pkgs.mkdocs
     pkgs.litecli
-    pkgs.just
     pkgs.oci-cli
 
     # Landing page
