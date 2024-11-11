@@ -14,6 +14,7 @@
 
     mac-app-util.url =
       "github:hraban/mac-app-util"; # https://discourse.nixos.org/t/mac-applications-installed-by-nix-are-not-loaded-by-spotlight/14129/16
+    # mac-app-util.inputs.nixpkgs.follows = "nixpkgs"; # Requires specific versions
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, nixpkgs-darwin, nix-darwin
