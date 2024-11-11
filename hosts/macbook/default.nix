@@ -135,8 +135,6 @@ in {
   environment.systemPackages = [
     pkgs.nixos-rebuild # deploy to linux machines; https://nixcademy.com/posts/macos-linux-builder/
 
-    pkgs.btop
-    pkgs.git
     pkgs.doggo
     pkgs.wget
     pkgs.ripgrep
@@ -151,7 +149,6 @@ in {
     pkgs.rectangle
     pkgs.spotify
     pkgs.monitorcontrol
-    pkgs.vscode
     # pkgs.kitty / broken for macos 15.1. see https://github.com/NixOS/nixpkgs/pull/352795
     pkgs.watchman
     pkgs.opentofu
