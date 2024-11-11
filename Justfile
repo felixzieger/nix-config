@@ -48,3 +48,6 @@ switch target_host=hostname:
 gc generations="5d":
   nix-env --delete-generations {{generations}}
   nix-store --gc
+
+update
+  nix flake update
