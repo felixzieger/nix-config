@@ -4,6 +4,8 @@ let
   docsyDashboardPort = 8050;
   docsyDataDir = "/data/docsy/data";
   docsyVersion = "v0.7.8";
+  docsyWebDataDir = "/data/docsy_web/data";
+  docsyWebVersion = "v0.1.1";
 in {
   config = {
     # Inspect sqlite database without docker exec
@@ -15,7 +17,10 @@ in {
       http3 = true;
       quic = true;
       locations."/" = {
-        proxyPass = "http://localhost:${toString docsySlackPort}";
+        proxyPass = "http://localhost:${toString docsyDashboardPort}";
+      };
+      locations."/slack" = {
+        proxyPass = "http://localhost:${toString docsySlackPort}/slack";
         proxyWebsockets = true;
       };
       locations."/dashboard" = {
@@ -73,6 +78,26 @@ in {
             "com.centurylinklabs.watchtower.enable" = "false";
           }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
         };
+        docsy_web = {
+          autoStart = true;
+          image = "ghcr.io/getdocsy/docsy:${docsyWebVersion}";
+          environment.TZ = "Europe/Berlin";
+          ports = [ "8000:8000" ];
+          volumes = [ "${docsyWebDataDir}:/app/" ];
+          entrypoint = ''
+            command: sh -c "poetry install && poetry run python src/manage.py migrate && poetry run python src/manage.py runserver 0.0.0.0:8000"
+          '';
+          login = {
+            registry = "ghcr.io";
+            username = "felixzieger";
+            passwordFile = config.age.secrets.ghcr-secret.path;
+          };
+          environmentFiles = [ config.age.secrets.app-getdocsy-com-env.path ];
+          labels = {
+            "com.centurylinklabs.watchtower.enable" = "false";
+          }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
+        };
+
       };
     };
 
@@ -87,7 +112,7 @@ in {
       docsy = {
         initialize = true;
 
-        paths = [ docsyDataDir ];
+        paths = [ docsyDataDir docsyWebDataDir ];
 
         repository = "b2:app-getdocsy-com";
         environmentFile =
