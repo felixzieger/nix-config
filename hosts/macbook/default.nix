@@ -155,13 +155,11 @@ in {
     pkgs.opentofu
 
     # Python development environment
-    (pkgs.python311.withPackages
-      (python-pkgs: [ python-pkgs.flake8 python-pkgs.black ]))
-    pkgs.poetry
-    pkgs.nodePackages.pyright
-    pkgs.ruff-lsp
+    pkgs.python3
+    pkgs.poetry # package management
+    pkgs.ruff # formatting and linting
+    pkgs.pyright # static type checking
     pkgs.ngrok
-    pkgs.mkdocs
     pkgs.litecli
     pkgs.oci-cli
 
@@ -169,7 +167,6 @@ in {
     pkgs.nodejs_22
     pkgs.bun
     pkgs.typescript
-    pkgs.pnpm
 
     agenix.packages."${pkgs.system}".default
   ];
