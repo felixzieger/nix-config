@@ -44,14 +44,10 @@ in {
   home-manager = {
     sharedModules = [ mac-app-util.homeManagerModules.default ];
 
-    users.felix = {
-      home.username = lib.mkForce "felix";
+    users.felix = { home.username = lib.mkForce "felix";
       home.homeDirectory = lib.mkForce "/Users/felix";
 
-      imports = [
-        ./../../modules/fish
-        ./../../modules/ssh
-      ];
+      imports = [ ./../../modules/fish ./../../modules/ssh ];
 
       programs.fish = { shellInit = builtins.readFile ./fishrc; };
       programs.zsh = {
