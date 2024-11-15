@@ -4,6 +4,7 @@ let
     system = pkgs.system;
     config.allowUnfree = true;
   };
+  scooter = pkgs.callPackage ./scooter.nix { };
 in {
   nixpkgs.config.allowUnfree = true;
   services.nix-daemon.enable = true;
@@ -162,6 +163,8 @@ in {
     pkgs.ngrok
     pkgs.litecli
     pkgs.oci-cli
+
+    scooter
 
     # Landing page
     pkgs.nodejs_22
