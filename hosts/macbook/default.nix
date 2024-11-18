@@ -150,6 +150,7 @@ in {
     # pkgs.kitty / broken for macos 15.1. see https://github.com/NixOS/nixpkgs/pull/352795
     pkgs.watchman
     pkgs.opentofu
+    # unstable.calibre # marked as broken
 
     # Python development environment
     pkgs.python3
