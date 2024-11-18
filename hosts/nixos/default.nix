@@ -64,6 +64,13 @@
   services.fail2ban = {
     enable = true; # comes with a default jail for SSH
     jails.sshd.settings = { maxretry = 10; };
+    ignoreIP = [
+      # "10.0.0.0/8"
+      # "172.16.0.0/12"
+      # "192.168.0.0/16"
+      "hof.sonnenhof-zieger.de"
+      "nextcloud.sonnenhof-zieger.de"
+    ];
   };
   services.openssh = {
     enable = true;
