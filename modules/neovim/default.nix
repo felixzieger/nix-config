@@ -6,7 +6,7 @@
     bat
 
     nil
-    nixfmt-classic
+    nixfmt-rfc-style
 
     lua-language-server
     nodePackages.bash-language-server
