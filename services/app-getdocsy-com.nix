@@ -2,10 +2,11 @@
 let
   docsySlackPort = 8080;
   docsyDashboardPort = 8050;
+  docsyWebPort = 8001;
   docsyDataDir = "/data/docsy/data";
   docsyVersion = "v0.7.8";
   docsyWebDataDir = "/data/docsy_web/data";
-  docsyWebVersion = "v0.1.1";
+  docsyWebVersion = "v0.0.6";
 in {
   config = {
     # Inspect sqlite database without docker exec
@@ -17,7 +18,7 @@ in {
       http3 = true;
       quic = true;
       locations."/" = {
-        proxyPass = "http://localhost:${toString docsyDashboardPort}";
+        proxyPass = "http://localhost:${toString docsyWebPort}";
       };
       locations."/slack" = {
         proxyPass = "http://localhost:${toString docsySlackPort}/slack";
@@ -82,11 +83,13 @@ in {
           autoStart = true;
           image = "ghcr.io/getdocsy/docsy:${docsyWebVersion}";
           environment.TZ = "Europe/Berlin";
-          ports = [ "8000:8000" ];
-          volumes = [ "${docsyWebDataDir}:/app/" ];
-          entrypoint = ''
-            command: sh -c "poetry install && poetry run python src/manage.py migrate && poetry run python src/manage.py runserver 0.0.0.0:8000"
-          '';
+          ports = [ "${builtins.toString docsyWebPort}:8000" ];
+          volumes = [ "${docsyWebDataDir}/src/data:/app/src/data" ];
+          entrypoint = "sh";
+          cmd = [
+            "-c"
+            "ls -la /app && poetry install && poetry run python src/manage.py migrate && poetry run daphne -b 0.0.0.0 -p 8000 docsy.asgi:application"
+          ];
           login = {
             registry = "ghcr.io";
             username = "felixzieger";
