@@ -9,9 +9,9 @@ lspconfig.nil_ls.setup {
         },
       },
     }
-lspconfig.yamlls.setup {}
-lspconfig.jsonls.setup {}
 lspconfig.bashls.setup {}
+-- lspconfig.yamlls.setup {}
+lspconfig.jsonls.setup {}
 
 lspconfig.lua_ls.setup {
   on_init = function(client)
