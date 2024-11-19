@@ -12,20 +12,25 @@ in {
     # Inspect sqlite database without docker exec
     environment.systemPackages = with pkgs; [ litecli ];
 
-    services.nginx.virtualHosts."app.getdocsy.com" = {
-      forceSSL = true;
-      enableACME = true;
-      http3 = true;
-      quic = true;
-      locations."/" = {
-        proxyPass = "http://localhost:${toString docsyWebPort}";
-      };
-      locations."/slack" = {
-        proxyPass = "http://localhost:${toString docsySlackPort}/slack";
-        proxyWebsockets = true;
-      };
-      locations."/dashboard" = {
-        proxyPass = "http://localhost:${toString docsyDashboardPort}/dashboard";
+    services.nginx = {
+      proxyTimeout =
+        "360s"; # we are changing this for all servers running on; not ideal but okay for now
+      virtualHosts."app.getdocsy.com" = {
+        forceSSL = true;
+        enableACME = true;
+        http3 = true;
+        quic = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${toString docsyWebPort}";
+        };
+        locations."/slack" = {
+          proxyPass = "http://localhost:${toString docsySlackPort}/slack";
+          proxyWebsockets = true;
+        };
+        locations."/dashboard" = {
+          proxyPass =
+            "http://localhost:${toString docsyDashboardPort}/dashboard";
+        };
       };
     };
 
