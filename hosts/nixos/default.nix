@@ -1,6 +1,7 @@
 { self, pkgs, config, ... }: {
   nixpkgs.config.allowUnfree = true;
-  boot.loader.systemd-boot.configurationLimit = 30; # prevent boot partition running out of disk space
+  boot.loader.systemd-boot.configurationLimit =
+    30; # prevent boot partition running out of disk space
 
   nix.settings.trusted-users =
     # Needed for pushing changes via `nixos-rebuild --target-host felix@<host>.felixzieger.de switch`
@@ -49,10 +50,11 @@
     ];
   };
 
-  environment.systemPackages = with pkgs; [
-    # systemctl-tui # view systemctl interactively
-    # sysz
-  ];
+  environment.systemPackages = with pkgs;
+    [
+      # systemctl-tui # view systemctl interactively
+      # sysz
+    ];
 
   programs.zsh.enable = true;
 
@@ -63,11 +65,21 @@
 
   services.fail2ban = {
     enable = true; # comes with a default jail for SSH
-    jails.sshd.settings = { maxretry = 10; };
+    jails.sshd.settings = {
+      maxretry = 5;
+      findtime = 3600;
+    };
+    bantime = "24h"; # Ban IPs for one day on the first ban
+    bantime-increment = {
+      enable = true; # Enable increment of bantime after each violation
+      multipliers = "1 2 4 8 16 32 64";
+      maxtime = "168h"; # Do not ban for more than 1 week
+      overalljails = true; # Calculate the bantime based on all the violations
+    };
     ignoreIP = [
       # "10.0.0.0/8"
       # "172.16.0.0/12"
-      # "192.168.0.0/16"
+      "192.168.0.0/16"
       "hof.sonnenhof-zieger.de"
       "nextcloud.sonnenhof-zieger.de"
     ];
@@ -87,10 +99,8 @@
     port = 2022;
   };
   networking = {
-      firewall = {
-        allowedTCPPorts = [ config.services.eternal-terminal.port ];
-      };
-    };
+    firewall = { allowedTCPPorts = [ config.services.eternal-terminal.port ]; };
+  };
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
@@ -98,9 +108,7 @@
     home.username = "felix";
     home.homeDirectory = "/home/felix";
 
-    imports = [
-      ./../../modules/zsh
-    ];
+    imports = [ ./../../modules/zsh ];
 
     programs.tmux = {
       extraConfig = ''
