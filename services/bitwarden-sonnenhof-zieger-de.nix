@@ -8,7 +8,7 @@ in {
       http3 = true;
       quic = true;
       locations."/" = {
-        proxyPass = "http://localhost:${
+        proxyPass = "http://127.0.0.1:${
             toString config.services.vaultwarden.config.ROCKET_PORT
           }";
         proxyWebsockets = true;
