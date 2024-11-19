@@ -11,7 +11,7 @@ in {
       http3 = true;
       quic = true;
       locations."/" = {
-        proxyPass = "http://localhost:${toString plausiblePort}";
+        proxyPass = "http://127.0.0.1:${toString plausiblePort}";
         proxyWebsockets = true;
       };
     };
