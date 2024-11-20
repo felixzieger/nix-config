@@ -80,3 +80,4 @@ For example, to restore the uptime-kuma backup run:
 - Nextcloud backup to Schwalbe
 - Encryption at rest for servers (password for decryption via SSH at boot; see https://www.return12.net/decrypt-nixos-via-ssh/)
 - Get rid of ../../ imports. Have a look at https://github.com/NotAShelf/nyx/
+- https://github.com/samuelclay/NewsBlur/ as omnivore replacement (currently trying out inoreader)
