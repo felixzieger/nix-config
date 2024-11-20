@@ -160,6 +160,7 @@ in {
     pkgs.ngrok
     pkgs.litecli
     pkgs.oci-cli
+    pkgs.vale
 
     scooter
 
