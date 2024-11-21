@@ -52,6 +52,14 @@
           maxretry = 5;
           findtime = 3600;
         };
+        nginx-ip-host = {
+          enabled = true;
+          filter = "nginx-ip-host";
+          logpath = "/var/log/nginx/error.log";
+          maxretry = 3;
+          findtime = 3600;
+          bantime = 86400; # 24 hours
+        };
       };
     };
     environment.etc = {
@@ -59,6 +67,11 @@
         (pkgs.lib.mkAfter ''
           [Definition]
           failregex = ^<HOST> - .* "(GET|POST) /(wp-|admin|boaform|phpmyadmin|\.env|\.git|.*\.(dll|so|cfm|asp)) HTTP/.*" 4[0-9]{2} .*
+        '');
+      "fail2ban/filter.d/nginx-ip-host.local".text = pkgs.lib.mkDefault
+        (pkgs.lib.mkAfter ''
+          [Definition]
+          failregex = ^\s*\S+ nginx\[\d+\]: \d+/\d+/\d+ \d+:\d+:\d+ \[error\] \d+#\d+: \*\d+ access forbidden by rule, client: <HOST>, server: .*, request: "(?:GET|POST) .*", host: "\d+\.\d+\.\d+\.\d+"$
         '');
     };
   };
