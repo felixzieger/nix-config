@@ -6,7 +6,7 @@ let
   docsyDataDir = "/data/docsy/data";
   docsyVersion = "v0.7.8";
   docsyWebDataDir = "/data/docsy_web/data";
-  docsyWebVersion = "v0.0.12";
+  docsyWebVersion = "0.0.21";
 in {
   config = {
     # Inspect sqlite database without docker exec
@@ -93,7 +93,7 @@ in {
           entrypoint = "sh";
           cmd = [
             "-c"
-            "ls -la /app && poetry install && poetry run python src/manage.py migrate && poetry run daphne -b 0.0.0.0 -p 8000 docsy.asgi:application"
+            "poetry install --without dev && poetry run python src/manage.py migrate && poetry run daphne -b 0.0.0.0 -p 8000 docsy.asgi:application"
           ];
           login = {
             registry = "ghcr.io";
