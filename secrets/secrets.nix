@@ -18,7 +18,7 @@ let
 in {
   "email-password-bot-sonnenhof-zieger.age".publicKeys = systems;
 
-  "tailscale-authkey.age".publicKeys = [ schwalbe ];
+  "tailscale-authkey.age".publicKeys = systems;
 
   "netdata-basic-auth.age".publicKeys = systems;
 
