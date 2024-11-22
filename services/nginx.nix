@@ -52,13 +52,12 @@
           maxretry = 5;
           findtime = 3600;
         };
-        nginx-ip-host = {
+        nginx-ip-host.settings = {
           enabled = true;
           filter = "nginx-ip-host";
-          logpath = "/var/log/nginx/error.log";
+          logpath = "/var/log/nginx/access.log";
           maxretry = 3;
           findtime = 3600;
-          bantime = 86400; # 24 hours
         };
       };
     };
@@ -66,7 +65,7 @@
       "fail2ban/filter.d/nginx-url-probe.local".text = pkgs.lib.mkDefault
         (pkgs.lib.mkAfter ''
           [Definition]
-          failregex = ^<HOST> - .* "(GET|POST) /(wp-|admin|boaform|phpmyadmin|\.env|\.git|.*\.(dll|so|cfm|asp)) HTTP/.*" 4[0-9]{2} .*
+          failregex = ^.*<HOST> - .* "(GET|POST) /(wp-|boaform|phpmyadmin|\.env|\.git|.*\.(dll|so|cfm|asp)) HTTP/.*" 4[0-9]{2} .*
         '');
       "fail2ban/filter.d/nginx-ip-host.local".text = pkgs.lib.mkDefault
         (pkgs.lib.mkAfter ''
