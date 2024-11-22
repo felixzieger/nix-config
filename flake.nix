@@ -35,6 +35,7 @@
             ./services/calibre.nix
             ./services/frigate-sonnenhof-zieger-de.nix
             ./services/grafana
+            ./services/tailscale.nix
 
             ./services/docker.nix
             ./services/home-assistant.nix
@@ -89,6 +90,7 @@
             ./services/plausible-sonnenhof-zieger-de
             ./services/bitwarden-sonnenhof-zieger-de.nix
             ./services/paperless-sonnenhof-zieger-de.nix
+            ./services/tailscale.nix
             inputs.agenix.nixosModules.default
           ];
         };

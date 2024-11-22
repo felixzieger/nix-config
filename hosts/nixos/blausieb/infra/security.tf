@@ -62,4 +62,16 @@ resource "oci_core_security_list" "ampere_security_list" {
       min = "443"
     }
   }
+
+  # tailscale
+  ingress_security_rules {
+    protocol = "17"
+    source   = "0.0.0.0/0"
+
+    udp_options {
+      max = "41641"
+      min = "41641"
+    }
+  }
+
 }
