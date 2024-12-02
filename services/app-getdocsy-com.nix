@@ -93,7 +93,7 @@ in {
           entrypoint = "sh";
           cmd = [
             "-c"
-            "poetry install --without dev && poetry run python src/manage.py migrate && poetry run daphne -b 0.0.0.0 -p 8000 docsy.asgi:application"
+            "uv sync --frozen && uv run python src/manage.py migrate && uv run daphne -b 0.0.0.0 -p 8000 docsy.asgi:application"
           ];
           login = {
             registry = "ghcr.io";
