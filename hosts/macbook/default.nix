@@ -70,7 +70,7 @@ in {
       home.packages = with pkgs; [
         terraform-ls
         nodePackages.vscode-langservers-extracted
-        nodePackages.typescript-language-server # provides tsserver for nvim lsp
+        nodePackages.typescript-language-server # provides ts_ls for nvim lsp
       ];
       programs.neovim = {
         package = unstable.neovim-unwrapped;
