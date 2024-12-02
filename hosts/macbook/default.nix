@@ -154,6 +154,7 @@ in {
 
     # Python development environment
     pkgs.python3
+    pkgs.uv
     pkgs.poetry # package management
     pkgs.ruff # formatting and linting
     pkgs.pyright # static type checking
