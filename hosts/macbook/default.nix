@@ -1,15 +1,28 @@
-{ agenix, lib, pkgs, mac-app-util, nixpkgs-unstable, ... }:
+{
+  agenix,
+  lib,
+  pkgs,
+  mac-app-util,
+  nixpkgs-unstable,
+  ...
+}:
 let
   unstable = import nixpkgs-unstable {
     system = pkgs.system;
     config.allowUnfree = true;
   };
   scooter = pkgs.callPackage ./scooter.nix { };
-in {
+in
+{
   nixpkgs.config.allowUnfree = true;
   services.nix-daemon.enable = true;
   nix = {
-    settings = { "extra-experimental-features" = [ "nix-command" "flakes" ]; };
+    settings = {
+      "extra-experimental-features" = [
+        "nix-command"
+        "flakes"
+      ];
+    };
 
     # build linux hosts from darwin
     linux-builder = {
@@ -38,18 +51,23 @@ in {
     Defaults timestamp_timeout=20
   '';
 
-  fonts.packages = with pkgs;
-    [ (nerdfonts.override { fonts = [ "SourceCodePro" ]; }) ];
+  fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "SourceCodePro" ]; }) ];
 
   home-manager = {
     sharedModules = [ mac-app-util.homeManagerModules.default ];
 
-    users.felix = { home.username = lib.mkForce "felix";
+    users.felix = {
+      home.username = lib.mkForce "felix";
       home.homeDirectory = lib.mkForce "/Users/felix";
 
-      imports = [ ./../../modules/fish ./../../modules/ssh ];
+      imports = [
+        ./../../modules/fish
+        ./../../modules/ssh
+      ];
 
-      programs.fish = { shellInit = builtins.readFile ./fishrc; };
+      programs.fish = {
+        shellInit = builtins.readFile ./fishrc;
+      };
       programs.zsh = {
         initExtra = ''
           if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
@@ -60,8 +78,7 @@ in {
       };
 
       # Additional plugins for tmux
-      programs.tmux.plugins =
-        [ pkgs.tmuxPlugins.fzf-tmux-url ]; # Open Hyperlink-Picker via CTRL+b u
+      programs.tmux.plugins = [ pkgs.tmuxPlugins.fzf-tmux-url ]; # Open Hyperlink-Picker via CTRL+b u
       programs.tmux.extraConfig = ''
         set -g @fzf-url-history-limit '2000'
       '';
@@ -98,7 +115,9 @@ in {
 
       programs.kitty = {
         enable = false;
-        settings = { font_family = "SourceCodePro"; };
+        settings = {
+          font_family = "SourceCodePro";
+        };
       };
 
       # This value determines the home Manager release that your
@@ -128,7 +147,10 @@ in {
     };
   };
 
-  environment.shells = [ pkgs.zsh pkgs.fish ];
+  environment.shells = [
+    pkgs.zsh
+    pkgs.fish
+  ];
   environment.systemPackages = [
     pkgs.nixos-rebuild # deploy to linux machines; https://nixcademy.com/posts/macos-linux-builder/
 
@@ -140,14 +162,14 @@ in {
     pkgs.eternal-terminal
 
     # pkgs.jan # LLM gui; currently only packaged for linux on nixos
-    # pkgs.elia # llm tui https://github.com/NixOS/nixpkgs/pull/317782 
+    # pkgs.elia # llm tui https://github.com/NixOS/nixpkgs/pull/317782
     # pkgs.posting # HTTP tui https://github.com/NixOS/nixpkgs/pull/325971
     unstable.aider-chat
     pkgs.rectangle
     pkgs.spotify
     pkgs.monitorcontrol
     unstable.signal-desktop # darwin support got added in October
-    # pkgs.kitty / broken for macos 15.1. see https://github.com/NixOS/nixpkgs/pull/352795
+    pkgs.kitty
     pkgs.watchman
     pkgs.opentofu
     # unstable.calibre # marked as broken
