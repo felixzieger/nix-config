@@ -60,9 +60,8 @@
 
   # For frigate hwaccell
   boot.initrd.kernelModules = [ "amdgpu" ];
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
   };
 }
