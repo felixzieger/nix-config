@@ -34,7 +34,6 @@
             ./services/uptime-kuma.nix
             ./services/calibre.nix
             ./services/frigate-sonnenhof-zieger-de.nix
-            ./services/grafana
             ./services/tailscale.nix
 
             ./services/docker.nix
