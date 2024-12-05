@@ -27,7 +27,7 @@ in
     # build linux hosts from darwin
     linux-builder = {
       enable = true;
-      ephemeral = true;
+      # ephemeral = true;
       maxJobs = 4;
       config = {
         virtualisation = {
@@ -40,6 +40,14 @@ in
       };
     };
     settings.trusted-users = [ "@admin" ];
+  };
+
+  # Enable logging for the linux builder
+  launchd.daemons.linux-builder = {
+    serviceConfig = {
+        StandardOutPath = "/var/log/darwin-builder.log";
+        StandardErrorPath = "/var/log/darwin-builder.log";
+    };
   };
 
   programs.zsh.enable = true;
