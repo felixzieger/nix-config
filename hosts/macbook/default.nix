@@ -55,6 +55,7 @@ in
 
   home-manager = {
     sharedModules = [ mac-app-util.homeManagerModules.default ];
+    backupFileExtension = "backup";
 
     users.felix = {
       home.username = lib.mkForce "felix";
@@ -114,7 +115,7 @@ in
       };
 
       programs.kitty = {
-        enable = false;
+        enable = true;
         settings = {
           font_family = "SourceCodePro";
         };
