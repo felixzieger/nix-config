@@ -12,7 +12,7 @@
   nix.optimise.automatic = true;
   nix.gc = {
     automatic = true;
-    dates = "Sat *-*-* 14:30:00";
+    dates = "Sat *-*-* 04:30:00";
     options = "--delete-older-than 30d";
   };
   system.autoUpgrade = {
@@ -24,7 +24,7 @@
       "--commit-lock-file"
       "-L" # print build logs
     ];
-    dates = "Sat *-*-* 12:30:00";
+    dates = "Sat *-*-* 02:30:00";
     allowReboot = true;
   };
 
