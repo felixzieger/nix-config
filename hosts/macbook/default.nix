@@ -192,6 +192,7 @@ in
     pkgs.ngrok
     pkgs.litecli
     pkgs.oci-cli
+    pkgs.gh
     pkgs.vale
 
     unstable.scooter
