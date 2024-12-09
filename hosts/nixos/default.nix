@@ -125,7 +125,7 @@
     '';
     programs.zsh.initExtra = ''
       # SSH agent forwarding for attached sessions
-      if test "$SSH_AUTH_SOCK"; then
+      if test "$SSH_AUTH_SOCK" && [ "$SSH_AUTH_SOCK" != "$HOME/.ssh/ssh_auth_sock" ]; then
         ln -sf "$SSH_AUTH_SOCK" $HOME/.ssh/ssh_auth_sock
       fi
     '';
