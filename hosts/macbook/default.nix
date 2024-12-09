@@ -11,7 +11,6 @@ let
     system = pkgs.system;
     config.allowUnfree = true;
   };
-  scooter = pkgs.callPackage ./scooter.nix { };
 in
 {
   nixpkgs.config.allowUnfree = true;
@@ -177,7 +176,8 @@ in
     pkgs.rectangle
     pkgs.spotify
     pkgs.monitorcontrol
-    unstable.signal-desktop # darwin support got added in October
+    pkgs.signal-desktop
+    pkgs.slack
     pkgs.kitty
     pkgs.watchman
     pkgs.opentofu
@@ -194,7 +194,7 @@ in
     pkgs.oci-cli
     pkgs.vale
 
-    scooter
+    unstable.scooter
 
     # Landing page
     pkgs.nodejs_22
