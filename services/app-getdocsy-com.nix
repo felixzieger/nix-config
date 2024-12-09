@@ -4,7 +4,7 @@ let
   docsyDashboardPort = 8050;
   docsyWebPort = 8001;
   docsyDataDir = "/data/docsy/data";
-  docsyVersion = "v0.7.8";
+  docsyVersion = "v0.7.12";
   docsyWebDataDir = "/data/docsy_web/data";
   docsyWebVersion = "v0.0.57";
 in {
