@@ -6,7 +6,7 @@ let
   docsyDataDir = "/data/docsy/data";
   docsyVersion = "v0.7.8";
   docsyWebDataDir = "/data/docsy_web/data";
-  docsyWebVersion = "v0.0.51";
+  docsyWebVersion = "v0.0.53";
 in {
   config = {
     # Inspect sqlite database without docker exec
