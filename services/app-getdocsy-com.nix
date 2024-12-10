@@ -23,13 +23,13 @@ in {
         locations."/" = {
           proxyPass = "http://localhost:${toString docsyWebPort}";
         };
+        locations."/v1-dashboard" = {
+          proxyPass =
+            "http://localhost:${toString docsyDashboardPort}/dashboard";
+        };
         locations."/slack" = {
           proxyPass = "http://localhost:${toString docsySlackPort}/slack";
           proxyWebsockets = true;
-        };
-        locations."/dashboard" = {
-          proxyPass =
-            "http://localhost:${toString docsyDashboardPort}/dashboard";
         };
       };
     };
