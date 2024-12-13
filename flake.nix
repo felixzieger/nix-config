@@ -90,6 +90,7 @@
             ./services/bitwarden-sonnenhof-zieger-de.nix
             ./services/paperless-sonnenhof-zieger-de.nix
             ./services/tailscale.nix
+            ./services/nostr-felixzieger-de.nix
             inputs.agenix.nixosModules.default
           ];
         };
