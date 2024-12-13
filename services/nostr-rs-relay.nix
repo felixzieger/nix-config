@@ -11,7 +11,7 @@ let
     cfg.settings
     // {
       database = {
-        data_directory = "/var/lib/nostr-rs-relay";
+        data_directory = config.services.nostr-rs-relay.dataDir;
       };
       network = {
         port = config.services.nostr-rs-relay.port;
@@ -29,8 +29,14 @@ in
       default = 12849;
       type = lib.types.port;
       description = ''
-        Port to serve HTTP pages on.
+        Port to serve requests on.
       '';
+    };
+
+    dataDir = lib.mkOption {
+      type = lib.types.path;
+      default = "/var/lib/nostr-rs-relay";
+      description = lib.mdDoc "Directory holding data of nostr-rs-relay.";
     };
 
     settings = lib.mkOption {
@@ -52,6 +58,8 @@ in
         DynamicUser = true;
         Restart = "on-failure";
         Type = "simple";
+
+        ReadWritePaths = [ cfg.dataDir ];
 
         RuntimeDirectory = "nostr-rs-relay";
         StateDirectory = "nostr-rs-relay";
