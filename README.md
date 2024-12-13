@@ -1,12 +1,6 @@
-# How to use
+# nixos and darwin config
 
-Config files for nixos are in `/etc/nixos`.
-Reload config via `sudo nixos-rebuild switch`
-
-Config files for mac os are in `~/.nixpkgs`.
-Relod config via `darwin-rebuild switch --flake ~/.nixpkgs `
-
-## Add a new machine
+## Add a new nixos machine
 
 Working on the machine itself:
 
@@ -18,53 +12,64 @@ Working on the machine itself:
 - `git add hosts/<path-to-new-host-config>`
 - add `<hostname>` config to flake.nix
 - `nixos-rebuild switch --flake .#<hostname>`
-- rm -rf /etc/old_nixos
+- `systemctl reboot`
+- `systemctl status`
+- If everyrhing looks good, clean up via `rm -rf /etc/old_nixos`
 
 Remotely:
 
-- `nixos-rebuild --target-host felix@address-of-new-host> switch`´
+- write new config in this repo
+- `nixos-rebuild --target-host felix@address-of-new-host> switch`
+
+## How to switch to new config
+
+Config files for nixos are in `/etc/nixos`.
+Switch to config via `sudo nixos-rebuild switch`.
+
+Config files for mac os are in `~/.nixpkgs`.
+Switch to config via `darwin-rebuild switch --flake ~/.nixpkgs `.
+
 
 ## Update inputs
 
+Update versions in flake.lock via
+
 ```
-# Update flake.lock
 nix flake update
 ```
 
 ## Debug a service
 
-Use journalctrl to insepct logs. For example, to watch uptime-kuma related logs:
+Use journalctrl to insepct logs. 
 
-`journalctl -u uptime-kuma.service -b0`
-
-Where the 
-- `-u` argument is a unit name (retrievable by using systemctl) and
-- `-b 0` filters by current boot.
-
-## Show a config variable for debugging
-
-Add the following bit and rebuild switch
+For example, to check uptime-kuma related logs run
 
 ```
-system.extraDependencies = let
-  debugVal = config.networking.firewall.allowedTCPPorts;
-in lib.traceSeqN 3 debugVal [];
+journalctl -u uptime-kuma.service -e
 ```
+
+Useful flags are `-e` for directly show the latest logs or `--follow` for showing a live stream of logs.
 
 # Backups
 
 The flake uses restic to create backups on b2. I followed https://www.arthurkoziel.com/restic-backups-b2-nixos/ and https://francis.begyn.be/blog/nixos-restic-backups for setup.
 
-Start the service manually to trigger a new backup run:
-`$ sudo systemctl start restic-$job.service`
-Check the ouput for errors:
-`$ journalctl -u restic-$job.service`
-
-The restic service creates wrapper scripts for each job. 
+The [restic service](https://mynixos.com/nixpkgs/options/services.restic) creates wrapper scripts for each job. 
 The script is name `restic-$job`. It will automatically load the environment variables, repository name and password from the service definition.
 
+```
+# Start the service manually to trigger a new backup run
+systemctl start restic-$job.service
+
+# Check the ouput for errors
+journalctl -u restic-$job.service
+```
+
 For example, to restore the uptime-kuma backup run:
-`sudo restic-uptime-kuma restore latest --target /`
+
+```
+restic-uptime-kuma restore latest --target /
+```
 
 # Home Assistant
 
@@ -74,9 +79,6 @@ For example, to restore the uptime-kuma backup run:
 # Up next
 
 - Impermanence https://lantian.pub/en/article/modify-computer/nixos-impermanence.lantian/
-- Observability https://xeiaso.net/blog/prometheus-grafana-loki-nixos-2020-11-20/
-- Deploying to remote hosts https://nixos-and-flakes.thiscute.world/best-practices/remote-deployment (colema or nixos-rebuild)
-- Write proper modules (with options and all). See https://guekka.github.io/nixos-server-2/ for an example
 - Nextcloud backup to Schwalbe
 - Encryption at rest for servers (password for decryption via SSH at boot; see https://www.return12.net/decrypt-nixos-via-ssh/)
 - Get rid of ../../ imports. Have a look at https://github.com/NotAShelf/nyx/
