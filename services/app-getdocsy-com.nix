@@ -23,10 +23,10 @@ in {
         locations."/" = {
           proxyPass = "http://localhost:${toString docsyWebPort}";
         };
-        locations."/v1-dashboard" = {
-          proxyPass =
-            "http://localhost:${toString docsyDashboardPort}/dashboard";
-        };
+        # locations."/v1-dashboard" = {
+        #   proxyPass =
+        #     "http://localhost:${toString docsyDashboardPort}/dashboard";
+        # };
         locations."/slack" = {
           proxyPass = "http://localhost:${toString docsySlackPort}/slack";
           proxyWebsockets = true;
@@ -59,31 +59,31 @@ in {
             "com.centurylinklabs.watchtower.enable" = "false";
           }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
         };
-        docsy_dashboard = {
-          autoStart = true;
-          image = "ghcr.io/felixzieger/docsy:${docsyVersion}";
-          environment.TZ = "Europe/Berlin";
-          ports = [ "${builtins.toString docsyDashboardPort}:8050" ];
-          volumes = [ "${docsyDataDir}:/app/data" ];
-          login = {
-            registry = "ghcr.io";
-            username = "felixzieger";
-            passwordFile = config.age.secrets.ghcr-secret.path;
-          };
-          entrypoint = "poetry";
-          cmd = [
-            "run"
-            "gunicorn"
-            "-w"
-            "1"
-            "-b"
-            "0.0.0.0:8050"
-            "docsy.dashboard:flask_app"
-          ];
-          labels = {
-            "com.centurylinklabs.watchtower.enable" = "false";
-          }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
-        };
+        # docsy_dashboard = {
+        #   autoStart = true;
+        #   image = "ghcr.io/felixzieger/docsy:${docsyVersion}";
+        #   environment.TZ = "Europe/Berlin";
+        #   ports = [ "${builtins.toString docsyDashboardPort}:8050" ];
+        #   volumes = [ "${docsyDataDir}:/app/data" ];
+        #   login = {
+        #     registry = "ghcr.io";
+        #     username = "felixzieger";
+        #     passwordFile = config.age.secrets.ghcr-secret.path;
+        #   };
+        #   entrypoint = "poetry";
+        #   cmd = [
+        #     "run"
+        #     "gunicorn"
+        #     "-w"
+        #     "1"
+        #     "-b"
+        #     "0.0.0.0:8050"
+        #     "docsy.dashboard:flask_app"
+        #   ];
+        #   labels = {
+        #     "com.centurylinklabs.watchtower.enable" = "false";
+        #   }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
+        # };
         docsy_web = {
           autoStart = true;
           image = "ghcr.io/getdocsy/docsy:${docsyWebVersion}";
