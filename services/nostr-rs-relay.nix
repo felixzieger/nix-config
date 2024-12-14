@@ -21,36 +21,33 @@ let
 in
 {
   options.services.nostr-rs-relay = {
-    enable = lib.mkEnableOption { };
+    enable = lib.mkEnableOption;
 
     package = lib.mkPackageOption pkgs "nostr-rs-relay" { };
 
     port = lib.mkOption {
       default = 12849;
       type = lib.types.port;
-      description = ''
-        Port to serve requests on.
-      '';
+      description = "Listen on this port.";
     };
 
     dataDir = lib.mkOption {
       type = lib.types.path;
       default = "/var/lib/nostr-rs-relay";
-      description = lib.mdDoc "Directory holding data of nostr-rs-relay.";
+      description = "Directory for SQLite files.";
     };
 
     settings = lib.mkOption {
       inherit (settingsFormat) type;
       default = { };
-      description = lib.mdDoc ''
-        See https://git.sr.ht/~gheartsfield/nostr-rs-relay/#configuration for documentation.
-      '';
+      description = "See https://git.sr.ht/~gheartsfield/nostr-rs-relay/#configuration for documentation.";
     };
   };
 
   config = lib.mkIf cfg.enable {
     systemd.services.nostr-rs-relay = {
       description = "nostr-rs-relay";
+      wants = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
@@ -91,4 +88,9 @@ in
       };
     };
   };
+
+  meta.maintainers = with lib.maintainers; [
+    felixzieger
+    jb55
+  ];
 }
