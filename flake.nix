@@ -33,9 +33,9 @@
             ./hosts/nixos
             ./hosts/nixos/schwalbe/configuration.nix
             ./services/nginx.nix
-            ./services/adguard.nix
+            # ./services/adguard.nix
             ./services/uptime-kuma.nix
-            ./services/calibre.nix
+            # ./services/calibre.nix
             ./services/frigate-sonnenhof-zieger-de.nix
             ./services/tailscale.nix
 
