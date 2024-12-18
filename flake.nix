@@ -12,13 +12,16 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
 
+
+    nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
+
     mac-app-util.url =
       "github:hraban/mac-app-util"; # https://discourse.nixos.org/t/mac-applications-installed-by-nix-are-not-loaded-by-spotlight/14129/16
     # mac-app-util.inputs.nixpkgs.follows = "nixpkgs"; # Requires specific versions
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, nixpkgs-darwin, nix-darwin
-    , nixpkgs-unstable, mac-app-util, ... }: {
+    , nixpkgs-unstable, mac-app-util, nix-bitcoin, ... }: {
       nixosConfigurations = {
         "schwalbe" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -35,6 +38,10 @@
             ./services/calibre.nix
             ./services/frigate-sonnenhof-zieger-de.nix
             ./services/tailscale.nix
+
+            nix-bitcoin.nixosModules.default
+            (nix-bitcoin + "/modules/presets/enable-tor.nix")
+            ./services/bitcoin.nix
 
             ./services/docker.nix
             ./services/home-assistant.nix
