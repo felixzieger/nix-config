@@ -57,16 +57,16 @@ in {
                 # ch1 is lower resolution
                 "rtsp://BJA3Y0v5:gZbBIUBXeyj4w70q@192.168.178.131:1337/live/ch1";
               input_args = "preset-rtsp-restream";
-              roles = [ "detect" ];
+              roles = [ "detect" "record" ];
             }
 
-            {
-              path =
-                # ch0 is FHD            
-                "rtsp://BJA3Y0v5:gZbBIUBXeyj4w70q@192.168.178.131:1337/live/ch0";
-              input_args = "preset-rtsp-restream";
-              roles = [ "record" ];
-            }
+            # {
+            #   path =
+            #     # ch0 is FHD; it's broken, so we use ch1 above
+            #     "rtsp://BJA3Y0v5:gZbBIUBXeyj4w70q@192.168.178.131:1337/live/ch0";
+            #   input_args = "preset-rtsp-restream";
+            #   roles = [ "record" ];
+            # }
           ];
         };
 
