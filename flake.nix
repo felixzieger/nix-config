@@ -48,6 +48,8 @@
 
             ./services/systemd-email-notify.nix
 
+            ./services/alby-hub.nix
+
             inputs.agenix.nixosModules.default
 
           ];

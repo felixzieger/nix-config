@@ -5,7 +5,7 @@
 }:
 let
   cfg = config.services.alby-hub;
-  albyHub = pkgs.callPackage ./alby-hub-pkg.nix {};
+  albyHubPkg = pkgs.callPackage ./alby-hub-pkg.nix {};
 in
 {
   options.services.alby-hub = {
@@ -45,7 +45,7 @@ in
         ];
 
         # You'll need to package alby-hub and reference it here
-        ExecStart = "${pkgs.alby-hub}/bin/albyhub";
+        ExecStart = "${albyHubPkg}/bin/albyhub";
 
         StateDirectory = "alby-hub";
         ReadWritePaths = [ cfg.dataDir ];
