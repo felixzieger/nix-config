@@ -44,8 +44,8 @@ in
   # Enable logging for the linux builder
   launchd.daemons.linux-builder = {
     serviceConfig = {
-        StandardOutPath = "/var/log/darwin-builder.log";
-        StandardErrorPath = "/var/log/darwin-builder.log";
+      StandardOutPath = "/var/log/darwin-builder.log";
+      StandardErrorPath = "/var/log/darwin-builder.log";
     };
   };
 
@@ -201,6 +201,9 @@ in
     pkgs.nodejs_22
     pkgs.bun
     pkgs.typescript
+
+    pkgs.cargo
+    pkgs.rustc
 
     agenix.packages."${pkgs.system}".default
   ];
