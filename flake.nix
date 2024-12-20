@@ -33,9 +33,7 @@
             ./hosts/nixos
             ./hosts/nixos/schwalbe/configuration.nix
             ./services/nginx.nix
-            # ./services/adguard.nix
             ./services/uptime-kuma.nix
-            # ./services/calibre.nix
             ./services/frigate-sonnenhof-zieger-de.nix
             ./services/tailscale.nix
 
@@ -45,10 +43,10 @@
 
             ./services/docker.nix
             ./services/home-assistant.nix
+            ./services/alby-felixzieger-de.nix
 
             ./services/systemd-email-notify.nix
 
-            ./services/alby-hub.nix
 
             inputs.agenix.nixosModules.default
 
