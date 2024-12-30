@@ -2,7 +2,8 @@ local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 lspconfig.terraformls.setup { capabilities = capabilities }
 lspconfig.html.setup { capabilities = capabilities }
-lspconfig.ts_ls.setup { capabilities = capabilities }
+lspconfig.ts_ls.setup { capabilities = capabilities } -- typescript
+lspconfig.rust_analyzer.setup { capabilities = capabilities }
 
 -- python
 lspconfig.ruff.setup { capabilities = capabilities }

@@ -202,8 +202,12 @@ in
     pkgs.bun
     pkgs.typescript
 
+    # nostr
     pkgs.cargo
+    pkgs.cargo-watch
     pkgs.rustc
+    pkgs.rust-analyzer
+    pkgs.nak
 
     agenix.packages."${pkgs.system}".default
   ];
