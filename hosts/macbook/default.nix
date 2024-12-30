@@ -166,16 +166,14 @@ in
     # pkgs.elia # llm tui https://github.com/NixOS/nixpkgs/pull/317782
     # pkgs.posting # HTTP tui https://github.com/NixOS/nixpkgs/pull/325971
     unstable.aider-chat
-    pkgs.texliveFull # latex for CV
     pkgs.rectangle
     pkgs.spotify
     pkgs.monitorcontrol
     pkgs.signal-desktop
     pkgs.slack
-    # unstable.ghostty # marked as broken
-    pkgs.watchman
     pkgs.opentofu
-    # unstable.calibre # marked as broken
+    # unstable.ghostty # marked as broken for darwin as of 2024-12-30
+    # pkgs.calibre # marked as broken for darwin as of 2024-12-30
 
     # Python development environment
     pkgs.python3
