@@ -173,6 +173,7 @@ in
     # pkgs.elia # llm tui https://github.com/NixOS/nixpkgs/pull/317782
     # pkgs.posting # HTTP tui https://github.com/NixOS/nixpkgs/pull/325971
     unstable.aider-chat
+    pkgs.texliveFull # latex for CV
     pkgs.rectangle
     pkgs.spotify
     pkgs.monitorcontrol
