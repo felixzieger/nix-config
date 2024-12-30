@@ -121,13 +121,6 @@ in
         ];
       };
 
-      programs.kitty = {
-        enable = true;
-        settings = {
-          font_family = "SourceCodePro";
-        };
-      };
-
       # This value determines the home Manager release that your
       # configuration is compatible with. This helps avoid breakage
       # when a new home Manager release introduces backwards
@@ -179,7 +172,7 @@ in
     pkgs.monitorcontrol
     pkgs.signal-desktop
     pkgs.slack
-    pkgs.kitty
+    # unstable.ghostty # marked as broken
     pkgs.watchman
     pkgs.opentofu
     # unstable.calibre # marked as broken
