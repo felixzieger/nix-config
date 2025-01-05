@@ -3,6 +3,9 @@
   ...
 }:
 {
+  # TODO Switch to service definition in unstable
+  # https://discourse.nixos.org/t/how-to-use-unstable-nixpkgs-in-imports-with-flake/17414/7
+  # https://discourse.nixos.org/t/how-to-use-service-definitions-from-unstable-channel/14767/4
   imports = [ ./nostr-rs-relay.nix ];
 
   services.nginx.virtualHosts."nostr.felixzieger.de" = {
