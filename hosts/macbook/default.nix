@@ -174,6 +174,7 @@ in
     pkgs.opentofu
     # unstable.ghostty # marked as broken for darwin as of 2024-12-30
     # pkgs.calibre # marked as broken for darwin as of 2024-12-30
+    pkgs.audacity
 
     # Python development environment
     pkgs.python3
