@@ -54,7 +54,7 @@ in {
 
         plausible = {
           autoStart = true;
-          image = "ghcr.io/plausible/community-edition:v2.1.1";
+          image = "ghcr.io/plausible/community-edition:v2.1.4";
           entrypoint = "sh";
           cmd = [
             "-c"
