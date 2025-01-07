@@ -68,7 +68,7 @@ in {
             SMTP_HOST_ADDR = "smtp.strato.de";
             SMTP_HOST_PORT = toString 465;
             SMTP_USER_NAME = "bot@sonnenhof-zieger.de";
-            SMTP_HOST_SSL_ENABLED = toString true;
+            SMTP_HOST_SSL_ENABLED = "true"; # toString true; yields 1 which is not supported
           };
           environmentFiles =
             [ config.age.secrets.plausible-sonnenhof-zieger-de-conf-env.path ];
