@@ -50,6 +50,9 @@
     ];
   };
 
+  # See https://ghostty.org/docs/help/terminfo#ssh for a good explanation of terminfo
+  environment.enableAllTerminfo = true;
+
   environment.systemPackages = with pkgs;
     [
       # systemctl-tui # view systemctl interactively
