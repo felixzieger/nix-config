@@ -168,7 +168,6 @@ in
     unstable.aider-chat
     pkgs.rectangle
     pkgs.spotify
-    pkgs.monitorcontrol
     pkgs.signal-desktop
     pkgs.slack
     pkgs.opentofu
