@@ -1,8 +1,10 @@
 # nixos and darwin config
 
+Config for nixos servers and macbook.
+
 ## Add a new nixos machine
 
-Working on the machine itself:
+Log into the machine and run:
 
 - `mv /etc/nixos /etc/old_nixos`
 - `nix-shell -p git`
@@ -16,12 +18,11 @@ Working on the machine itself:
 - `systemctl status`
 - If everyrhing looks good, clean up via `rm -rf /etc/old_nixos`
 
-Remotely:
+If SSH access has been established write new config in this repo and run:
 
-- write new config in this repo
 - `nixos-rebuild --target-host felix@address-of-new-host> switch`
 
-## How to switch to new config
+## Switch to new config
 
 Config files for nixos are in `/etc/nixos`.
 Switch to config via `sudo nixos-rebuild switch`.
@@ -73,13 +74,11 @@ restic-uptime-kuma restore latest --target /
 
 # Home Assistant
 
-- For Emfit integration I used https://github.com/jxlarrea/ha-emfitqs but I don't exactly remember how I set it up but I don't exactly remember how I set it up
+- For Emfit integration I used https://github.com/jxlarrea/ha-emfitqs by copying it to data dir manually.
 - Voice control in German is pretty bad https://community.home-assistant.io/t/whisper-is-really-bad-at-understanding-german-what-can-i-do-about-that/599167/3
 
 # Up next
 
 - Impermanence https://lantian.pub/en/article/modify-computer/nixos-impermanence.lantian/
 - Nextcloud backup to Schwalbe
-- Encryption at rest for servers (password for decryption via SSH at boot; see https://www.return12.net/decrypt-nixos-via-ssh/)
 - Get rid of ../../ imports. Have a look at https://github.com/NotAShelf/nyx/
-- https://github.com/samuelclay/NewsBlur/ as omnivore replacement (currently trying out inoreader)
