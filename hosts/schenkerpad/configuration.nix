@@ -1,12 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-    ./nvidia.nix
-   ./nvidia.nix
-   ./../../modules/ssh
-  ];
+  imports = [ ./hardware-configuration.nix ./nvidia.nix ./nvidia.nix ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -51,20 +46,21 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  environment.gnome.excludePackages = (with pkgs; [ gnome-photos gnome-tour ])
-    ++ (with pkgs.gnome; [
-      yelp # gnome help
-      cheese # webcam tool
-      simple-scan # document scanner
-      gnome-music
-      epiphany # web browser
-      # geary # email reader
-      totem # video player
-      tali # poker game
-      iagno # go game
-      hitori # sudoku game
-      atomix # puzzle game
-    ]);
+  environment.gnome.excludePackages = [
+    pkgs.gnome-photos
+    pkgs.gnome-tour
+    pkgs.yelp # gnome help
+    pkgs.cheese # webcam tool
+    pkgs.simple-scan # document scanner
+    pkgs.gnome-music
+    pkgs.epiphany # web browser
+    # pkgs.geary # email reader
+    pkgs.totem # video player
+    pkgs.tali # poker game
+    pkgs.iagno # go game
+    pkgs.hitori # sudoku game
+    pkgs.atomix # puzzle game
+  ];
 
   security.sudo.enable = true;
   security.sudo.wheelNeedsPassword = false;
@@ -84,8 +80,6 @@
   # Enable CUPS to print documents.
   services.printing.enable = false;
 
-  # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {

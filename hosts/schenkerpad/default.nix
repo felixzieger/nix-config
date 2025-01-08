@@ -39,6 +39,7 @@
       ./../../modules/tmux
       ./../../modules/neovim
       ./../../modules/git
+      ./../../modules/ssh
     ];
 
     # This value determines the home Manager release that your
