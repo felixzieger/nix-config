@@ -1,7 +1,23 @@
-{ self, pkgs, agenix, home-manager, ... }: {
-  fonts.packages = with pkgs;
-    [ (nerdfonts.override { fonts = [ "DejaVuSansMono" "SourceCodePro" ]; }) ];
+{
+  self,
+  pkgs,
+  agenix,
+  home-manager,
+  ...
+}:
+{
+  fonts.packages = with pkgs; [
+    (nerdfonts.override {
+      fonts = [
+        "DejaVuSansMono"
+        "SourceCodePro"
+      ];
+    })
+  ];
 
+  environment.systemPackages = [ pkgs.ghostty pkgs.eternal-terminal ];
+
+  home-manager.backupFileExtension = "backup";
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.felix = {
