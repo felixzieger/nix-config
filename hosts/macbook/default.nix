@@ -170,6 +170,7 @@ in
     pkgs.spotify
     pkgs.signal-desktop
     unstable.whatsapp-for-mac
+    pkgs.gimp
     pkgs.slack
     pkgs.opentofu
     # unstable.ghostty # marked as broken for darwin as of 2024-12-30
