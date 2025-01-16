@@ -1,6 +1,5 @@
 let
-  felix =
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOTTX+nJfoLV+smER/g7CbqZQNN0W++HwCK8EP4oggCJ";
+  felix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKAr2B730R5M9rMgyb92NALs5G4TLmF0+ua743dEbffv";
   users = [ felix ];
 
   blausieb =
@@ -60,6 +59,15 @@ in {
   "plausible-sonnenhof-zieger-de-restic-environment.age".publicKeys =
     [ blausieb ];
   "plausible-sonnenhof-zieger-de-restic-password.age".publicKeys = [ blausieb ];
+
+  "nextcloud-sonnenhof-zieger-de-adminpass.age".publicKeys = [
+    cameron
+    felix
+  ];
+  "nextcloud-sonnenhof-zieger-de-settings.age".publicKeys = [
+    cameron
+    felix
+  ];
 
   "all-buckets-read-only-restic-environment.age".publicKeys = systems;
 }
