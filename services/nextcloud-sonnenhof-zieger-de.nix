@@ -4,6 +4,9 @@
   ...
 }:
 {
+  # Inspect mysql database
+  environment.systemPackages = with pkgs; [ mycli ];
+
   services.nginx.virtualHosts."${config.services.nextcloud.hostName}" = {
     forceSSL = true;
     enableACME = true;
@@ -16,7 +19,10 @@
     # nextcloud-sonnenhof-zieger-de-restic-password.file = ../secrets/nextcloud-sonnenhof-zieger-de-restic-password.age;
 
     # nextcloud-sonnenhof-zieger-de-dbpass.file = ../secrets/nextcloud-sonnenhof-zieger-de-dbpass.age;
-    nextcloud-sonnenhof-zieger-de-adminpass.file = ../secrets/nextcloud-sonnenhof-zieger-de-adminpass.age;
+    nextcloud-sonnenhof-zieger-de-adminpass = {
+      file = ../secrets/nextcloud-sonnenhof-zieger-de-adminpass.age;
+      owner = "nextcloud";
+    };
     nextcloud-sonnenhof-zieger-de-settings.file = ../secrets/nextcloud-sonnenhof-zieger-de-settings.age;
   };
 
@@ -24,7 +30,6 @@
     enable = true;
     package = pkgs.nextcloud30;
     hostName = "nextcloud.sonnenhof-zieger.de";
-    home = "/data/nextcloud/home";
     https = true;
     # configureRedis = true; # https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/caching_configuration.html
     database.createLocally = true;
