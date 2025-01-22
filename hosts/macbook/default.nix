@@ -165,11 +165,13 @@ in
     # pkgs.jan # LLM gui; currently only packaged for linux on nixos
     # pkgs.elia # llm tui https://github.com/NixOS/nixpkgs/pull/317782
     # pkgs.posting # HTTP tui https://github.com/NixOS/nixpkgs/pull/325971
-    unstable.aider-chat
+    pkgs.aider-chat
     pkgs.rectangle
     pkgs.spotify
-    pkgs.signal-desktop
+    unstable.signal-desktop # Receives a lot of updates, better stay with the newest one we can
     unstable.whatsapp-for-mac
+    # pkgs.thunderbird # Not supported for x86_64-apple-darwin as of 2024-01-22
+    # pkgs.firefox # Not supported for x86_64-apple-darwin as of 2024-01-22
     pkgs.gimp
     pkgs.slack
     pkgs.opentofu
