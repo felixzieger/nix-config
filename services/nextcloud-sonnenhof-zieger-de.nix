@@ -18,7 +18,6 @@
     # nextcloud-sonnenhof-zieger-de-restic-environment.file = ../secrets/nextcloud-sonnenhof-zieger-de-restic-environment.age;
     # nextcloud-sonnenhof-zieger-de-restic-password.file = ../secrets/nextcloud-sonnenhof-zieger-de-restic-password.age;
 
-    # nextcloud-sonnenhof-zieger-de-dbpass.file = ../secrets/nextcloud-sonnenhof-zieger-de-dbpass.age;
     nextcloud-sonnenhof-zieger-de-adminpass = {
       file = ../secrets/nextcloud-sonnenhof-zieger-de-adminpass.age;
       owner = "nextcloud";
@@ -30,16 +29,15 @@
     enable = true;
     package = pkgs.nextcloud30;
     hostName = "nextcloud.sonnenhof-zieger.de";
+
+    home = "/data/nextcloud_basic/home";
+    datadir = "/data/nextcloud_basic/data"; # https://github.com/NixOS/nixpkgs/issues/369585
     https = true;
     # configureRedis = true; # https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/caching_configuration.html
     database.createLocally = true;
     config = {
       dbtype = "mysql";
       dbname = "nextcloud";
-
-      # Database is managed via this service and uses unix socket instead of password
-      # dbuser = "nextcloud";
-      # dbpassFile = config.age.secrets.nextcloud-sonnenhof-zieger-de-dbpass.path;
 
       adminuser = "root";
       adminpassFile = config.age.secrets.nextcloud-sonnenhof-zieger-de-adminpass.path;
@@ -61,6 +59,13 @@
       mail_smtpsecure = "ssl";
       mail_smtpname = "nextcloud@sonnenhof-zieger.de";
 
+      apps_paths = [
+        {
+          url = "/apps";
+          path = "${config.services.nextcloud.datadir}/custom_apps";
+          writable = toString true;
+        }
+      ];
       # Contains paswordsalt, secret, mail_smtppassword
       secretFile = config.age.secrets.nextcloud-sonnenhof-zieger-de-settings.path;
     };
