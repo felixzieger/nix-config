@@ -174,7 +174,6 @@ in
     # pkgs.posting # HTTP tui https://github.com/NixOS/nixpkgs/pull/325971
     pkgs.aider-chat
     pkgs.rectangle
-    pkgs.stats
     pkgs.spotify
     unstable.signal-desktop # Receives a lot of updates, better stay with the newest one we can
     unstable.whatsapp-for-mac

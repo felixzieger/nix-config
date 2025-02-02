@@ -79,6 +79,7 @@ restic-uptime-kuma restore latest --target /
 
 # Up next
 
+- Radicle (git hosting) on Blausieb
 - Impermanence https://lantian.pub/en/article/modify-computer/nixos-impermanence.lantian/
 - Nextcloud backup to Schwalbe
 - Get rid of ../../ imports. Have a look at https://github.com/NotAShelf/nyx/
