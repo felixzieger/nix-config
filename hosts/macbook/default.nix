@@ -121,13 +121,6 @@ in
         ];
       };
 
-      programs.kitty = {
-        enable = true;
-        settings = {
-          font_family = "SourceCodePro";
-        };
-      };
-
       # This value determines the home Manager release that your
       # configuration is compatible with. This helps avoid breakage
       # when a new home Manager release introduces backwards
@@ -181,7 +174,6 @@ in
     # pkgs.firefox # Not supported for x86_64-apple-darwin as of 2024-01-22
     pkgs.gimp
     pkgs.slack
-    pkgs.kitty
     pkgs.opentofu
     # unstable.ghostty # marked as broken for darwin as of 2024-12-30
     # pkgs.calibre # marked as broken for darwin as of 2024-12-30
