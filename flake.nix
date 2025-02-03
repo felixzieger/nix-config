@@ -15,13 +15,16 @@
 
     nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
 
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
+
+
     mac-app-util.url =
       "github:hraban/mac-app-util"; # https://discourse.nixos.org/t/mac-applications-installed-by-nix-are-not-loaded-by-spotlight/14129/16
     # mac-app-util.inputs.nixpkgs.follows = "nixpkgs"; # Requires specific versions
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, nixpkgs-darwin, nix-darwin
-    , nixpkgs-unstable, mac-app-util, nix-bitcoin, ... }: {
+    , nixpkgs-unstable, mac-app-util, nix-bitcoin, simple-nixos-mailserver, ... }: {
       nixosConfigurations = {
         "schwalbe" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -78,6 +81,9 @@
             ./hosts/nixos/hedwig/configuration.nix
             ./services/nginx.nix
             ./services/up-sonnenhof-zieger-de.nix
+
+            simple-nixos-mailserver.nixosModule
+            ./services/mail.nix
 
             inputs.agenix.nixosModules.default
           ];
