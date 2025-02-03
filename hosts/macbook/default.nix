@@ -169,7 +169,7 @@ in
     pkgs.rectangle
     pkgs.spotify
     unstable.signal-desktop # Receives a lot of updates, better stay with the newest one we can
-    unstable.whatsapp-for-mac
+    # unstable.whatsapp-for-mac # Too often outdated
     # pkgs.thunderbird # Not supported for x86_64-apple-darwin as of 2024-01-22
     # pkgs.firefox # Not supported for x86_64-apple-darwin as of 2024-01-22
     pkgs.gimp
