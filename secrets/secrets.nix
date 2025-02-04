@@ -74,7 +74,7 @@ in
   "plausible-sonnenhof-zieger-de-restic-environment.age".publicKeys = [ blausieb ];
   "plausible-sonnenhof-zieger-de-restic-password.age".publicKeys = [ blausieb ];
 
-  "think-in-sync-mail.age".publicKeys = [ blausieb ];
+  "think-in-sync-mail.age".publicKeys = [ hedwig ];
 
   "nextcloud-sonnenhof-zieger-de-adminpass.age".publicKeys = [
     cameron

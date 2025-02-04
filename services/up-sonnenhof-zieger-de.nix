@@ -7,8 +7,8 @@ in {
     services.nginx.virtualHosts."${uptimeKumaHost}" = {
       forceSSL = true;
       enableACME = true;
-      http3 = true;
-      quic = true;
+      # http3 = true;
+      # quic = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString uptimeKumaPort}";
         proxyWebsockets = true;

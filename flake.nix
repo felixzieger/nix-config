@@ -76,14 +76,14 @@
           specialArgs = inputs;
           modules = [
             home-manager.nixosModules.home-manager
-            ./hosts/common
+            ./hosts/minimal
             ./hosts/nixos
             ./hosts/nixos/hedwig/configuration.nix
             ./services/nginx.nix
             ./services/up-sonnenhof-zieger-de.nix
 
             simple-nixos-mailserver.nixosModule
-            ./services/mail.nix
+            ./services/think-in-sync-mail.nix
 
             inputs.agenix.nixosModules.default
           ];
