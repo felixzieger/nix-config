@@ -47,4 +47,5 @@ switch target_host=hostname:
 # Garbage collect old OS generations and remove stale packages from the nix store
 gc generations="5d":
   nix-env --delete-generations {{generations}}
+  nix-collect-garbage --delete-older-than {{generations}}
   nix-store --gc
