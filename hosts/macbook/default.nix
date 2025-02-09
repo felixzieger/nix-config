@@ -181,6 +181,7 @@ in
 
     # Python development environment
     pkgs.python3
+    pkgs.pipx
     pkgs.uv
     pkgs.poetry # package management
     pkgs.ruff # formatting and linting
@@ -190,6 +191,7 @@ in
     pkgs.oci-cli
     pkgs.gh
     pkgs.vale
+    pkgs.supabase-cli
 
     unstable.scooter
 
