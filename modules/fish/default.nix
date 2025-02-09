@@ -10,7 +10,7 @@
       ll = "ls -l";
       la = "ls -la";
       tree = "ls --tree";
-      dig = "dog";
+      dog = "doggo";
     };
   };
   programs.zoxide.enable = true;
