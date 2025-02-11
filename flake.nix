@@ -36,7 +36,7 @@
             ./hosts/nixos
             ./hosts/nixos/schwalbe/configuration.nix
             ./services/nginx.nix
-            ./services/uptime-kuma.nix
+            ./services/up-felixzieger-de.nix
             ./services/frigate-sonnenhof-zieger-de.nix
             ./services/tailscale.nix
 
