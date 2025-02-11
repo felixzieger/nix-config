@@ -8,6 +8,8 @@
   # https://discourse.nixos.org/t/how-to-use-service-definitions-from-unstable-channel/14767/4
   imports = [ ./nostr-rs-relay.nix ];
 
+  # Check stored notes via https://jumble.social/?r=nostr.felixzieger.de
+  # Check relay performance on https://nostr.watch/
   services.nginx.virtualHosts."nostr.felixzieger.de" = {
     forceSSL = true;
     enableACME = true;
@@ -37,7 +39,34 @@
         subscriptions_per_min = 10;
         limit_scrapers = false;
       };
+    };
+  };
 
+  age.secrets = {
+    nostr-felixzieger-de-restic-environment.file = ../secrets/nostr-felixzieger-de-restic-environment.age;
+    nostr-felixzieger-de-restic-password.file = ../secrets/nostr-felixzieger-de-restic-password.age;
+  };
+
+  services.restic.backups = {
+    nostr = {
+      initialize = true;
+
+      paths = [ config.services.nostr-rs-relay.dataDir ];
+
+      repository = "b2:nostr-felixzieger-de";
+      environmentFile = config.age.secrets.nostr-felixzieger-de-restic-environment.path;
+      passwordFile = config.age.secrets.nostr-felixzieger-de-restic-password.path;
+
+      timerConfig = {
+        OnCalendar = "04:00";
+        RandomizedDelaySec = "5min";
+      };
+
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 5"
+        "--keep-monthly 12"
+      ];
     };
   };
 }

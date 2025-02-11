@@ -87,5 +87,9 @@ in
   "alby-felixzieger-de-restic-password.age".publicKeys = [ schwalbe felix ];
   "alby-felixzieger-de-restic-environment.age".publicKeys = [ schwalbe felix ];
 
+  "nostr-felixzieger-de-restic-password.age".publicKeys = systems ++ [ felix ];
+  "nostr-felixzieger-de-restic-environment.age".publicKeys = systems ++ [ blausieb felix ];
+
+
   "all-buckets-read-only-restic-environment.age".publicKeys = systems;
 }
