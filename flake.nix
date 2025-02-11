@@ -83,7 +83,7 @@
             ./services/up-sonnenhof-zieger-de.nix
 
             simple-nixos-mailserver.nixosModule
-            ./services/think-in-sync-mail.nix
+            ./services/mail-think-in-sync-com.nix
 
             inputs.agenix.nixosModules.default
           ];
