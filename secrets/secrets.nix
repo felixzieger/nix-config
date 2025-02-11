@@ -85,5 +85,7 @@ in
     felix
   ];
 
+  "alby-felixzieger-de-env.age".publicKeys = [ schwalbe felix ];
+
   "all-buckets-read-only-restic-environment.age".publicKeys = systems;
 }

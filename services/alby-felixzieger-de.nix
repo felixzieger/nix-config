@@ -1,4 +1,5 @@
 {
+  config,
   ...
 }:
 let
@@ -15,6 +16,10 @@ in
     };
   };
 
+  age.secrets = {
+    alby-felixzieger-de-env.file = ../secrets/alby-felixzieger-de-env.age;
+  };
+
   virtualisation.docker.enable = true;
   # I followed https://github.com/getAlby/hub/blob/master/docker-compose.yml
   virtualisation.oci-containers = {
@@ -29,8 +34,8 @@ in
         ports = [ "${builtins.toString albyHubPort}:8080" ];
         environment = {
           WORK_DIR = "/data/albyhub";
-          # LOG_EVENTS = toString true;
         };
+        environmentFiles = [ config.age.secrets.alby-felixzieger-de-env.path ];
       };
     };
   };
