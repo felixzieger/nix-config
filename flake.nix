@@ -48,9 +48,6 @@
             ./services/home-assistant.nix
             ./services/alby-felixzieger-de.nix
 
-            ./services/systemd-email-notify.nix
-
-
             inputs.agenix.nixosModules.default
 
           ];

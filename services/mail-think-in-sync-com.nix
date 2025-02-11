@@ -4,6 +4,9 @@
     think-in-sync-mail.file = ../secrets/think-in-sync-mail.age;
   };
 
+  # I use msmtp for sendmail (see systemd-email-notify)
+  services.postfix.setSendmail = false;
+
   mailserver = {
     enable = true;
     fqdn = "mail.think-in-sync.com";

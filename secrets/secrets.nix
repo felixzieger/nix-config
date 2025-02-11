@@ -18,7 +18,7 @@ let
   ];
 in
 {
-  "email-password-bot-sonnenhof-zieger.age".publicKeys = systems;
+  "email-password-bot-sonnenhof-zieger.age".publicKeys = systems ++ [ felix ];
 
   "tailscale-authkey.age".publicKeys = systems;
 

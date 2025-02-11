@@ -3,6 +3,8 @@
   boot.loader.systemd-boot.configurationLimit =
     30; # prevent boot partition running out of disk space
 
+  imports = [ ../../services/systemd-email-notify.nix ];
+
   nix.settings.trusted-users =
     # Needed for pushing changes via `nixos-rebuild --target-host felix@<host>.felixzieger.de switch`
     # Adding a user equals password-less sudo. See https://github.com/NixOS/nix/issues/2127#issuecomment-2214837817
