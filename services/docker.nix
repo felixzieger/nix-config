@@ -18,8 +18,10 @@
           environment = {
             WATCHTOWER_LABEL_ENABLE = "false";
             WATCHTOWER_NOTIFICATIONS = "email";
+            WATCHTOWER_NOTIFICATIONS_LEVEL = "warn";
+            WATCHTOWER_NOTIFICATION_TITLE_TAG = "[${config.networking.hostName}] ";
             WATCHTOWER_NOTIFICATION_EMAIL_FROM = "bot@sonnenhof-zieger.de";
-            WATCHTOWER_NOTIFICATION_EMAIL_TO = "admin@felixzieger.de";
+            WATCHTOWER_NOTIFICATION_EMAIL_TO = "alerts@felixzieger.de";
             WATCHTOWER_NOTIFICATION_EMAIL_SERVER = "smtp.strato.de";
             WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT = "465";
             WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER =
