@@ -17,18 +17,6 @@
     dates = "Sat *-*-* 04:30:00";
     options = "--delete-older-than 30d";
   };
-  system.autoUpgrade = {
-    enable = true;
-    flake = self.outPath;
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "--commit-lock-file"
-      "-L" # print build logs
-    ];
-    dates = "Sat *-*-* 02:30:00";
-    allowReboot = true;
-  };
 
   systemd.enableEmergencyMode = false;
   services.journald.extraConfig =
