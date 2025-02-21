@@ -6,7 +6,6 @@
 }:
 let
   cfg = config.services.haven;
-  haven-package = pkgs.callPackage ./haven-package.nix { };
 in
 {
   options.services.haven = {
@@ -14,7 +13,7 @@ in
 
     package = lib.mkOption {
       type = lib.types.package;
-      default = haven-package;
+      # TODO add default once merged to nixpkgs
       description = "The Haven package to use.";
     };
 

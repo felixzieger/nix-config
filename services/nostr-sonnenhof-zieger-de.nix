@@ -1,7 +1,11 @@
 {
   config,
+  pkgs,
   ...
 }:
+let
+  haven-package = pkgs.callPackage ./haven-package.nix { };
+in
 {
   imports = [ ./haven.nix ];
 
@@ -15,6 +19,7 @@
 
   services.haven = {
     enable = true;
+    package = haven-package;
     relayUrl = "nostr.sonnenhof-zieger.de";
     ownerName = "sonnenhof-zieger";
     ownerNpub = "npub1we8qkts8j9znh3ma0dpa77ys2zm4rrulp6r5zuqn2pp6pn3jfamsy7c6je";
