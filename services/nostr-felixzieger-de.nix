@@ -1,7 +1,15 @@
 {
   config,
+  pkgs,
+  nixpkgs-unstable,
   ...
 }:
+let
+  unstable = import nixpkgs-unstable {
+    system = pkgs.system;
+    config.allowUnfree = true;
+  };
+in
 {
   # TODO Switch to service definition in unstable
   # https://discourse.nixos.org/t/how-to-use-unstable-nixpkgs-in-imports-with-flake/17414/7
@@ -21,6 +29,7 @@
 
   services.nostr-rs-relay = {
     enable = true;
+    package = unstable.nostr-rs-relay; # update to 0.9.0 on 2025-02-21
     settings = {
 
       info = {
