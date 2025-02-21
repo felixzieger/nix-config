@@ -37,7 +37,8 @@ in
 
     ownerName = lib.mkOption {
       type = lib.types.str;
-      description = "The name of the owner.";
+      description = "The name of the owner. Used for relay names and descriptions.";
+      default = "a nostrich";
     };
 
     blastrRelays = lib.mkOption {
@@ -65,7 +66,7 @@ in
     settings = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
       default = { };
-      description = "Additional environment variables to set for the Haven service.";
+      description = "Additional environment variables to set for the Haven service. See https://github.com/bitvora/haven for documentation.";
       example = lib.literalExpression ''
         {
           PRIVATE_RELAY_NAME = "My Custom Relay Name";
@@ -78,7 +79,7 @@ in
       type = lib.types.nullOr lib.types.path;
       default = null;
       description = ''
-        Path to a file containing sensitive environment variables. This file will be read by systemd.
+        Path to a file containing sensitive environment variables. See https://github.com/bitvora/haven for documentation.
         The file should contain environment-variable assignments like:
         S3_SECRET_KEY=mysecretkey
         S3_ACCESS_KEY_ID=myaccesskey
