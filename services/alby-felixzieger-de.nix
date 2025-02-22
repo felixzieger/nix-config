@@ -36,6 +36,9 @@ in
           LOG_LEVEL = toString 3;
         };
         environmentFiles = [ config.age.secrets.alby-felixzieger-de-env.path ];
+        labels = {
+          "io.containers.autoupdate" = "registry";
+        };
       };
     };
   };

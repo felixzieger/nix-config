@@ -4,7 +4,8 @@ let
   homeAssistantConfigDir = "/data/HomeAssistant";
   whisperPort = 10300;
   piperPort = 10200;
-in {
+in
+{
   config = {
     # This requires setting use_x_forwarded_for and trusted_proxies in configuration.yaml
     # Check container logs for the address of the proxy. Was ::1 for me.
@@ -16,17 +17,16 @@ in {
       };
     };
 
-    services.nginx.virtualHosts."home.${config.networking.hostName}.felixzieger.de" =
-      {
-        forceSSL = true;
-        enableACME = true;
-        http3 = true;
-        quic = true;
-        locations."/" = {
-          proxyPass = "http://localhost:${toString homeAssistantPort}";
-          proxyWebsockets = true;
-        };
+    services.nginx.virtualHosts."home.${config.networking.hostName}.felixzieger.de" = {
+      forceSSL = true;
+      enableACME = true;
+      http3 = true;
+      quic = true;
+      locations."/" = {
+        proxyPass = "http://localhost:${toString homeAssistantPort}";
+        proxyWebsockets = true;
       };
+    };
 
     networking = {
       firewall = {
@@ -45,7 +45,13 @@ in {
             "/etc/localtime:/etc/localtime:ro"
           ];
           environment.TZ = "Europe/Berlin";
-          extraOptions = [ "--network=host" "--privileged" ];
+          extraOptions = [
+            "--network=host"
+            "--privileged"
+          ];
+          labels = {
+            "io.containers.autoupdate" = "registry";
+          };
         };
         whisper = {
           autoStart = true;
@@ -55,23 +61,26 @@ in {
           ];
           volumes = [ "/data/whisper/data:/data" ];
           cmd = [ "--model=tiny-int8" ];
+          labels = {
+            "io.containers.autoupdate" = "registry";
+          };
         };
         piper = {
           autoStart = true;
           image = "rhasspy/wyoming-piper:latest";
-          ports =
-            [ "${builtins.toString piperPort}:${builtins.toString piperPort}" ];
+          ports = [ "${builtins.toString piperPort}:${builtins.toString piperPort}" ];
           volumes = [ "/data/piper/data:/data" ];
           cmd = [ "--voice=en_US-lessac-medium" ];
+          labels = {
+            "io.containers.autoupdate" = "registry";
+          };
         };
       };
     };
 
     age.secrets = {
-      home-assistant-restic-environment.file =
-        ../secrets/home-assistant-restic-environment.age;
-      home-assistant-restic-password.file =
-        ../secrets/home-assistant-restic-password.age;
+      home-assistant-restic-environment.file = ../secrets/home-assistant-restic-environment.age;
+      home-assistant-restic-password.file = ../secrets/home-assistant-restic-password.age;
     };
 
     services.restic.backups = {
@@ -81,8 +90,7 @@ in {
         paths = [ homeAssistantConfigDir ];
 
         repository = "b2:${config.networking.hostName}-home-assistant";
-        environmentFile =
-          config.age.secrets.home-assistant-restic-environment.path;
+        environmentFile = config.age.secrets.home-assistant-restic-environment.path;
         passwordFile = config.age.secrets.home-assistant-restic-password.path;
 
         timerConfig = {
@@ -90,7 +98,11 @@ in {
           RandomizedDelaySec = "5min";
         };
 
-        pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-monthly 12" ];
+        pruneOpts = [
+          "--keep-daily 7"
+          "--keep-weekly 5"
+          "--keep-monthly 12"
+        ];
       };
     };
   };
