@@ -7,7 +7,7 @@ let
 in {
   config = {
     # This requires setting use_x_forwarded_for and trusted_proxies in configuration.yaml
-    # Check docker container logs for the address of the proxy. Was ::1 for me.
+    # Check container logs for the address of the proxy. Was ::1 for me.
     services.nginx.virtualHosts."home.${config.networking.hostName}.local" = {
       rejectSSL = true;
       locations."/" = {
@@ -35,9 +35,7 @@ in {
       };
     };
 
-    virtualisation.docker.enable = true;
     virtualisation.oci-containers = {
-      backend = "docker";
       containers = {
         homeassistant = {
           autoStart = true;
