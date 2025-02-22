@@ -51,6 +51,31 @@ in
       };
     };
 
+    environment.etc."fail2ban/filter.d/vaultwarden.local".text = pkgs.lib.mkDefault (
+      pkgs.lib.mkAfter ''
+        [INCLUDES]
+        before = common.conf
+
+        [Definition]
+        failregex = ^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$
+        ignoreregex =
+      ''
+    );
+
+    # I followed https://github.com/dani-garcia/vaultwarden/wiki/Fail2Ban-Setup
+    services.fail2ban = {
+      enable = true;
+      jails = {
+        vaultwarden.settings = {
+          enabled = true;
+          filter = "vaultwarden[journalmatch='_SYSTEMD_UNIT=vaultwarden.service']";
+          backend = "systemd";
+          banaction = "%(banaction_allports)s";
+          maxretry = 10;
+        };
+      };
+    };
+
     age.secrets = {
       bitwarden-sonnenhof-zieger-de-restic-environment.file = ../secrets/bitwarden-sonnenhof-zieger-de-restic-environment.age;
       bitwarden-sonnenhof-zieger-de-restic-password.file = ../secrets/bitwarden-sonnenhof-zieger-de-restic-password.age;
