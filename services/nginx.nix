@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }: {
+{ pkgs, ... }: {
   config = {
     networking = {
       firewall = {
@@ -34,30 +34,29 @@
     };
     services.fail2ban = {
       jails = {
-        ngnix-botsearch.settings = {
-          enabled = true;
-          filter = "nginx-botsearch";
-          maxretry = 5;
-          findtime = 3600;
+        nginx-http-auth.settings = {
+          enabled= true;
+          port = "http,https";
+          logpath = "/var/log/nginx/access.log";
+          backend = "auto";
         };
-        ngnix-url-probe.settings = {
+        nginx-botsearch.settings = {
+          enabled = true;
+          port = "http,https";
+          logpath = "/var/log/nginx/access.log";
+          backend = "auto";
+        };
+        nginx-url-probe.settings = {
           enabled = true;
           filter = "nginx-url-probe";
           logpath = "/var/log/nginx/access.log";
-          action = ''
-            %(action_)s[blocktype=DROP]
-          '';
-          backend =
-            "auto"; # Do not forget to specify this if your jail uses a log file
-          maxretry = 5;
-          findtime = 3600;
+          backend = "auto";
         };
         nginx-ip-host.settings = {
           enabled = true;
           filter = "nginx-ip-host";
           logpath = "/var/log/nginx/access.log";
-          maxretry = 3;
-          findtime = 3600;
+          backend = "auto";
         };
       };
     };
