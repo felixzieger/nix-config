@@ -83,11 +83,11 @@ in {
 
       serviceConfig.Type = "oneshot";
       script =
-        let dockercli = "${config.virtualisation.docker.package}/bin/docker";
+        let podmancli = "${config.virtualisation.podman.package}/bin/podman";
         in ''
-          check=$(${dockercli} network ls | grep "plausible-bridge" || true)
+          check=$(${podmancli} network ls | grep "plausible-bridge" || true)
           if [ -z "$check" ]; then
-            ${dockercli} network create plausible-bridge
+            ${podmancli} network create plausible-bridge
           else
             echo "plausible-bridge already exists in docker"
           fi

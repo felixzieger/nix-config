@@ -95,15 +95,18 @@
             ./hosts/common
             ./hosts/nixos
             ./hosts/nixos/blausieb/configuration.nix
+            ./services/tailscale.nix
             ./services/nginx.nix
-            ./services/docker.nix
+
+            ./services/bitwarden-sonnenhof-zieger-de.nix
+            ./services/paperless-sonnenhof-zieger-de.nix
+            ./services/nostr-felixzieger-de.nix
+
+            ./services/podman.nix
             ./services/blog-felixzieger-de.nix
             ./services/app-getdocsy-com.nix
             ./services/plausible-sonnenhof-zieger-de
-            ./services/bitwarden-sonnenhof-zieger-de.nix
-            ./services/paperless-sonnenhof-zieger-de.nix
-            ./services/tailscale.nix
-            ./services/nostr-felixzieger-de.nix
+
             inputs.agenix.nixosModules.default
           ];
         };
