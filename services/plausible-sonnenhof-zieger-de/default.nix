@@ -27,9 +27,7 @@ in {
         ../../secrets/plausible-sonnenhof-zieger-de-restic-password.age;
     };
 
-    virtualisation.docker.enable = true;
     virtualisation.oci-containers = {
-      backend = "docker";
       containers = {
         plausible_db = {
           autoStart = true;

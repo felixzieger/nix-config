@@ -9,7 +9,7 @@ let
   docsyWebVersion = "v0.0.61";
 in {
   config = {
-    # Inspect sqlite database without docker exec
+    # Inspect sqlite database
     environment.systemPackages = with pkgs; [ litecli ];
 
     services.nginx = {
@@ -39,9 +39,7 @@ in {
       app-getdocsy-com-env.file = ../secrets/app-getdocsy-com-env.age;
     };
 
-    virtualisation.docker.enable = true;
     virtualisation.oci-containers = {
-      backend = "docker";
       containers = {
         docsy = {
           autoStart = true;

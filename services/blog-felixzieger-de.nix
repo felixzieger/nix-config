@@ -18,9 +18,7 @@ in {
         ../secrets/blog-felixzieger-de-environment.age;
     };
 
-    virtualisation.docker.enable = true;
     virtualisation.oci-containers = {
-      backend = "docker";
       containers = {
         ghost = {
           autoStart = true;
