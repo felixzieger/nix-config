@@ -45,7 +45,7 @@
             (nix-bitcoin + "/modules/presets/enable-tor.nix")
             ./services/bitcoin.nix
 
-            ./services/docker.nix
+            ./services/podman.nix
             ./services/home-assistant.nix
             ./services/alby-felixzieger-de.nix
 
