@@ -34,6 +34,33 @@ in
       };
     };
 
+    # Example log entry
+    # Feb 22 00:00:00 blausieb paperless-web-start[443349]: [2025-02-22 00:00:00,000] [INFO] [paperless.auth] Login failed for user `hans` from IP `0.0.0.0`.
+    environment.etc."fail2ban/filter.d/paperless.local".text = pkgs.lib.mkDefault (
+      pkgs.lib.mkAfter ''
+        [INCLUDES]
+        before = common.conf
+
+        [Definition]
+        failregex = ^.*Login failed for user `.*` from IP `<ADDR>`\.$
+        ignoreregex =
+      ''
+    );
+
+    services.fail2ban = {
+      enable = true;
+      jails = {
+        paperless.settings = {
+          enabled = true;
+          filter = "paperless[journalmatch='_SYSTEMD_UNIT=paperless-web.service']";
+          backend = "systemd";
+          banaction = "%(banaction_allports)s";
+          maxretry = 10;
+        };
+      };
+    };
+
+
     age.secrets = {
       paperless-sonnenhof-zieger-de-restic-environment.file = ../secrets/paperless-sonnenhof-zieger-de-restic-environment.age;
       paperless-sonnenhof-zieger-de-restic-password.file = ../secrets/paperless-sonnenhof-zieger-de-restic-password.age;
