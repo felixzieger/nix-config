@@ -35,6 +35,7 @@ in
         environment = {
           WORK_DIR = "/data/albyhub";
           PORT = toString albyHubPort;
+          LOG_LEVEL = toString 3;
         };
         environmentFiles = [ config.age.secrets.alby-felixzieger-de-env.path ];
       };
