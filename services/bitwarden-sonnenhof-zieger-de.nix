@@ -1,6 +1,13 @@
-{ config, pkgs, lib, ... }:
-let vaultwardenHost = "bitwarden.sonnenhof-zieger.de";
-in {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  vaultwardenHost = "bitwarden.sonnenhof-zieger.de";
+in
+{
   config = {
     services.nginx.virtualHosts."${vaultwardenHost}" = {
       forceSSL = true;
@@ -8,24 +15,20 @@ in {
       http3 = true;
       quic = true;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:${
-            toString config.services.vaultwarden.config.ROCKET_PORT
-          }";
+        proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
         proxyWebsockets = true;
       };
     };
 
     age.secrets = {
-      bitwarden-sonnenhof-zieger-de-environment.file =
-        ../secrets/bitwarden-sonnenhof-zieger-de-environment.age;
+      bitwarden-sonnenhof-zieger-de-environment.file = ../secrets/bitwarden-sonnenhof-zieger-de-environment.age;
     };
 
     services = {
       vaultwarden = {
         enable = true;
         backupDir = "/data/vaultwarden/backup";
-        environmentFile =
-          config.age.secrets.bitwarden-sonnenhof-zieger-de-environment.path;
+        environmentFile = config.age.secrets.bitwarden-sonnenhof-zieger-de-environment.path;
         config = {
           DOMAIN = "https://${vaultwardenHost}";
           WEBSOCKET_ENABLED = "true";
@@ -49,10 +52,8 @@ in {
     };
 
     age.secrets = {
-      bitwarden-sonnenhof-zieger-de-restic-environment.file =
-        ../secrets/bitwarden-sonnenhof-zieger-de-restic-environment.age;
-      bitwarden-sonnenhof-zieger-de-restic-password.file =
-        ../secrets/bitwarden-sonnenhof-zieger-de-restic-password.age;
+      bitwarden-sonnenhof-zieger-de-restic-environment.file = ../secrets/bitwarden-sonnenhof-zieger-de-restic-environment.age;
+      bitwarden-sonnenhof-zieger-de-restic-password.file = ../secrets/bitwarden-sonnenhof-zieger-de-restic-password.age;
     };
 
     services.restic.backups = {
@@ -62,10 +63,8 @@ in {
         paths = [ config.services.vaultwarden.backupDir ];
 
         repository = "b2:schwalbe-vaultwarden";
-        environmentFile =
-          config.age.secrets.bitwarden-sonnenhof-zieger-de-restic-environment.path;
-        passwordFile =
-          config.age.secrets.bitwarden-sonnenhof-zieger-de-restic-password.path;
+        environmentFile = config.age.secrets.bitwarden-sonnenhof-zieger-de-restic-environment.path;
+        passwordFile = config.age.secrets.bitwarden-sonnenhof-zieger-de-restic-password.path;
 
         timerConfig = {
           # Ideally, this would always run directly after systemd.services.backup-vaultwarden
@@ -75,7 +74,11 @@ in {
           RandomizedDelaySec = "5min";
         };
 
-        pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-monthly 12" ];
+        pruneOpts = [
+          "--keep-daily 7"
+          "--keep-weekly 5"
+          "--keep-monthly 12"
+        ];
       };
     };
   };
