@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 {
   age.secrets = {
     think-in-sync-mail.file = ../secrets/think-in-sync-mail.age;
@@ -27,6 +27,15 @@
     # Use Let's Encrypt certificates. Note that this needs to set up a stripped
     # down nginx and opens port 80.
     certificateScheme = "acme-nginx";
+  };
+
+  services.fail2ban.jails.dovecot = {
+    settings = {
+      # block IPs which failed to log-in
+      # aggressive mode add blocking for aborted connections
+      filter = "dovecot[mode=aggressive]";
+      maxretry = 3;
+    };
   };
 
   # age.secrets = {
