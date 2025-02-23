@@ -83,5 +83,3 @@ restic-uptime-kuma restore latest --target /
 - Impermanence https://lantian.pub/en/article/modify-computer/nixos-impermanence.lantian/
 - Nextcloud backup to Schwalbe
 - Get rid of ../../ imports. Have a look at https://github.com/NotAShelf/nyx/
-- Auto update containers on podman; check https://www.howtogeek.com/devops/how-to-enable-podmans-automatic-container-updates/
-- Also see https://nixcademy.com/posts/auto-update-containers/
