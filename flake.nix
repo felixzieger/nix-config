@@ -105,7 +105,7 @@
             ./services/paperless-sonnenhof-zieger-de.nix
             ./services/tailscale.nix
             ./services/nostr-felixzieger-de.nix
-            ./services/strfry.nix
+            ./services/strfry-felixzieger-de.nix
             inputs.agenix.nixosModules.default
           ];
         };
