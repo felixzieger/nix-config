@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-felix.url = "github:felixzieger/nixpkgs/strfry-dev";
     home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
@@ -24,7 +25,7 @@
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, nixpkgs-darwin, nix-darwin
-    , nixpkgs-unstable, mac-app-util, nix-bitcoin, simple-nixos-mailserver, ... }: {
+    , nixpkgs-unstable, nixpkgs-felix, mac-app-util, nix-bitcoin, simple-nixos-mailserver, ... }: {
       nixosConfigurations = {
         "schwalbe" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -104,6 +105,7 @@
             ./services/paperless-sonnenhof-zieger-de.nix
             ./services/tailscale.nix
             ./services/nostr-felixzieger-de.nix
+            ./services/strfry.nix
             inputs.agenix.nixosModules.default
           ];
         };
