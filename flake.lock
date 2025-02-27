@@ -327,11 +327,11 @@
     },
     "nixpkgs-felix": {
       "locked": {
-        "lastModified": 1740576499,
-        "narHash": "sha256-nyn6XC5zKJvfEqElvITz1W3VttsA8ksGCVTplujQkq4=",
+        "lastModified": 1740667841,
+        "narHash": "sha256-pw8MVdStYquymdQDEAHUkPc8CT6z984VjEXGAIkZmtQ=",
         "owner": "felixzieger",
         "repo": "nixpkgs",
-        "rev": "b25f3741d88782ad122f51807b63c8373abcbf50",
+        "rev": "565bdb252fc218e319a33349c83565bb2e92263e",
         "type": "github"
       },
       "original": {

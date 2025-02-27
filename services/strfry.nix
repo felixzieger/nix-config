@@ -6,28 +6,28 @@
 }:
 let
   defaultConfig = {
-    db = "./strfry-db/";
+    db = cfg.dataDir;
 
     dbParams = {
-      maxreaders = "256";
-      mapsize = "10995116277760";
-      noReadAhead = "false";
+      maxreaders = 256;
+      mapsize = 10995116277760;
+      noReadAhead = false;
     };
 
     events = {
-      maxEventSize = "65536";
-      rejectEventsNewerThanSeconds = "900";
-      rejectEventsOlderThanSeconds = "94608000";
-      rejectEphemeralEventsOlderThanSeconds = "60";
-      ephemeralEventsLifetimeSeconds = "300";
-      maxNumTags = "2000";
-      maxTagValSize = "1024";
+      maxEventSize = 65536;
+      rejectEventsNewerThanSeconds = 900;
+      rejectEventsOlderThanSeconds = 94608000;
+      rejectEphemeralEventsOlderThanSeconds = 60;
+      ephemeralEventsLifetimeSeconds = 300;
+      maxNumTags = 2000;
+      maxTagValSize = 1024;
     };
 
     relay = {
       bind = "127.0.0.1";
-      port = "7777";
-      nofiles = "1000000";
+      port = cfg.port;
+      nofiles = 1000000;
       realIpHeader = "";
 
       info = {
@@ -39,50 +39,46 @@ let
         nips = "";
       };
 
-      maxWebsocketPayloadSize = "131072";
-      maxReqFilterSize = "200";
-      autoPingSeconds = "55";
-      enableTcpKeepalive = "false";
-      queryTimesliceBudgetMicroseconds = "10000";
-      maxFilterLimit = "500";
-      maxSubsPerConnection = "20";
+      maxWebsocketPayloadSize = 131072;
+      maxReqFilterSize = 200;
+      autoPingSeconds = 55;
+      enableTcpKeepalive = false;
+      queryTimesliceBudgetMicroseconds = 10000;
+      maxFilterLimit = 500;
+      maxSubsPerConnection = 20;
 
       writePolicy = {
         plugin = "";
       };
 
       compression = {
-        enabled = "true";
-        slidingWindow = "true";
+        enabled = true;
+        slidingWindow = true;
       };
 
       logging = {
-        dumpInAll = "false";
-        dumpInEvents = "false";
-        dumpInReqs = "false";
-        dbScanPerf = "false";
-        invalidEvents = "true";
+        dumpInAll = false;
+        dumpInEvents = false;
+        dumpInReqs = false;
+        dbScanPerf = false;
+        invalidEvents = true;
       };
 
       numThreads = {
-        ingester = "3";
-        reqWorker = "3";
-        reqMonitor = "3";
-        negentropy = "2";
+        ingester = 3;
+        reqWorker = 3;
+        reqMonitor = 3;
+        negentropy = 2;
       };
 
       negentropy = {
-        enabled = "true";
-        maxSyncEvents = "1000000";
+        enabled = true;
+        maxSyncEvents = 1000000;
       };
     };
   };
 
-  cfg = config.services.strfry // {
-    db = cfg.dataDir;
-    relay.port = toString cfg.port;
-  };
-
+  cfg = config.services.strfry;
   settingsFormat = pkgs.formats.json { };
   configFile = settingsFormat.generate "config.json" (cfg.settings);
 in
@@ -100,23 +96,26 @@ in
 
     dataDir = lib.mkOption {
       type = lib.types.path;
-      default = "/var/lib/strfry/db";
+      default = "/var/lib/strfry";
       description = "Directory for DB files.";
     };
 
     settings = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
+      type = lib.types.attrsOf (
+        lib.types.anything
+      );
       default = { };
       apply = lib.mergeAttrs defaultConfig;
       description = "Additional environment variables to set for the Strfry service. See https://github.com/hoytech/strfry for documentation.";
       example = lib.literalExpression ''
         dbParams = {
-          maxreaders = "256";
-          mapsize = "10995116277760";
-          noReadAhead = "false";
+          maxreaders = 256;
+          mapsize = 10995116277760;
+          noReadAhead = false;
         };
       '';
     };
+
   };
 
   config = lib.mkIf cfg.enable {
@@ -134,8 +133,7 @@ in
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        ExecStart = "${lib.getExe cfg.package} relay ${configFile}";
-        EnvironmentFile = cfg.environmentFile;
+        ExecStart = "${lib.getExe cfg.package} --config=${configFile} relay";
         User = "strfry";
         Group = "strfry";
         Restart = "on-failure";
@@ -143,7 +141,7 @@ in
 
         RuntimeDirectory = "strfry";
         StateDirectory = "strfry";
-        WorkingDirectory = "/var/lib/strfry";
+        WorkingDirectory = cfg.dataDir;
 
         PrivateTmp = true;
         PrivateUsers = true;
