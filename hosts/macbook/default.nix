@@ -11,6 +11,7 @@ let
     system = pkgs.system;
     config.allowUnfree = true;
   };
+  notedeck = pkgs.callPackage ./notedeck.nix { };
 in
 {
   nixpkgs.config.allowUnfree = true;
@@ -165,7 +166,7 @@ in
     # pkgs.jan # LLM gui; currently only packaged for linux on nixos
     # pkgs.elia # llm tui https://github.com/NixOS/nixpkgs/pull/317782
     # pkgs.posting # HTTP tui https://github.com/NixOS/nixpkgs/pull/325971
-    pkgs.atac # HTTP tui
+    # pkgs.atac # HTTP tui
     # pkgs.aider-chat
     pkgs.rectangle
     pkgs.monitorcontrol
@@ -176,10 +177,10 @@ in
     # pkgs.firefox # Not supported for x86_64-apple-darwin as of 2024-01-22
     pkgs.gimp
     pkgs.slack
-    pkgs.opentofu
+    # pkgs.opentofu
     # unstable.ghostty # marked as broken for darwin as of 2024-12-30
     # pkgs.calibre # marked as broken for darwin as of 2024-12-30
-    pkgs.audacity
+    # pkgs.audacity
 
     # Python development environment
     pkgs.python3
@@ -207,7 +208,8 @@ in
     pkgs.cargo-watch
     pkgs.rustc
     pkgs.rust-analyzer
-    pkgs.nak
+    # pkgs.nak
+    notedeck
 
     agenix.packages."${pkgs.system}".default
   ];
