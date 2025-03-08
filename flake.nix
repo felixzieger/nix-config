@@ -63,8 +63,10 @@
             ./hosts/common
             ./hosts/nixos
             ./hosts/nixos/cameron/configuration.nix
-            ./services/nginx.nix
+            # ./services/nginx.nix
             # ./services/nextcloud-sonnenhof-zieger-de.nix
+
+            ./services/note-to-quote.nix
 
             inputs.agenix.nixosModules.default
           ];
