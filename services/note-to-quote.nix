@@ -16,9 +16,6 @@
         };
         environmentFiles = [ config.age.secrets.note-to-quote-env.path ];
       };
-      labels = {
-        "com.centurylinklabs.watchtower.enable" = "false";
-      }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
     };
   };
 }
