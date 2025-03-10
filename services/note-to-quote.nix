@@ -1,5 +1,7 @@
 { config, ... }:
-{
+let
+  noteToQuoteVersion = "v0.8";
+in {
   age.secrets = {
     ghcr-secret.file = ../secrets/ghcr-secret.age;
     note-to-quote-env.file = ../secrets/note-to-quote-env.age;
@@ -8,7 +10,7 @@
     containers = {
       note-to-quote = {
         autoStart = true;
-        image = "ghcr.io/felixzieger/note-to-quote:latest";
+        image = "ghcr.io/felixzieger/note-to-quote:${noteToQuoteVersion}";
         login = {
           registry = "ghcr.io";
           username = "felixzieger";
