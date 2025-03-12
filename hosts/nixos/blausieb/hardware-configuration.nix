@@ -31,7 +31,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.eth0.useDHCP = lib.mkDefault true;
+  networking.timeServers = ["169.254.169.254"]; # see https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/configuringntpservice.htm
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }
