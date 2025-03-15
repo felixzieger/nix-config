@@ -97,6 +97,7 @@
             home-manager.nixosModules.home-manager
             ./hosts/common
             ./hosts/nixos
+            ./hosts/services/mongo.nix
             ./hosts/nixos/blausieb/configuration.nix
             ./services/nginx.nix
             ./services/docker.nix

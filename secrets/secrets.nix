@@ -94,4 +94,6 @@ in
 
 
   "all-buckets-read-only-restic-environment.age".publicKeys = systems;
+
+  "mongo.age".publicKeys = systems;
 }
