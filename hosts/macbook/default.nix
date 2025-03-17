@@ -195,9 +195,6 @@ in
     pkgs.vale
     pkgs.opentofu
 
-    #hackathon
-    pkgs.mongosh
-
     unstable.scooter
 
     # Landing page
