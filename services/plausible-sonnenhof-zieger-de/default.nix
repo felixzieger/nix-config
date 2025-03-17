@@ -16,6 +16,28 @@ in {
       };
     };
 
+    services.nginx.virtualHosts."y.felixzieger.de" = {
+      forceSSL = true;
+      enableACME = true;
+      http3 = true;
+      quic = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString plausiblePort}";
+        proxyWebsockets = true;
+      };
+    };
+
+    services.nginx.virtualHosts."y.sonnenhof-zieger.de" = {
+      forceSSL = true;
+      enableACME = true;
+      http3 = true;
+      quic = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString plausiblePort}";
+        proxyWebsockets = true;
+      };
+    };
+
     age.secrets = {
       email-password-bot-sonnenhof-zieger.file =
         ../../secrets/email-password-bot-sonnenhof-zieger.age;
@@ -67,6 +89,7 @@ in {
             SMTP_HOST_PORT = toString 465;
             SMTP_USER_NAME = "bot@sonnenhof-zieger.de";
             SMTP_HOST_SSL_ENABLED = "true"; # toString true; yields 1 which is not supported
+            DISABLE_REGISTRATION= "true";
           };
           environmentFiles =
             [ config.age.secrets.plausible-sonnenhof-zieger-de-conf-env.path ];
