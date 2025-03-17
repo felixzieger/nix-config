@@ -11,7 +11,6 @@ let
     system = pkgs.system;
     config.allowUnfree = true;
   };
-  notedeck = pkgs.callPackage ./notedeck.nix { };
 in
 {
   nixpkgs.config.allowUnfree = true;
@@ -194,22 +193,21 @@ in
     pkgs.oci-cli
     pkgs.gh
     pkgs.vale
-    pkgs.supabase-cli
+    pkgs.opentofu
+
+    #hackathon
+    pkgs.mongosh
 
     unstable.scooter
 
     # Landing page
+    pkgs.pnpm
     pkgs.nodejs_22
     pkgs.bun
     pkgs.typescript
 
     # nostr
-    pkgs.cargo
-    pkgs.cargo-watch
-    pkgs.rustc
-    pkgs.rust-analyzer
     # pkgs.nak
-    notedeck
 
     agenix.packages."${pkgs.system}".default
   ];
