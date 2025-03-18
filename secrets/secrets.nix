@@ -92,6 +92,9 @@ in
   "nostr-felixzieger-de-restic-password.age".publicKeys = systems ++ [ felix ];
   "nostr-felixzieger-de-restic-environment.age".publicKeys = systems ++ [ blausieb felix ];
 
+  "omnivore-felixzieger-de-environment.age".publicKeys = systems ++ [ felix ];
+  "omnivore-felixzieger-de-google-service-account.age".publicKeys = systems ++ [ felix ];
+
 
   "all-buckets-read-only-restic-environment.age".publicKeys = systems;
 }

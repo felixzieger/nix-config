@@ -49,7 +49,6 @@
             ./services/docker.nix
             ./services/home-assistant.nix
             ./services/alby-felixzieger-de.nix
-
             inputs.agenix.nixosModules.default
 
           ];
@@ -108,6 +107,7 @@
             ./services/tailscale.nix
             ./services/nostr-felixzieger-de.nix
             ./services/strfry-felixzieger-de.nix
+            ./services/omnivore-felixzieger-de.nix
             inputs.agenix.nixosModules.default
           ];
         };
