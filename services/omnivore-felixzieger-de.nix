@@ -51,181 +51,206 @@ in
       omnivore-felixzieger-de-environment.file = ../secrets/omnivore-felixzieger-de-environment.age;
     };
 
-    virtualisation.oci-containers = {
-      containers = {
-        omnivore-web = {
-          autoStart = true;
-          image = "ghcr.io/omnivore-app/sh-web:latest";
-          ports = [ "3000:8080" ];
-          environment.GCS_UPLOAD_SA_KEY_FILE_PATH =
-            config.age.secrets.omnivore-felixzieger-de-google-service-account.path;
-          environmentFiles = [
-            config.age.secrets.omnivore-felixzieger-de-environment.path
-          ];
-          dependsOn = [
-            "omnivore-postgres"
-            "omnivore-redis"
-            "omnivore-api"
-            # "omnivore-migrate"
-          ];
-          extraOptions = [ "--network=omnivore-bridge" ];
-        };
+    virtualisation.oci-containers =
+      let
+        shared_environment = {
+          IMAGE_PROXY_URL = "https://omnivore.felixzieger.de/images";
+          GATEWAY_URL = "http://omnivore-api:8080/api";
+          CONTENT_FETCH_URL = "http://omnivore-content-fetch:8080/?token=some_token";
+          CLIENT_URL = "https://omnivore.felixzieger.de";
+          LOCAL_MINIO_URL = "http://localhost:1010";
+          REDIS_URL = "redis://omnivore-redis:6379/0";
+          MQ_REDIS_URL = "redis://omnivore-redis:6379/0";
 
-        omnivore-minio = {
-          autoStart = true;
-          image = "minio/minio:latest";
-          ports = [ "1010:9000" ];
-          environment = {
-            MINIO_ACCESS_KEY = "minio";
-            MINIO_SECRET_KEY = "miniominio";
-            AWS_S3_ENDPOINT_URL = "http://omnivore-minio:1010";
+          #Web
+          BASE_URL = "https://omnivore.felixzieger.de";
+          SERVER_BASE_URL = "https://omnivore.felixzieger.de";
+          HIGHLIGHTS_BASE_URL = "https://omnivore.felixzieger.de";
+        };
+      in
+      {
+        containers = {
+          omnivore-web = {
+            autoStart = true;
+            image = "ghcr.io/omnivore-app/sh-web:latest";
+            ports = [ "3000:8080" ];
+            environment = {
+            };
+            environmentFiles = [
+              config.age.secrets.omnivore-felixzieger-de-environment.path
+            ];
+            dependsOn = [
+              "omnivore-postgres"
+              "omnivore-redis"
+              "omnivore-api"
+              # "omnivore-migrate"
+            ];
+            extraOptions = [ "--network=omnivore-bridge" ];
           };
-          volumes = [ "${omnivoreDataDir}/minio:/data" ];
-          cmd = [
-            "server"
-            "/data"
-          ];
-          extraOptions = [ "--network=omnivore-bridge" ];
-        };
 
-        # omnivore-minio-bucket = {
-        #   autoStart = false;
-        #   image = "minio/mc:latest";
-        #   environment = {
-        #     MINIO_ACCESS_KEY = "minio";
-        #     MINIO_SECRET_KEY = "miniominio";
-        #     BUCKET_NAME = "omnivore";
-        #     ENDPOINT = "http://omnivore-minio:9000";
-        #     AWS_S3_ENDPOINT_URL = "http://omnivore-minio:9000";
-        #   };
-        #   dependsOn = [ "omnivore-minio" ];
-        #   entrypoint = "sh";
-        #   cmd = [
-        #     "-c"
-        #     ''
-        #       sleep 5;
-        #       until (/usr/bin/mc config host add myminio http://omnivore-minio:9000 minio miniominio) do echo '...waiting...' && sleep 1; done;
-        #       /usr/bin/mc mb myminio/omnivore;
-        #       /usr/bin/mc anonymous set public myminio/omnivore;
-        #       exit 0;
-        #     ''
-        #   ];
-        #   extraOptions = [ "--network=omnivore-bridge" ];
-        # };
-
-        omnivore-postgres = {
-          autoStart = true;
-          image = "pgvector/pgvector:pg17";
-          volumes = [ "${postgresDataDir}:/var/lib/postgresql/data" ];
-          environmentFiles = [
-            config.age.secrets.omnivore-felixzieger-de-environment.path
-          ];
-          extraOptions = [ "--network=omnivore-bridge" ];
-        };
-
-        omnivore-redis = {
-          autoStart = true;
-          image = "redis:7.2.4";
-          volumes = [ "${redisDataDir}:/data" ];
-          extraOptions = [ "--network=omnivore-bridge" ];
-        };
-
-        # omnivore-migrate = {
-        #   autoStart = true;
-        #   image = "ghcr.io/omnivore-app/sh-migrate:latest";
-        #   cmd = [
-        #     "/bin/sh"
-        #     "./packages/db/setup.sh"
-        #   ];
-        #   environment = {
-        #     PG_HOST = "omnivore-postgres";
-        #   };
-        #   environmentFiles = [
-        #     config.age.secrets.omnivore-felixzieger-de-environment.path
-        #   ];
-        #   dependsOn = [
-        #     "omnivore-postgres"
-        #   ];
-        #   extraOptions = [ "--network=omnivore-bridge" ];
-        # };
-
-        omnivore-api = {
-          autoStart = true;
-          image = "ghcr.io/omnivore-app/sh-backend:latest";
-          ports = [ "4000:8080" ];
-          environment = {
-            API_ENV = "local";
-            PG_HOST = "omnivore-postgres";
-
-            GCS_USE_LOCAL_HOST = "false";
-            GCP_PROJECT_ID = "omnivore-felixzieger-de";
-            GCS_UPLOAD_BUCKET = "omnivore-felixzieger-de";
-            GCS_UPLOAD_SA_KEY_FILE_PATH =
-              config.age.secrets.omnivore-felixzieger-de-google-service-account.path;
+          omnivore-minio = {
+            autoStart = true;
+            image = "minio/minio:latest";
+            ports = [ "1010:9000" ];
+            environment = {
+              MINIO_ACCESS_KEY = "minio";
+              MINIO_SECRET_KEY = "miniominio";
+              AWS_S3_ENDPOINT_URL = "http://omnivore-minio:1010";
+            } // shared_environment;
+            volumes = [ "${omnivoreDataDir}/minio:/data" ];
+            cmd = [
+              "server"
+              "/data"
+            ];
+            extraOptions = [ "--network=omnivore-bridge" ];
           };
-          environmentFiles = [
-            config.age.secrets.omnivore-felixzieger-de-environment.path
-          ];
-          dependsOn = [
-            # "omnivore-migrate" # since migration is restarting all the time, ignore it
-            "omnivore-redis"
-          ];
-          extraOptions = [ "--network=omnivore-bridge" ];
-        };
 
-        omnivore-queue-processor = {
-          autoStart = true;
-          image = "ghcr.io/omnivore-app/sh-queue-processor:latest";
-          environmentFiles = [
-            config.age.secrets.omnivore-felixzieger-de-environment.path
-          ];
-          dependsOn = [
-            "omnivore-api"
-          ];
-          extraOptions = [ "--network=omnivore-bridge" ];
-        };
+          # omnivore-minio-bucket = {
+          #   autoStart = false;
+          #   image = "minio/mc:latest";
+          #   environment = {
+          #     MINIO_ACCESS_KEY = "minio";
+          #     MINIO_SECRET_KEY = "miniominio";
+          #     BUCKET_NAME = "omnivore";
+          #     ENDPOINT = "http://omnivore-minio:9000";
+          #     AWS_S3_ENDPOINT_URL = "http://omnivore-minio:9000";
+          #   };
+          #   dependsOn = [ "omnivore-minio" ];
+          #   entrypoint = "sh";
+          #   cmd = [
+          #     "-c"
+          #     ''
+          #       sleep 5;
+          #       until (/usr/bin/mc config host add myminio http://omnivore-minio:9000 minio miniominio) do echo '...waiting...' && sleep 1; done;
+          #       /usr/bin/mc mb myminio/omnivore;
+          #       /usr/bin/mc anonymous set public myminio/omnivore;
+          #       exit 0;
+          #     ''
+          #   ];
+          #   extraOptions = [ "--network=omnivore-bridge" ];
+          # };
 
-        omnivore-image-proxy = {
-          autoStart = true;
-          image = "ghcr.io/omnivore-app/sh-image-proxy:latest";
-          ports = [ "7070:8080" ];
-          environmentFiles = [
-            config.age.secrets.omnivore-felixzieger-de-environment.path
-          ];
-          extraOptions = [ "--network=omnivore-bridge" ];
-        };
-
-        omnivore-content-fetch = {
-          autoStart = true;
-          image = "ghcr.io/omnivore-app/sh-content-fetch:latest";
-          ports = [ "9090:8080" ];
-          environment = {
-            USE_FIREFOX = "true";
+          omnivore-postgres = {
+            autoStart = true;
+            image = "pgvector/pgvector:pg17";
+            volumes = [ "${postgresDataDir}:/var/lib/postgresql/data" ];
+            environment = shared_environment;
+            environmentFiles = [
+              config.age.secrets.omnivore-felixzieger-de-environment.path
+            ];
+            extraOptions = [ "--network=omnivore-bridge" ];
           };
-          environmentFiles = [
-            config.age.secrets.omnivore-felixzieger-de-environment.path
-          ];
-          dependsOn = [
-            "omnivore-redis"
-            "omnivore-api"
-          ];
-          extraOptions = [ "--network=omnivore-bridge" ];
-        };
 
-        #         omnivore-mail-watch-server = {
-        #           autoStart = true;
-        #           image = "ghcr.io/omnivore-app/sh-local-mail-watcher:latest";
-        #           ports = ["4398:8080"];
-        #           environmentFiles = [
-        #             config.age.secrets.omnivore-felixzieger-de-environment.path
-        #           ];
-        #           dependsOn = [
-        #             "omnivore-redis"
-        #           ];
-        # extraOptions = [ "--network=omnivore-bridge" ];
-        #         };
+          omnivore-redis = {
+            autoStart = true;
+            image = "redis:7.2.4";
+            volumes = [ "${redisDataDir}:/data" ];
+            extraOptions = [ "--network=omnivore-bridge" ];
+          };
+
+          # omnivore-migrate = {
+          #   autoStart = true;
+          #   image = "ghcr.io/omnivore-app/sh-migrate:latest";
+          #   cmd = [
+          #     "/bin/sh"
+          #     "./packages/db/setup.sh"
+          #   ];
+          #   environment = {
+          #     PG_HOST = "omnivore-postgres";
+          #   };
+          #   environmentFiles = [
+          #     config.age.secrets.omnivore-felixzieger-de-environment.path
+          #   ];
+          #   dependsOn = [
+          #     "omnivore-postgres"
+          #   ];
+          #   extraOptions = [ "--network=omnivore-bridge" ];
+          # };
+
+          omnivore-api = {
+            autoStart = true;
+            image = "ghcr.io/omnivore-app/sh-backend:latest";
+            ports = [ "4000:8080" ];
+            environment = {
+              API_ENV = "local";
+              PG_HOST = "omnivore-postgres";
+
+              IMAGE_PROXY_URL = "https://omnivore.felixzieger.de/images";
+
+              GCS_USE_LOCAL_HOST = "false";
+              GCP_PROJECT_ID = "omnivore-felixzieger-de";
+              GCS_UPLOAD_BUCKET = "omnivore-felixzieger-de";
+              GCS_UPLOAD_SA_KEY_FILE_PATH =
+                config.age.secrets.omnivore-felixzieger-de-google-service-account.path;
+            } // shared_environment;
+            environmentFiles = [
+              config.age.secrets.omnivore-felixzieger-de-environment.path
+            ];
+            dependsOn = [
+              # "omnivore-migrate" # since migration is restarting all the time, ignore it
+              "omnivore-redis"
+            ];
+            extraOptions = [ "--network=omnivore-bridge" ];
+          };
+
+          omnivore-queue-processor = {
+            autoStart = true;
+            image = "ghcr.io/omnivore-app/sh-queue-processor:latest";
+            environment = {
+              PG_HOST = "omnivore-postgres";
+            } // shared_environment;
+            environmentFiles = [
+              config.age.secrets.omnivore-felixzieger-de-environment.path
+            ];
+            dependsOn = [
+              "omnivore-api"
+            ];
+            extraOptions = [ "--network=omnivore-bridge" ];
+          };
+
+          omnivore-image-proxy = {
+            autoStart = true;
+            image = "ghcr.io/omnivore-app/sh-image-proxy:latest";
+            ports = [ "7070:8080" ];
+            environment = shared_environment;
+            environmentFiles = [
+              config.age.secrets.omnivore-felixzieger-de-environment.path
+            ];
+            extraOptions = [ "--network=omnivore-bridge" ];
+          };
+
+          omnivore-content-fetch = {
+            autoStart = true;
+            image = "ghcr.io/omnivore-app/sh-content-fetch:latest";
+            ports = [ "9090:8080" ];
+            environment = {
+              USE_FIREFOX = "true";
+            } // shared_environment;
+            environmentFiles = [
+              config.age.secrets.omnivore-felixzieger-de-environment.path
+            ];
+            dependsOn = [
+              "omnivore-redis"
+              "omnivore-api"
+            ];
+            extraOptions = [ "--network=omnivore-bridge" ];
+          };
+
+          #         omnivore-mail-watch-server = {
+          #           autoStart = true;
+          #           image = "ghcr.io/omnivore-app/sh-local-mail-watcher:latest";
+          #           ports = ["4398:8080"];
+          #           environment = shared_environment;
+          #           environmentFiles = [
+          #             config.age.secrets.omnivore-felixzieger-de-environment.path
+          #           ];
+          #           dependsOn = [
+          #             "omnivore-redis"
+          #           ];
+          # extraOptions = [ "--network=omnivore-bridge" ];
+          #         };
+        };
       };
-    };
     systemd.services.init-omnivore-network = {
       description = "Create the network omnivore-bridge for Omnivore.";
       after = [ "network.target" ];
