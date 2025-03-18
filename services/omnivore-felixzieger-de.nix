@@ -78,7 +78,7 @@ in
           environment = {
             MINIO_ACCESS_KEY = "minio";
             MINIO_SECRET_KEY = "miniominio";
-            AWS_S3_ENDPOINT_URL = "http://minio:1010";
+            AWS_S3_ENDPOINT_URL = "http://omnivore-minio:1010";
           };
           volumes = [ "${omnivoreDataDir}/minio:/data" ];
           cmd = [ "server" "/data" ];
@@ -86,22 +86,22 @@ in
         };
 
         omnivore-minio-bucket = {
-          autoStart = true;
+          autoStart = false;
           image = "minio/mc:latest";
           environment = {
             MINIO_ACCESS_KEY = "minio";
             MINIO_SECRET_KEY = "miniominio";
             BUCKET_NAME = "omnivore";
-            ENDPOINT = "http://minio:9000";
-            AWS_S3_ENDPOINT_URL = "http://minio:9000";
+            ENDPOINT = "http://omnivore-minio:9000";
+            AWS_S3_ENDPOINT_URL = "http://omnivore-minio:9000";
           };
           dependsOn = [ "omnivore-minio" ];
+          entrypoint = "sh";
           cmd = [
-            "/bin/bash"
             "-c"
             ''
               sleep 5;
-              until (/usr/bin/mc config host add myminio http://minio:9000 minio miniominio) do echo '...waiting...' && sleep 1; done;
+              until (/usr/bin/mc config host add myminio http://omnivore-minio:9000 minio miniominio) do echo '...waiting...' && sleep 1; done;
               /usr/bin/mc mb myminio/omnivore;
               /usr/bin/mc anonymous set public myminio/omnivore;
               exit 0;
@@ -164,6 +164,7 @@ in
           ];
           dependsOn = [
             "omnivore-migrate"
+            "omnivore-redis"
           ];
           extraOptions = [ "--network=omnivore-bridge" ];
         };
