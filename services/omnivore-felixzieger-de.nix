@@ -56,7 +56,6 @@ in
         shared_environment = {
           IMAGE_PROXY_URL = "https://omnivore.felixzieger.de/images";
           GATEWAY_URL = "http://omnivore-api:8080/api";
-          CONTENT_FETCH_URL = "http://omnivore-content-fetch:8080/?token=some_token";
           CLIENT_URL = "https://omnivore.felixzieger.de";
           LOCAL_MINIO_URL = "http://localhost:1010";
           REDIS_URL = "redis://omnivore-redis:6379/0";
@@ -177,6 +176,8 @@ in
 
               IMAGE_PROXY_URL = "https://omnivore.felixzieger.de/images";
 
+              CONTENT_FETCH_QUEUE_ENABLED = "true";
+
               GCS_USE_LOCAL_HOST = "false";
               GCP_PROJECT_ID = "omnivore-felixzieger-de";
               GCS_UPLOAD_BUCKET = "omnivore-felixzieger-de";
@@ -225,6 +226,8 @@ in
             ports = [ "9090:8080" ];
             environment = {
               USE_FIREFOX = "true";
+              REST_BACKEND_ENDPOINT = "http://omnivore-api:8080/api";
+              SKIP_UPLOAD_ORIGINAL = "true";
             } // shared_environment;
             environmentFiles = [
               config.age.secrets.omnivore-felixzieger-de-environment.path
