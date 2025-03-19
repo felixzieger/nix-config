@@ -164,9 +164,8 @@ in
 
     # pkgs.jan # LLM gui; currently only packaged for linux on nixos
     # pkgs.elia # llm tui https://github.com/NixOS/nixpkgs/pull/317782
-    # pkgs.posting # HTTP tui https://github.com/NixOS/nixpkgs/pull/325971
-    # pkgs.atac # HTTP tui
-    # pkgs.aider-chat
+    unstable.posting # HTTP tui https://github.com/NixOS/nixpkgs/pull/325971
+    unstable.aider-chat
     pkgs.rectangle
     pkgs.monitorcontrol
     pkgs.spotify
