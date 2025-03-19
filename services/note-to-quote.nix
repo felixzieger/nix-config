@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  noteToQuoteVersion = "v0.9";
+  noteToQuoteVersion = "v0.10";
 in {
   age.secrets = {
     ghcr-secret.file = ../secrets/ghcr-secret.age;
