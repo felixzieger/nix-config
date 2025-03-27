@@ -5,8 +5,8 @@
   ...
 }:
 let
-  defaultConfig = {
-    db = cfg.dataDir;
+  defaultSettings = {
+    db = "/var/lib/strfry";
 
     dbParams = {
       maxreaders = 256;
@@ -26,7 +26,7 @@ let
 
     relay = {
       bind = "127.0.0.1";
-      port = cfg.port;
+      port = 7777;
       nofiles = 1000000;
       realIpHeader = "";
 
@@ -80,7 +80,7 @@ let
 
   cfg = config.services.strfry;
   settingsFormat = pkgs.formats.json { };
-  configFile = settingsFormat.generate "config.json" (cfg.settings);
+  configFile = settingsFormat.generate "config.json" cfg.settings;
 in
 {
   options.services.strfry = {
@@ -88,25 +88,11 @@ in
 
     package = lib.mkPackageOption pkgs "strfry" { };
 
-    port = lib.mkOption {
-      default = 7777;
-      type = lib.types.port;
-      description = "Listen on this port.";
-    };
-
-    dataDir = lib.mkOption {
-      type = lib.types.path;
-      default = "/var/lib/strfry";
-      description = "Directory for DB files.";
-    };
-
     settings = lib.mkOption {
-      type = lib.types.attrsOf (
-        lib.types.anything
-      );
-      default = { };
-      apply = lib.mergeAttrs defaultConfig;
-      description = "Additional environment variables to set for the Strfry service. See https://github.com/hoytech/strfry for documentation.";
+      type = settingsFormat.type;
+      default = defaultSettings;
+      apply = lib.recursiveUpdate defaultSettings;
+      description = "Environment variables to set for the Strfry service. See https://github.com/hoytech/strfry for documentation.";
       example = lib.literalExpression ''
         dbParams = {
           maxreaders = 256;
@@ -137,11 +123,10 @@ in
         User = "strfry";
         Group = "strfry";
         Restart = "on-failure";
-        Type = "simple";
 
         RuntimeDirectory = "strfry";
         StateDirectory = "strfry";
-        WorkingDirectory = cfg.dataDir;
+        WorkingDirectory = cfg.settings.db;
 
         PrivateTmp = true;
         PrivateUsers = true;
