@@ -92,7 +92,7 @@ in
       type = settingsFormat.type;
       default = defaultSettings;
       apply = lib.recursiveUpdate defaultSettings;
-      description = "Environment variables to set for the Strfry service. See https://github.com/hoytech/strfry for documentation.";
+      description = "Configuration options to set for the Strfry service. See https://github.com/hoytech/strfry for documentation.";
       example = lib.literalExpression ''
         dbParams = {
           maxreaders = 256;
@@ -124,9 +124,9 @@ in
         Group = "strfry";
         Restart = "on-failure";
 
-        RuntimeDirectory = "strfry";
         StateDirectory = "strfry";
         WorkingDirectory = cfg.settings.db;
+        ReadWritePaths = [ cfg.settings.db ];
 
         PrivateTmp = true;
         PrivateUsers = true;
@@ -156,7 +156,11 @@ in
     };
   };
 
-  meta.maintainers = with lib.maintainers; [
-    felixzieger
-  ];
+  meta = {
+    doc = ./strfry.md;
+    maintainers = with lib.maintainers; [
+      felixzieger
+    ];
+  };
 }
+
