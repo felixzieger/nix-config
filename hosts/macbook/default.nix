@@ -173,8 +173,8 @@ in
     # unstable.whatsapp-for-mac # Too often outdated
     # pkgs.thunderbird # Not supported for x86_64-apple-darwin as of 2024-01-22
     # pkgs.firefox # Not supported for x86_64-apple-darwin as of 2024-01-22
-    pkgs.gimp
-    pkgs.slack
+    # pkgs.gimp
+    # pkgs.slack
     # pkgs.opentofu
     # unstable.ghostty # marked as broken for darwin as of 2024-12-30
     # pkgs.calibre # marked as broken for darwin as of 2024-12-30
@@ -184,11 +184,11 @@ in
     pkgs.python3
     pkgs.pipx
     pkgs.uv
-    pkgs.poetry # package management
+    # pkgs.poetry # package management
     pkgs.ruff # formatting and linting
     pkgs.pyright # static type checking
-    pkgs.ngrok
-    pkgs.litecli
+    # pkgs.ngrok
+    # pkgs.litecli
     pkgs.oci-cli
     pkgs.gh
     pkgs.vale
