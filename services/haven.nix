@@ -5,34 +5,16 @@
   ...
 }:
 let
-  defaultSettings = lib.attrsets.mapAttrs (name: value: 
-    if builtins.isBool value then
-      if value then "true" else "false"
-    else
-      toString value
-  ) (
-    builtins.fromTOML (builtins.readFile "${cfg.package}/share/haven/.env.example")
-  );
-  mergedSettings =
-    defaultSettings
-    // {
-      OWNER_NPUB = cfg.ownerNpub;
-      RELAY_URL = cfg.relayUrl;
-      RELAY_PORT = toString cfg.port;
-      PRIVATE_RELAY_NAME = "${cfg.ownerName}'s private relay";
-      PRIVATE_RELAY_NPUB = cfg.ownerNpub;
-      CHAT_RELAY_NAME = "${cfg.ownerName}'s chat relay";
-      CHAT_RELAY_NPUB = cfg.ownerNpub;
-      OUTBOX_RELAY_NAME = "${cfg.ownerName}'s outbox relay";
-      OUTBOX_RELAY_NPUB = cfg.ownerNpub;
-      INBOX_RELAY_NAME = "${cfg.ownerName}'s inbox relay";
-      INBOX_RELAY_NPUB = cfg.ownerNpub;
-      IMPORT_SEED_RELAYS_FILE = "${pkgs.writeText "relays_import.json" (
-        builtins.toJSON cfg.importRelays
-      )}";
-      BLASTR_RELAYS_FILE = "${pkgs.writeText "relays_blastr.json" (builtins.toJSON cfg.blastrRelays)}";
-    }
-    // cfg.settings;
+  # Load default values from package. See https://github.com/bitvora/haven/blob/master/.env.example
+  defaultSettings = builtins.fromTOML (builtins.readFile "${cfg.package}/share/haven/.env.example");
+
+  import_relays_file = "${pkgs.writeText "import_relays.json" (builtins.toJSON cfg.importRelays)}";
+  blastr_relays_file = "${pkgs.writeText "blastr_relays.json" (builtins.toJSON cfg.blastrRelays)}";
+
+  mergedSettings = cfg.settings // {
+    IMPORT_SEED_RELAYS_FILE = import_relays_file;
+    BLASTR_RELAYS_FILE = blastr_relays_file;
+  };
 
   cfg = config.services.haven;
 in
@@ -44,29 +26,6 @@ in
       type = lib.types.package;
       # TODO add default once merged to nixpkgs
       description = "The Haven package to use.";
-    };
-
-    port = lib.mkOption {
-      default = 3355;
-      type = lib.types.port;
-      description = "Listen on this port.";
-    };
-
-    relayUrl = lib.mkOption {
-      default = "relay.utxo.one";
-      type = lib.types.str;
-      description = "The URL of the relay.";
-    };
-
-    ownerNpub = lib.mkOption {
-      type = lib.types.str;
-      description = "The NPUB of the owner.";
-    };
-
-    ownerName = lib.mkOption {
-      type = lib.types.str;
-      description = "The name of the owner. Used for relay names and descriptions.";
-      default = "a nostrich";
     };
 
     blastrRelays = lib.mkOption {
@@ -92,9 +51,11 @@ in
     };
 
     settings = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
-      default = { };
-      description = "Additional environment variables to set for the Haven service. See https://github.com/bitvora/haven for documentation.";
+      # type = builtins.typeOf defaultSettings;
+      default = defaultSettings;
+      defaultText = "See https://github.com/bitvora/haven/blob/master/.env.example";
+      apply = lib.recursiveUpdate defaultSettings;
+      description = "See https://github.com/bitvora/haven for documentation.";
       example = lib.literalExpression ''
         {
           PRIVATE_RELAY_NAME = "My Custom Relay Name";
@@ -129,7 +90,9 @@ in
       description = "haven";
       wants = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
-      environment = mergedSettings;
+      environment = lib.attrsets.mapAttrs (
+        name: value: if builtins.isBool value then if value then "true" else "false" else toString value
+      ) mergedSettings;
 
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/haven";
@@ -137,7 +100,6 @@ in
         User = "haven";
         Group = "haven";
         Restart = "on-failure";
-        Type = "simple";
 
         RuntimeDirectory = "haven";
         StateDirectory = "haven";
