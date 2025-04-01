@@ -18,11 +18,16 @@ noremap <Right> <Nop>
 
 let mapleader=" "
 
+" Move between windows
+nnoremap <leader>h <C-W>h
+nnoremap <leader>j <C-W>j
+nnoremap <leader>k <C-W>k
+nnoremap <leader>l <C-W>l
+
 " Telescope
 nnoremap <leader>f <cmd>Telescope find_files<cr>
 nnoremap <leader>r <cmd>Telescope live_grep<cr>
 nnoremap <leader>b <cmd>Telescope buffers<cr>
-nnoremap <leader>g <cmd>Telescope<cr>
 
 map <leader>n :NvimTreeFindFileToggle<CR>
 
@@ -33,8 +38,9 @@ vmap <leader>y "+y
 nmap <leader>p "+p
 " Safe file
 nmap <leader>w :w<CR>
+
 " Toggle line numbers
-nmap <leader>l :set number!<CR>
+nmap <leader>tl :set number!<CR>
 
 " AI shortcuts start with a
 nnoremap <leader>ae :Copilot enable<CR>

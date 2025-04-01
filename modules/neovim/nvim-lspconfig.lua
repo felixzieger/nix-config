@@ -4,11 +4,11 @@ lspconfig.nil_ls.setup {
   settings = {
     ['nil'] = {
       formatting = {
-            command = { "nixfmt" },
-          },
-        },
+        command = { "nixfmt" },
       },
-    }
+    },
+  },
+}
 lspconfig.bashls.setup {}
 -- lspconfig.yamlls.setup {}
 lspconfig.jsonls.setup {}
@@ -46,13 +46,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Enable completion triggered by <c-x><c-o>
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
     local opts = { buffer = ev.buf }
-    vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', '<C-h>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<leader>gh', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', '<leader>gj', vim.lsp.buf.signature_help, opts)
 
     vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', '<leader>gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<leader>gd', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<leader>gf', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', '<leader>gg', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references, opts)
 
     -- vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts) -- Makes <leader>r slow to appear

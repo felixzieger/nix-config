@@ -74,25 +74,6 @@
         config = builtins.readFile ./nvim-tree.lua;
       }
 
-      {
-        plugin =
-          # Will be available in 24.10
-          # https://search.nixos.org/packages?channel=unstable&show=vimPlugins.grug-far-nvim&from=0&size=50&sort=relevance&type=packages&query=grug+far+nvim
-          pkgs.vimUtils.buildVimPlugin {
-            pname = "grug-far.nvim";
-            version = "2024-09-09";
-            src = pkgs.fetchFromGitHub {
-              owner = "MagicDuck";
-              repo = "grug-far.nvim";
-              rev = "76d86580f71bd2f07d4264c782ab8d1c12302e13";
-              sha256 = "0zn847nfzh1ps9b1czsg1xmhdygvjg7dgq3wa5b6l7frv75lhwhk";
-            };
-            meta.homepage = "https://github.com/MagicDuck/grug-far.nvim/";
-          };
-        type = "lua";
-        config = builtins.readFile ./nvim-grug-far.lua;
-      }
-
     ];
     extraConfig = builtins.readFile ./neovim.vim;
   };
