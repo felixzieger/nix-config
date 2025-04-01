@@ -20,6 +20,7 @@ buildGoModule rec {
   postInstall = ''
     mkdir -p $out/share/haven
     cp -r $src/templates $out/share/haven/
+    cp $src/.env.example $out/share/haven/.env.example
   '';
 
   meta = with lib; {
