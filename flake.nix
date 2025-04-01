@@ -49,6 +49,7 @@
             ./services/docker.nix
             ./services/home-assistant.nix
             ./services/alby-felixzieger-de.nix
+            ./services/note-to-quote.nix
             inputs.agenix.nixosModules.default
 
           ];
@@ -64,8 +65,6 @@
             ./hosts/nixos/cameron/configuration.nix
             # ./services/nginx.nix
             # ./services/nextcloud-sonnenhof-zieger-de.nix
-
-            ./services/note-to-quote.nix
 
             inputs.agenix.nixosModules.default
           ];
