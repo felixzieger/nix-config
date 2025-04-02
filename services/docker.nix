@@ -27,6 +27,7 @@
             WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER =
               "bot@sonnenhof-zieger.de";
             WATCHTOWER_NOTIFICATION_EMAIL_DELAY = "10";
+            WATCHTOWER_TIMEOUT = "120s";
           };
           volumes = [ "/var/run/docker.sock:/var/run/docker.sock" ];
           environmentFiles = [ config.age.secrets.watchtower-environment.path ];
