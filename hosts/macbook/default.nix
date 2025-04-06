@@ -121,6 +121,18 @@ in
         ];
       };
 
+      programs.helix = {
+        enable = true;
+
+        languages.language = [
+          {
+            name = "nix";
+            auto-format = true;
+            formatter.command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
+          }
+        ];
+      };
+
       # This value determines the home Manager release that your
       # configuration is compatible with. This helps avoid breakage
       # when a new home Manager release introduces backwards
@@ -161,10 +173,8 @@ in
     pkgs.shellcheck
     pkgs.fish
     pkgs.eternal-terminal
+    pkgs.helix
 
-    # pkgs.jan # LLM gui; currently only packaged for linux on nixos
-    # pkgs.elia # llm tui https://github.com/NixOS/nixpkgs/pull/317782
-    unstable.posting # HTTP tui https://github.com/NixOS/nixpkgs/pull/325971
     unstable.aider-chat
     pkgs.rectangle
     pkgs.monitorcontrol
@@ -193,13 +203,13 @@ in
     pkgs.gh
     pkgs.vale
     pkgs.opentofu
+    # unstable.supabase-cli
 
     unstable.scooter
 
     # Landing page
     pkgs.pnpm
     pkgs.nodejs_22
-    pkgs.bun
     pkgs.typescript
 
     # nostr
