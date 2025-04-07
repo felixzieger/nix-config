@@ -128,6 +128,8 @@ in
         WorkingDirectory = cfg.settings.db;
         ReadWritePaths = [ cfg.settings.db ];
 
+        LimitNOFILE = cfg.settings.relay.nofiles;
+
         PrivateTmp = true;
         PrivateUsers = true;
         PrivateDevices = true;
