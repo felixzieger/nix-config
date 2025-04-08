@@ -85,16 +85,36 @@ in
     felix
   ];
 
-  "alby-felixzieger-de-env.age".publicKeys = [ schwalbe felix ];
-  "alby-felixzieger-de-restic-password.age".publicKeys = [ schwalbe felix ];
-  "alby-felixzieger-de-restic-environment.age".publicKeys = [ schwalbe felix ];
+  "alby-felixzieger-de-env.age".publicKeys = [
+    schwalbe
+    felix
+  ];
+  "alby-felixzieger-de-restic-password.age".publicKeys = [
+    schwalbe
+    felix
+  ];
+  "alby-felixzieger-de-restic-environment.age".publicKeys = [
+    schwalbe
+    felix
+  ];
 
   "nostr-felixzieger-de-restic-password.age".publicKeys = systems ++ [ felix ];
-  "nostr-felixzieger-de-restic-environment.age".publicKeys = systems ++ [ blausieb felix ];
+  "nostr-felixzieger-de-restic-environment.age".publicKeys = systems ++ [
+    blausieb
+    felix
+  ];
 
   "omnivore-felixzieger-de-environment.age".publicKeys = systems ++ [ felix ];
   "omnivore-felixzieger-de-google-service-account.age".publicKeys = systems ++ [ felix ];
 
+  "pay-sonnenhof-zieger-de-restic-password.age".publicKeys = [
+    schwalbe
+    felix
+  ];
+  "pay-sonnenhof-zieger-de-restic-environment.age".publicKeys = [
+    schwalbe
+    felix
+  ];
 
   "all-buckets-read-only-restic-environment.age".publicKeys = systems;
 }
