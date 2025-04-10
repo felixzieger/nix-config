@@ -209,6 +209,7 @@ in
 
     # Landing page
     pkgs.pnpm
+    pkgs.bun
     pkgs.nodejs_22
     pkgs.typescript
 
