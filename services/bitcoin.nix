@@ -44,7 +44,7 @@
   };
 
   services.restic.backups = {
-    pay = {
+    btcpay = {
       initialize = true;
 
       paths = [
