@@ -1,0 +1,29 @@
+# Source: https://github.com/yomaq/nix-config/blob/cd58b7134b2d0df3600f86140973c6f2048fabb4/.github/workflows/UpdateFlakeLock.yml
+name: Weekly Flake Update
+
+on:
+  schedule:
+    - cron: '0 0 * * 2'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update_and_check_flake:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Nix
+      uses: nixbuild/nix-quick-install-action@v28
+    - name: Run nix flake update
+      run: |
+        nix flake update
+    - name: Run nix flake check
+      run: |
+        nix flake check --verbose
+    - name: Commit and Push flake.lock
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "update inputs"
+        file_pattern: "flake.lock"
