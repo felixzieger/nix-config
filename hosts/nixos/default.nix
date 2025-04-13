@@ -1,7 +1,12 @@
-{ self, pkgs, config, ... }: {
+{
+  self,
+  pkgs,
+  config,
+  ...
+}:
+{
   nixpkgs.config.allowUnfree = true;
-  boot.loader.systemd-boot.configurationLimit =
-    30; # prevent boot partition running out of disk space
+  boot.loader.systemd-boot.configurationLimit = 30; # prevent boot partition running out of disk space
 
   imports = [ ../../services/systemd-email-notify.nix ];
 
@@ -10,7 +15,10 @@
     # Adding a user equals password-less sudo. See https://github.com/NixOS/nix/issues/2127#issuecomment-2214837817
     # TODO separate deployment users
     [ "felix" ];
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nix.optimise.automatic = true;
   nix.gc = {
     automatic = true;
@@ -19,17 +27,18 @@
   };
 
   systemd.enableEmergencyMode = false;
-  services.journald.extraConfig =
-    "SystemMaxUse=1000M"; # Reduce journald log size
+  services.journald.extraConfig = "SystemMaxUse=1000M"; # Reduce journald log size
 
   security.sudo.enable = true;
-  security.sudo.wheelNeedsPassword =
-    false; # allows user-level programs to silently obtain sudo permissions which is a risk; but it's very comfrotable
+  security.sudo.wheelNeedsPassword = false; # allows user-level programs to silently obtain sudo permissions which is a risk; but it's very comfrotable
 
   users.users.felix = {
     isNormalUser = true;
     description = "felix";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.zsh;
     packages = [ ];
     openssh.authorizedKeys.keys = [
@@ -43,15 +52,14 @@
   # See https://ghostty.org/docs/help/terminfo#ssh for a good explanation of terminfo
   environment.enableAllTerminfo = true;
 
-  environment.systemPackages =
-    [
-      # view systemctl interactively
-      # pkgs.systemctl-tui
-      # pkgs.sysz
+  environment.systemPackages = [
+    # view systemctl interactively
+    # pkgs.systemctl-tui
+    # pkgs.sysz
 
-      # view journalctl interactively
-      # pkgs.lazyjournal
-    ];
+    # view journalctl interactively
+    # pkgs.lazyjournal
+  ];
 
   programs.zsh.enable = true;
 
@@ -87,8 +95,7 @@
       PermitRootLogin = "no";
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
-      LogLevel =
-        "VERBOSE"; # fail2ban requires a log level that shows failed login attempts
+      LogLevel = "VERBOSE"; # fail2ban requires a log level that shows failed login attempts
     };
   };
   services.eternal-terminal = {
@@ -96,7 +103,9 @@
     port = 2022;
   };
   networking = {
-    firewall = { allowedTCPPorts = [ config.services.eternal-terminal.port ]; };
+    firewall = {
+      allowedTCPPorts = [ config.services.eternal-terminal.port ];
+    };
   };
 
   home-manager.useGlobalPkgs = true;

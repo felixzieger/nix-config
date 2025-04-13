@@ -1,6 +1,11 @@
 # Copied from https://github.com/pSub/configs/blob/master/nixos%2Fserver%2Fmodules%2Fsystemd-email-notify.nix
 # Background: https://pascal-wittmann.de/entry/systemd-failure-notification
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -30,7 +35,8 @@ let
     ERRMAIL
   '';
 
-in {
+in
+{
   options = {
     systemd.email-notify.mailTo = mkOption {
       type = types.str;
@@ -41,13 +47,15 @@ in {
     systemd.email-notify.mailFrom = mkOption {
       type = types.str;
       default = null;
-      description =
-        "Email address from which the service status will be mailed.";
+      description = "Email address from which the service status will be mailed.";
     };
 
     systemd.services = mkOption {
-      type = with types;
-        attrsOf (submodule { config.onFailure = [ "email@%n.service" ]; });
+      type =
+        with types;
+        attrsOf (submodule {
+          config.onFailure = [ "email@%n.service" ];
+        });
     };
   };
 
@@ -90,8 +98,7 @@ in {
           host = "smtp.strato.de";
           from = "bot@sonnenhof-zieger.de";
           user = "bot@sonnenhof-zieger.de";
-          passwordeval =
-            "cat ${config.age.secrets.email-password-bot-sonnenhof-zieger.path}";
+          passwordeval = "cat ${config.age.secrets.email-password-bot-sonnenhof-zieger.path}";
         };
       };
     };

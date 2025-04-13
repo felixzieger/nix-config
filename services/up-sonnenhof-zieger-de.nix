@@ -1,8 +1,14 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   uptimeKumaPort = 3001;
   uptimeKumaHost = "up.sonnenhof-zieger.de";
-in {
+in
+{
   config = {
     services.nginx.virtualHosts."${uptimeKumaHost}" = {
       forceSSL = true;
@@ -26,10 +32,8 @@ in {
     };
 
     age.secrets = {
-      up-sonnenhof-zieger-de-restic-environment.file =
-        ../secrets/up-sonnenhof-zieger-de-restic-environment.age;
-      up-sonnenhof-zieger-de-restic-password.file =
-        ../secrets/up-sonnenhof-zieger-de-restic-password.age;
+      up-sonnenhof-zieger-de-restic-environment.file = ../secrets/up-sonnenhof-zieger-de-restic-environment.age;
+      up-sonnenhof-zieger-de-restic-password.file = ../secrets/up-sonnenhof-zieger-de-restic-password.age;
     };
 
     services.restic.backups.uptime-kuma = {
@@ -40,17 +44,19 @@ in {
       paths = [ "/var/lib/private/uptime-kuma" ];
 
       repository = "b2:up-sonnenhof-zieger-de";
-      environmentFile =
-        config.age.secrets.up-sonnenhof-zieger-de-restic-environment.path;
-      passwordFile =
-        config.age.secrets.up-sonnenhof-zieger-de-restic-password.path;
+      environmentFile = config.age.secrets.up-sonnenhof-zieger-de-restic-environment.path;
+      passwordFile = config.age.secrets.up-sonnenhof-zieger-de-restic-password.path;
 
       timerConfig = {
         OnCalendar = "16:00";
         RandomizedDelaySec = "5min";
       };
 
-      pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-monthly 12" ];
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 5"
+        "--keep-monthly 12"
+      ];
     };
   };
 }

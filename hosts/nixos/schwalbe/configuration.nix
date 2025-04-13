@@ -16,7 +16,9 @@
   };
 
   home-manager.users.felix = {
-    programs.btop.settings = { color_theme = "flat-remix"; };
+    programs.btop.settings = {
+      color_theme = "flat-remix";
+    };
   };
 
   # This value determines the NixOS release from which the default

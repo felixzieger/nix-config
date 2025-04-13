@@ -1,11 +1,18 @@
-{ pkgs, nixpkgs-unstable, config, lib, ... }:
+{
+  pkgs,
+  nixpkgs-unstable,
+  config,
+  lib,
+  ...
+}:
 let
   frigateHost = "frigate.sonnenhof-zieger.de";
   unstable = import nixpkgs-unstable {
     system = pkgs.system;
     config.allowUnfree = true;
   };
-in {
+in
+{
   config = {
 
     # Frigate service module configures nginx virtualHost
@@ -41,13 +48,18 @@ in {
         # The object detection for the 1 stream is already using 50% CPU most of the time
         # Frigate supports Coral AI; before adding more streams, I will get a Coral AI extension card
         # https://buyzero.de/products/google-coral-m-2-accelerator-a-e-key
-        objects = { track = [ "person" "car" ]; };
+        objects = {
+          track = [
+            "person"
+            "car"
+          ];
+        };
 
         snapshots.enabled = true;
 
         cameras."kartoffelbox" = {
           # It's ugly to have the camera credential checked into git.
-          # The service implementation stores the frigate.yml in nix store and I couldn't figure out how to 
+          # The service implementation stores the frigate.yml in nix store and I couldn't figure out how to
           # get the path of that file to do the Agenix "Replace inplace strings with secrets" trick.
           # While this would be an improvement, the nix store wouldn't be ideal since it's world readable.
           # Since the camera is only reachable from within the private network and RTSP is not encrypted anyway I decided to leave it like that.
@@ -57,7 +69,10 @@ in {
                 # ch1 is lower resolution
                 "rtsp://BJA3Y0v5:gZbBIUBXeyj4w70q@192.168.178.131:1337/live/ch1";
               input_args = "preset-rtsp-restream";
-              roles = [ "detect" "record" ];
+              roles = [
+                "detect"
+                "record"
+              ];
             }
 
             # {
@@ -70,7 +85,9 @@ in {
           ];
         };
 
-        telemetry = { version_check = false; };
+        telemetry = {
+          version_check = false;
+        };
       };
     };
 
@@ -86,7 +103,9 @@ in {
       };
       wantedBy = [ "multi-user.target" ];
     };
-    systemd.services.frigate = { wants = [ "set-apex-permissions.service" ]; };
+    systemd.services.frigate = {
+      wants = [ "set-apex-permissions.service" ];
+    };
 
     # Hardware accelleration for video decoding via VAAPI (on AMD GPU)
     # gives frigate access to /dev/dri/redner128

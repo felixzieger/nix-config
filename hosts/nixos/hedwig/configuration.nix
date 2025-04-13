@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   imports = [
     ./hardware-configuration.nix
   ];
@@ -14,6 +15,8 @@
     '';
   };
   home-manager.users.felix = {
-    programs.btop.settings = { color_theme = "dusklight"; };
+    programs.btop.settings = {
+      color_theme = "dusklight";
+    };
   };
 }

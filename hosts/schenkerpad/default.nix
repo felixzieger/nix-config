@@ -15,7 +15,10 @@
     })
   ];
 
-  environment.systemPackages = [ pkgs.ghostty pkgs.eternal-terminal ];
+  environment.systemPackages = [
+    pkgs.ghostty
+    pkgs.eternal-terminal
+  ];
 
   home-manager.backupFileExtension = "backup";
   home-manager.useGlobalPkgs = true;

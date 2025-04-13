@@ -22,7 +22,9 @@
     '';
   };
   home-manager.users.felix = {
-    programs.btop.settings = { color_theme = "horizon"; };
+    programs.btop.settings = {
+      color_theme = "horizon";
+    };
   };
 
   # This value determines the NixOS release from which the default

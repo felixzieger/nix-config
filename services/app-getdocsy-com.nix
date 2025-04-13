@@ -7,14 +7,14 @@ let
   docsyVersion = "v0.7.12";
   docsyWebDataDir = "/data/docsy_web/data";
   docsyWebVersion = "v0.0.62";
-in {
+in
+{
   config = {
     # Inspect sqlite database
     environment.systemPackages = with pkgs; [ litecli ];
 
     services.nginx = {
-      proxyTimeout =
-        "360s"; # we are changing this for all servers running on; not ideal but okay for now
+      proxyTimeout = "360s"; # we are changing this for all servers running on; not ideal but okay for now
       virtualHosts."app.getdocsy.com" = {
         forceSSL = true;
         enableACME = true;
@@ -108,21 +108,21 @@ in {
     };
 
     age.secrets = {
-      app-getdocsy-com-restic-environment.file =
-        ../secrets/app-getdocsy-com-restic-environment.age;
-      app-getdocsy-com-restic-password.file =
-        ../secrets/app-getdocsy-com-restic-password.age;
+      app-getdocsy-com-restic-environment.file = ../secrets/app-getdocsy-com-restic-environment.age;
+      app-getdocsy-com-restic-password.file = ../secrets/app-getdocsy-com-restic-password.age;
     };
 
     services.restic.backups = {
       docsy = {
         initialize = true;
 
-        paths = [ docsyDataDir docsyWebDataDir ];
+        paths = [
+          docsyDataDir
+          docsyWebDataDir
+        ];
 
         repository = "b2:app-getdocsy-com";
-        environmentFile =
-          config.age.secrets.app-getdocsy-com-restic-environment.path;
+        environmentFile = config.age.secrets.app-getdocsy-com-restic-environment.path;
         passwordFile = config.age.secrets.app-getdocsy-com-restic-password.path;
 
         timerConfig = {
@@ -130,7 +130,11 @@ in {
           RandomizedDelaySec = "5min";
         };
 
-        pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-monthly 12" ];
+        pruneOpts = [
+          "--keep-daily 7"
+          "--keep-weekly 5"
+          "--keep-monthly 12"
+        ];
       };
     };
   };

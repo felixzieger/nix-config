@@ -1,4 +1,11 @@
-{ self, pkgs, agenix, config, ... }: {
+{
+  self,
+  pkgs,
+  agenix,
+  config,
+  ...
+}:
+{
   environment.variables.EDITOR = "nvim";
   environment.systemPackages = with pkgs; [
     git

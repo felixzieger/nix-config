@@ -1,8 +1,14 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   plausibleHost = "plausible.sonnenhof-zieger.de";
   plausiblePort = 8000;
-in {
+in
+{
   config = {
 
     services.nginx.virtualHosts."${plausibleHost}" = {
@@ -39,14 +45,10 @@ in {
     };
 
     age.secrets = {
-      email-password-bot-sonnenhof-zieger.file =
-        ../../secrets/email-password-bot-sonnenhof-zieger.age;
-      plausible-sonnenhof-zieger-de-conf-env.file =
-        ../../secrets/plausible-sonnenhof-zieger-de-conf-env.age;
-      plausible-sonnenhof-zieger-de-restic-environment.file =
-        ../../secrets/plausible-sonnenhof-zieger-de-restic-environment.age;
-      plausible-sonnenhof-zieger-de-restic-password.file =
-        ../../secrets/plausible-sonnenhof-zieger-de-restic-password.age;
+      email-password-bot-sonnenhof-zieger.file = ../../secrets/email-password-bot-sonnenhof-zieger.age;
+      plausible-sonnenhof-zieger-de-conf-env.file = ../../secrets/plausible-sonnenhof-zieger-de-conf-env.age;
+      plausible-sonnenhof-zieger-de-restic-environment.file = ../../secrets/plausible-sonnenhof-zieger-de-restic-environment.age;
+      plausible-sonnenhof-zieger-de-restic-password.file = ../../secrets/plausible-sonnenhof-zieger-de-restic-password.age;
     };
 
     virtualisation.oci-containers = {
@@ -54,7 +56,9 @@ in {
         plausible_db = {
           autoStart = true;
           image = "postgres:16-alpine";
-          environment = { POSTGRES_PASSWORD = "postgres"; };
+          environment = {
+            POSTGRES_PASSWORD = "postgres";
+          };
           volumes = [ "/data/plausible/db-data:/var/lib/postgresql/data" ];
           extraOptions = [ "--network=plausible-bridge" ];
         };
@@ -68,8 +72,11 @@ in {
             "/etc/clickhouse/clickhouse-config.xml:/etc/clickhouse-server/config.d/logging.xml:ro"
             "/etc/clickhouse/clickhouse-user-config.xml:/etc/clickhouse-server/users.d/logging.xml:ro"
           ];
-          extraOptions =
-            [ "--ulimit" "nofile=262144:262144" "--network=plausible-bridge" ];
+          extraOptions = [
+            "--ulimit"
+            "nofile=262144:262144"
+            "--network=plausible-bridge"
+          ];
         };
 
         plausible = {
@@ -80,7 +87,10 @@ in {
             "-c"
             "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh run"
           ];
-          dependsOn = [ "plausible_db" "plausible_events_db" ];
+          dependsOn = [
+            "plausible_db"
+            "plausible_events_db"
+          ];
           ports = [ "127.0.0.1:${toString plausiblePort}:8000" ];
           environment = {
             BASE_URL = "https://${plausibleHost}";
@@ -89,10 +99,9 @@ in {
             SMTP_HOST_PORT = toString 465;
             SMTP_USER_NAME = "bot@sonnenhof-zieger.de";
             SMTP_HOST_SSL_ENABLED = "true"; # toString true; yields 1 which is not supported
-            DISABLE_REGISTRATION= "true";
+            DISABLE_REGISTRATION = "true";
           };
-          environmentFiles =
-            [ config.age.secrets.plausible-sonnenhof-zieger-de-conf-env.path ];
+          environmentFiles = [ config.age.secrets.plausible-sonnenhof-zieger-de-conf-env.path ];
           extraOptions = [ "--network=plausible-bridge" ];
         };
       };
@@ -106,8 +115,10 @@ in {
 
       serviceConfig.Type = "oneshot";
       script =
-        let dockercli = "${config.virtualisation.docker.package}/bin/docker";
-        in ''
+        let
+          dockercli = "${config.virtualisation.docker.package}/bin/docker";
+        in
+        ''
           check=$(${dockercli} network ls | grep "plausible-bridge" || true)
           if [ -z "$check" ]; then
             ${dockercli} network create plausible-bridge
@@ -117,11 +128,9 @@ in {
         '';
     };
 
-    environment.etc."clickhouse/clickhouse-config.xml".source =
-      ./clickhouse-config.xml;
+    environment.etc."clickhouse/clickhouse-config.xml".source = ./clickhouse-config.xml;
 
-    environment.etc."clickhouse/clickhouse-user-config.xml".source =
-      ./clickhouse-user-config.xml;
+    environment.etc."clickhouse/clickhouse-user-config.xml".source = ./clickhouse-user-config.xml;
 
     services.restic.backups.plausible = {
       initialize = true;
@@ -129,17 +138,19 @@ in {
       paths = [ "/data/plausible" ];
 
       repository = "b2:plausible-sonnenhof-zieger-de";
-      environmentFile =
-        config.age.secrets.plausible-sonnenhof-zieger-de-restic-environment.path;
-      passwordFile =
-        config.age.secrets.plausible-sonnenhof-zieger-de-restic-password.path;
+      environmentFile = config.age.secrets.plausible-sonnenhof-zieger-de-restic-environment.path;
+      passwordFile = config.age.secrets.plausible-sonnenhof-zieger-de-restic-password.path;
 
       timerConfig = {
         OnCalendar = "19:00";
         RandomizedDelaySec = "5min";
       };
 
-      pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-monthly 12" ];
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 5"
+        "--keep-monthly 12"
+      ];
     };
   };
 }

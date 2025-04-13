@@ -1,4 +1,5 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   config = {
 
     age.secrets = {
@@ -24,8 +25,7 @@
             WATCHTOWER_NOTIFICATION_EMAIL_TO = "alerts@felixzieger.de";
             WATCHTOWER_NOTIFICATION_EMAIL_SERVER = "smtp.strato.de";
             WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT = "465";
-            WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER =
-              "bot@sonnenhof-zieger.de";
+            WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER = "bot@sonnenhof-zieger.de";
             WATCHTOWER_NOTIFICATION_EMAIL_DELAY = "10";
             WATCHTOWER_TIMEOUT = "120s";
           };

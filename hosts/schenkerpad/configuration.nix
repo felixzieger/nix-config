@@ -1,7 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ./nvidia.nix ./nvidia.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./nvidia.nix
+    ./nvidia.nix
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -9,7 +13,9 @@
   boot.loader.grub.useOSProber = true;
 
   # Setup keyfile
-  boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
+  boot.initrd.secrets = {
+    "/crypto_keyfile.bin" = null;
+  };
 
   boot.loader.grub.enableCryptodisk = true;
 
@@ -74,7 +80,10 @@
   # Configure console keymap
   console.keyMap = "de";
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nix.optimise.automatic = true;
 
   # Enable CUPS to print documents.
@@ -101,9 +110,16 @@
   users.users.felix = {
     isNormalUser = true;
     description = "felix";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.zsh;
-    packages = with pkgs; [ bitwarden spotify nextcloud-client ];
+    packages = with pkgs; [
+      bitwarden
+      spotify
+      nextcloud-client
+    ];
   };
 
   nixpkgs.config.allowUnfree = true;

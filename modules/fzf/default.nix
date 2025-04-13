@@ -1,4 +1,5 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }:
+{
   # FZF shortcuts
   # Ctrl + T: paste the path of file or directory found on the command line
   # Ctrl + R: find history command and paste command on the command line

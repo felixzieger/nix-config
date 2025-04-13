@@ -1,8 +1,12 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   config = {
     networking = {
       firewall = {
-        allowedTCPPorts = [ 80 443 ];
+        allowedTCPPorts = [
+          80
+          443
+        ];
         allowedUDPPorts = [ 443 ];
       };
     };
@@ -35,7 +39,7 @@
     services.fail2ban = {
       jails = {
         nginx-http-auth.settings = {
-          enabled= true;
+          enabled = true;
           port = "http,https";
           logpath = "/var/log/nginx/access.log";
           backend = "auto";
@@ -61,16 +65,18 @@
       };
     };
     environment.etc = {
-      "fail2ban/filter.d/nginx-url-probe.local".text = pkgs.lib.mkDefault
-        (pkgs.lib.mkAfter ''
+      "fail2ban/filter.d/nginx-url-probe.local".text = pkgs.lib.mkDefault (
+        pkgs.lib.mkAfter ''
           [Definition]
           failregex = ^.*<HOST> - .* "(GET|POST) /(wp-|boaform|phpmyadmin|\.env|\.git|.*\.(dll|so|cfm|asp)) HTTP/.*" 4[0-9]{2} .*
-        '');
-      "fail2ban/filter.d/nginx-ip-host.local".text = pkgs.lib.mkDefault
-        (pkgs.lib.mkAfter ''
+        ''
+      );
+      "fail2ban/filter.d/nginx-ip-host.local".text = pkgs.lib.mkDefault (
+        pkgs.lib.mkAfter ''
           [Definition]
           failregex = ^\s*\S+ nginx\[\d+\]: \d+/\d+/\d+ \d+:\d+:\d+ \[error\] \d+#\d+: \*\d+ access forbidden by rule, client: <HOST>, server: .*, request: "(?:GET|POST) .*", host: "\d+\.\d+\.\d+\.\d+"$
-        '');
+        ''
+      );
     };
   };
 }

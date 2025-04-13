@@ -2,9 +2,13 @@
 # I mostly followed
 # https://tailscale.com/kb/1096/nixos-minecraft
 {
-  age.secrets = { tailscale-authkey.file = ../secrets/tailscale-authkey.age; };
+  age.secrets = {
+    tailscale-authkey.file = ../secrets/tailscale-authkey.age;
+  };
 
-  networking.firewall = { trustedInterfaces = [ "tailscale0" ]; };
+  networking.firewall = {
+    trustedInterfaces = [ "tailscale0" ];
+  };
 
   environment.systemPackages = [ pkgs.tailscale ];
 
@@ -24,4 +28,3 @@
     };
   };
 }
-

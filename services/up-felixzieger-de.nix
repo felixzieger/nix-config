@@ -1,8 +1,14 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   uptimeKumaPort = 3001;
   uptimeKumaHost = "up.felixzieger.de";
-in {
+in
+{
   config = {
     services.nginx.virtualHosts."${uptimeKumaHost}" = {
       forceSSL = true;
@@ -26,10 +32,8 @@ in {
     };
 
     age.secrets = {
-      uptime-kuma-restic-environment.file =
-        ../secrets/uptime-kuma-restic-environment.age;
-      uptime-kuma-restic-password.file =
-        ../secrets/uptime-kuma-restic-password.age;
+      uptime-kuma-restic-environment.file = ../secrets/uptime-kuma-restic-environment.age;
+      uptime-kuma-restic-password.file = ../secrets/uptime-kuma-restic-password.age;
     };
 
     services.restic.backups = {
@@ -41,8 +45,7 @@ in {
         paths = [ "/var/lib/private/uptime-kuma" ];
 
         repository = "b2:${config.networking.hostName}-uptime-kuma";
-        environmentFile =
-          config.age.secrets.uptime-kuma-restic-environment.path;
+        environmentFile = config.age.secrets.uptime-kuma-restic-environment.path;
         passwordFile = config.age.secrets.uptime-kuma-restic-password.path;
 
         timerConfig = {
@@ -50,7 +53,11 @@ in {
           RandomizedDelaySec = "5min";
         };
 
-        pruneOpts = [ "--keep-daily 7" "--keep-weekly 5" "--keep-monthly 12" ];
+        pruneOpts = [
+          "--keep-daily 7"
+          "--keep-weekly 5"
+          "--keep-monthly 12"
+        ];
       };
     };
   };
