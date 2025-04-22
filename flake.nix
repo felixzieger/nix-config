@@ -49,7 +49,6 @@
             ./services/nginx.nix
             ./services/up-felixzieger-de.nix
             ./services/frigate-sonnenhof-zieger-de.nix
-            ./services/nostr-sonnenhof-zieger-de.nix
             ./services/tailscale.nix
 
             nix-bitcoin.nixosModules.default
