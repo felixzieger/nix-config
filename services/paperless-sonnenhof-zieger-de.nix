@@ -1,16 +1,10 @@
 {
   config,
-  nixpkgs-unstable,
   pkgs,
-  lib,
   ...
 }:
 let
   paperlessHost = "paperless.sonnenhof-zieger.de";
-  unstable = import nixpkgs-unstable {
-    system = pkgs.system;
-    config.allowUnfree = true;
-  };
 in
 {
   config = {
@@ -28,8 +22,6 @@ in
     services = {
       paperless = {
         enable = true;
-        package = unstable.paperless-ngx;
-        # address = paperlessHost;
         settings.PAPERLESS_OCR_LANGUAGE = "deu+eng";
       };
     };
