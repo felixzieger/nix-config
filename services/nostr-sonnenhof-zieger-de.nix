@@ -1,13 +1,20 @@
 {
   config,
   pkgs,
+  nixpkgs-unstable,
   ...
-}:
+}@args:
 let
-  haven-package = pkgs.callPackage ./haven-package.nix { };
+  unstable = import nixpkgs-unstable {
+    system = pkgs.system;
+    config.allowUnfree = true;
+  };
 in
 {
-  imports = [ ./haven.nix ];
+  # TODO rm upon channel upgrade
+  imports = [
+    "${args.nixpkgs-unstable}/nixos/modules/services/web-apps/haven.nix"
+  ];
 
   services.nginx.virtualHosts."nostr.sonnenhof-zieger.de" = {
     forceSSL = true;
@@ -20,7 +27,7 @@ in
 
   services.haven = {
     enable = true;
-    package = haven-package;
+    package = unstable.haven;
     blastrRelays = [
       "nostr.felixzieger.de"
     ];
