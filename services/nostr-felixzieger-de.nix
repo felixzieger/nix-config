@@ -3,7 +3,7 @@
   pkgs,
   nixpkgs-unstable,
   ...
-}:
+}@args:
 let
   unstable = import nixpkgs-unstable {
     system = pkgs.system;
@@ -11,10 +11,10 @@ let
   };
 in
 {
-  # TODO Switch to service definition in unstable
-  # https://discourse.nixos.org/t/how-to-use-unstable-nixpkgs-in-imports-with-flake/17414/7
-  # https://discourse.nixos.org/t/how-to-use-service-definitions-from-unstable-channel/14767/4
-  imports = [ ./nostr-rs-relay.nix ];
+  # TODO rm upon channel upgrade
+  imports = [
+    "${args.nixpkgs-unstable}/nixos/modules/services/web-apps/nostr-rs-relay.nix"
+  ];
 
   # Check stored notes via https://jumble.social/?r=nostr.felixzieger.de
   # Check relay performance on https://nostr.watch/

@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-felix.url = "github:felixzieger/nixpkgs/strfry-dev";
     home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
@@ -29,7 +28,6 @@
       nixpkgs-darwin,
       nix-darwin,
       nixpkgs-unstable,
-      nixpkgs-felix,
       mac-app-util,
       nix-bitcoin,
       simple-nixos-mailserver,
@@ -100,7 +98,6 @@
             ./services/tailscale.nix
             ./services/nostr-felixzieger-de.nix
             ./services/strfry-felixzieger-de.nix
-            ./services/omnivore-felixzieger-de.nix
             inputs.agenix.nixosModules.default
           ];
         };

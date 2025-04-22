@@ -325,22 +325,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-felix": {
-      "locked": {
-        "lastModified": 1740673098,
-        "narHash": "sha256-9ZISoF9VgVBmrZS7+JnXaShnXI2W4cy+8mvlIMZ0NVs=",
-        "owner": "felixzieger",
-        "repo": "nixpkgs",
-        "rev": "750ec5e28e84db63705ec6da618e2b70d32fce01",
-        "type": "github"
-      },
-      "original": {
-        "owner": "felixzieger",
-        "ref": "strfry-dev",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1742923925,
@@ -445,7 +429,6 @@
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-darwin": "nixpkgs-darwin",
-        "nixpkgs-felix": "nixpkgs-felix",
         "nixpkgs-unstable": "nixpkgs-unstable_2",
         "simple-nixos-mailserver": "simple-nixos-mailserver"
       }
