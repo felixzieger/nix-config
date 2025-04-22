@@ -64,21 +64,6 @@
 
           ];
         };
-        "cameron" = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-
-          specialArgs = inputs;
-          modules = [
-            home-manager.nixosModules.home-manager
-            ./hosts/common
-            ./hosts/nixos
-            ./hosts/nixos/cameron/configuration.nix
-            # ./services/nginx.nix
-            # ./services/nextcloud-sonnenhof-zieger-de.nix
-
-            inputs.agenix.nixosModules.default
-          ];
-        };
         "hedwig" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
 
