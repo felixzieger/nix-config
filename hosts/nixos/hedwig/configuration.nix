@@ -15,8 +15,11 @@
     '';
   };
   home-manager.users.felix = {
-    programs.btop.settings = {
-      color_theme = "dusklight";
+    programs.btop = {
+      enable = true;
+      settings = {
+        color_theme = "dusklight";
+      };
     };
   };
 }

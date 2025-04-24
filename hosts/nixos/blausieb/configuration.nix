@@ -31,8 +31,11 @@
     '';
   };
   home-manager.users.felix = {
-    programs.btop.settings = {
-      color_theme = "ayu";
+    programs.btop = {
+      enable = true;
+      settings = {
+        color_theme = "ayu";
+      };
     };
   };
 

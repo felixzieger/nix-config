@@ -16,8 +16,11 @@
   };
 
   home-manager.users.felix = {
-    programs.btop.settings = {
-      color_theme = "flat-remix";
+    programs.btop = {
+      enable = true;
+      settings = {
+        color_theme = "adapta";
+      };
     };
   };
 
