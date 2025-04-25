@@ -4,6 +4,8 @@
   pkgs,
   mac-app-util,
   nixpkgs-unstable,
+  homebrew-core,
+  homebrew-cask,
   ...
 }:
 let
@@ -179,15 +181,9 @@ in
     pkgs.rectangle
     pkgs.monitorcontrol
     pkgs.spotify
-    # unstable.signal-desktop # not available on darwin as of 2025-4-22
-    # unstable.whatsapp-for-mac # Too often outdated
-    # pkgs.thunderbird # Not supported for x86_64-apple-darwin as of 2024-01-22
-    # pkgs.firefox # Not supported for x86_64-apple-darwin as of 2024-01-22
     # pkgs.gimp
     # pkgs.slack
     # pkgs.opentofu
-    # unstable.ghostty # marked as broken for darwin as of 2024-12-30
-    # pkgs.calibre # marked as broken for darwin as of 2024-12-30
     # pkgs.audacity
 
     # Python development environment
@@ -218,6 +214,34 @@ in
 
     agenix.packages."${pkgs.system}".default
   ];
+
+  nix-homebrew = {
+    enable = true;
+    user = "felix";
+    taps = {
+      "homebrew/homebrew-core" = homebrew-core;
+      "homebrew/homebrew-cask" = homebrew-cask;
+    };
+    mutableTaps = false;
+  };
+
+  homebrew = {
+    enable = true;
+    casks = [
+      # unstable.signal-desktop # not available on darwin as of 2025-4-22
+      "signal"
+      # unstable.whatsapp-for-mac # Too often outdated
+      "whatsapp"
+      # unstable.ghostty # marked as broken for darwin as of 2024-12-30
+      "ghostty"
+      # pkgs.calibre # marked as broken for darwin as of 2024-12-30
+      "calibre"
+      # pkgs.thunderbird # Not supported for x86_64-apple-darwin as of 2024-01-22
+      # "thunderbird"
+      # pkgs.firefox # Not supported for x86_64-apple-darwin as of 2024-01-22
+      # "firefox"
+    ];
+  };
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

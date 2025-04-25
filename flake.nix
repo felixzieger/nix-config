@@ -17,7 +17,17 @@
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
 
     mac-app-util.url = "github:hraban/mac-app-util"; # https://discourse.nixos.org/t/mac-applications-installed-by-nix-are-not-loaded-by-spotlight/14129/16
-    # mac-app-util.inputs.nixpkgs.follows = "nixpkgs"; # Requires specific versions
+
+    # Setup see https://github.com/zhaofengli/nix-homebrew
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
   };
 
   outputs =
@@ -31,6 +41,7 @@
       mac-app-util,
       nix-bitcoin,
       simple-nixos-mailserver,
+      nix-homebrew,
       ...
     }:
     {
@@ -124,6 +135,7 @@
             home-manager.darwinModules.home-manager
             mac-app-util.darwinModules.default
             inputs.agenix.nixosModules.default
+            nix-homebrew.darwinModules.nix-homebrew
           ];
         };
       };
