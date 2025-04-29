@@ -86,6 +86,12 @@ in
           fi
         '';
       };
+      programs.btop = {
+        enable = true;
+        settings = {
+          color_theme = "TTY";
+        };
+      };
 
       # Additional plugins for tmux
       programs.tmux.plugins = [ pkgs.tmuxPlugins.fzf-tmux-url ]; # Open Hyperlink-Picker via CTRL+b u
@@ -240,6 +246,7 @@ in
       # "thunderbird"
       # pkgs.firefox # Not supported for x86_64-apple-darwin as of 2024-01-22
       # "firefox"
+      "slack"
     ];
   };
 
