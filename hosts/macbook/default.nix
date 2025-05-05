@@ -183,40 +183,37 @@ in
     pkgs.eternal-terminal
     pkgs.helix
 
-    unstable.aider-chat
     pkgs.rectangle
     pkgs.monitorcontrol
     pkgs.spotify
-    # pkgs.gimp
+    pkgs.gimp
     # pkgs.slack
     # pkgs.opentofu
-    # pkgs.audacity
+    pkgs.audacity
 
     # Python development environment
-    pkgs.python3
-    pkgs.pipx
     pkgs.uv
-    # pkgs.poetry # package management
-    pkgs.ruff # formatting and linting
-    pkgs.pyright # static type checking
+    pkgs.ruff
     # pkgs.ngrok
     # pkgs.litecli
     pkgs.oci-cli
     pkgs.gh
     pkgs.vale
     pkgs.opentofu
-    # unstable.supabase-cli
 
     unstable.scooter
+
+    unstable.aider-chat
+    (unstable.python3.withPackages (ps: [
+      ps.llm
+      ps.llm-gemini
+    ]))
 
     # Landing page
     pkgs.pnpm
     pkgs.bun
     pkgs.nodejs_22
     pkgs.typescript
-
-    # nostr
-    # pkgs.nak
 
     agenix.packages."${pkgs.system}".default
   ];
