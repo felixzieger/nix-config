@@ -215,6 +215,10 @@ in
     pkgs.nodejs_22
     pkgs.typescript
 
+    #esp32
+    pkgs.ninja
+    pkgs.dfu-util
+
     agenix.packages."${pkgs.system}".default
   ];
 
