@@ -51,10 +51,9 @@ in
     };
   };
 
-  programs.zsh.enable = true;
   programs.fish.enable = true;
 
-  users.users.felix.shell = pkgs.zsh;
+  users.users.felix.shell = pkgs.fish;
 
   security.sudo.extraConfig = ''
     Defaults timestamp_timeout=20
@@ -169,7 +168,6 @@ in
   };
 
   environment.shells = [
-    pkgs.zsh
     pkgs.fish
   ];
   environment.systemPackages = [
@@ -194,8 +192,9 @@ in
     # Python development environment
     pkgs.uv
     pkgs.ruff
-    # pkgs.ngrok
-    # pkgs.litecli
+    pkgs.pyright
+    pkgs.ngrok
+    pkgs.litecli
     pkgs.oci-cli
     pkgs.gh
     pkgs.vale
@@ -218,6 +217,8 @@ in
     #esp32
     pkgs.ninja
     pkgs.dfu-util
+    pkgs.cmake
+    pkgs.esphome
 
     agenix.packages."${pkgs.system}".default
   ];
@@ -233,6 +234,7 @@ in
   };
 
   homebrew = {
+    onActivation.autoUpdate = true;
     enable = true;
     casks = [
       # unstable.signal-desktop # not available on darwin as of 2025-4-22
@@ -248,6 +250,8 @@ in
       # pkgs.firefox # Not supported for x86_64-apple-darwin as of 2024-01-22
       # "firefox"
       "slack"
+      "nextcloud"
+      "zen-browser"
     ];
   };
 
