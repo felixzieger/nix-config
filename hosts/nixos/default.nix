@@ -63,11 +63,6 @@
 
   programs.zsh.enable = true;
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-  };
-
   services.fail2ban = {
     enable = true; # comes with a default jail for SSH
     jails.sshd.settings = {

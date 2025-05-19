@@ -105,7 +105,6 @@ in
         nodePackages.typescript-language-server # provides ts_ls for nvim lsp
       ];
       programs.neovim = {
-        package = unstable.neovim-unwrapped;
         plugins = with pkgs.vimPlugins; [
           vim-terraform
 
