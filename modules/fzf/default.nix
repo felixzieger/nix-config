@@ -11,6 +11,12 @@
     if [ -n "''${commands[fzf-share]}" ]; then
       source "$(fzf-share)/key-bindings.zsh"
       source "$(fzf-share)/completion.zsh"
+  '';
+
+  programs.bash.initExtra = ''
+    if command -v fzf-share >/dev/null; then
+      source "$(fzf-share)/key-bindings.bash"
+      source "$(fzf-share)/completion.bash"
     fi
   '';
 }
