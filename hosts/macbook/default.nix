@@ -16,7 +16,6 @@ let
 in
 {
   nixpkgs.config.allowUnfree = true;
-  services.nix-daemon.enable = true;
   nix = {
     settings = {
       "extra-experimental-features" = [
@@ -59,7 +58,9 @@ in
     Defaults timestamp_timeout=20
   '';
 
-  fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "SourceCodePro" ]; }) ];
+  fonts.packages = [
+    pkgs.nerd-fonts.sauce-code-pro
+  ];
 
   home-manager = {
     sharedModules = [ mac-app-util.homeManagerModules.default ];
@@ -102,7 +103,9 @@ in
       home.packages = with pkgs; [
         terraform-ls
         nodePackages.vscode-langservers-extracted
-        nodePackages.typescript-language-server # provides ts_ls for nvim lsp
+
+        # disabled because it tried to pull in nodejs-20.19 which failed to build
+        # nodePackages.typescript-language-server # provides ts_ls for nvim lsp
       ];
       programs.neovim = {
         plugins = with pkgs.vimPlugins; [
@@ -151,6 +154,7 @@ in
     };
   };
 
+  system.primaryUser = "felix";
   system.defaults = {
     finder = {
       AppleShowAllExtensions = true;
@@ -206,6 +210,19 @@ in
       ps.llm
       ps.llm-gemini
     ]))
+    (pkgs.python3Packages.buildPythonApplication {
+      pname = "shell_sage";
+      version = "0.1.0";
+
+      src = pkgs.fetchFromGitHub {
+        owner = "AnswerDotAI";
+        repo = "shell_sage";
+        rev = "80fb2afde8c507079ca0b0faec0951c99eb3d70d";
+        sha256 = "sha256-I7CWGU06kP5p8KCe6A+Syy1ZUssjjI0V+9cE3+Oro5g";
+      };
+
+      pypiDeps = true;
+    })
 
     # Landing page
     pkgs.pnpm

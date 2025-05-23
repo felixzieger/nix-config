@@ -6,13 +6,8 @@
   ...
 }:
 {
-  fonts.packages = with pkgs; [
-    (nerdfonts.override {
-      fonts = [
-        "DejaVuSansMono"
-        "SourceCodePro"
-      ];
-    })
+  fonts.packages = [
+    pkgs.nerd-fonts.sauce-code-pro
   ];
 
   environment.systemPackages = [
