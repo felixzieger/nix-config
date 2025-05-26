@@ -6,7 +6,7 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    initExtra = ''
+    initContent = ''
       unsetopt BEEP
 
       HYPHEN_INSENSITIVE="true"

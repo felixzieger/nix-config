@@ -79,7 +79,7 @@ in
         shellInit = builtins.readFile ./fishrc;
       };
       programs.zsh = {
-        initExtra = ''
+        initContent = ''
           if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
           then
               exec fish -l

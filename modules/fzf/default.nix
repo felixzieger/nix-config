@@ -7,7 +7,7 @@
   programs.fzf.enable = true;
   programs.bat.enable = true;
 
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     if [ -n "''${commands[fzf-share]}" ]; then
       source "$(fzf-share)/key-bindings.zsh"
       source "$(fzf-share)/completion.zsh"
