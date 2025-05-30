@@ -70,6 +70,8 @@ in
   "paperless-sonnenhof-zieger-de-restic-environment.age".publicKeys = [ blausieb ];
   "paperless-sonnenhof-zieger-de-restic-password.age".publicKeys = [ blausieb ];
 
+  "readeck-felixzieger-de-env.age".publicKeys = [ blausieb ];
+
   "plausible-sonnenhof-zieger-de-conf-env.age".publicKeys = [ blausieb ];
   "plausible-sonnenhof-zieger-de-restic-environment.age".publicKeys = [ blausieb ];
   "plausible-sonnenhof-zieger-de-restic-password.age".publicKeys = [ blausieb ];

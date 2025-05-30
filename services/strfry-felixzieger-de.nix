@@ -1,20 +1,9 @@
 {
   pkgs,
   config,
-  nixpkgs-unstable,
   ...
-}@args:
-let
-  unstable = import nixpkgs-unstable {
-    system = pkgs.system;
-    config.allowUnfree = true;
-  };
-in
+}:
 {
-  imports = [
-    "${args.nixpkgs-unstable}/nixos/modules/services/web-apps/strfry.nix"
-  ];
-
   services.nginx.virtualHosts."strfry.felixzieger.de" = {
     forceSSL = true;
     enableACME = true;
@@ -26,7 +15,6 @@ in
 
   services.strfry = {
     enable = true;
-    package = unstable.strfry;
     settings = {
 
       relay.info = {

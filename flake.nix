@@ -109,6 +109,7 @@
             ./services/plausible-sonnenhof-zieger-de
             ./services/bitwarden-sonnenhof-zieger-de.nix
             ./services/paperless-sonnenhof-zieger-de.nix
+            ./services/readeck-felixzieger-de.nix
             ./services/tailscale.nix
             ./services/nostr-felixzieger-de.nix
             ./services/strfry-felixzieger-de.nix

@@ -1,21 +1,8 @@
 {
   config,
-  pkgs,
-  nixpkgs-unstable,
   ...
-}@args:
-let
-  unstable = import nixpkgs-unstable {
-    system = pkgs.system;
-    config.allowUnfree = true;
-  };
-in
+}:
 {
-  # TODO rm upon channel upgrade
-  imports = [
-    "${args.nixpkgs-unstable}/nixos/modules/services/web-apps/nostr-rs-relay.nix"
-  ];
-
   # Check stored notes via https://jumble.social/?r=nostr.felixzieger.de
   # Check relay performance on https://nostr.watch/
   services.nginx.virtualHosts."nostr.felixzieger.de" = {
@@ -29,7 +16,6 @@ in
 
   services.nostr-rs-relay = {
     enable = true;
-    package = unstable.nostr-rs-relay; # update to 0.9.0 on 2025-02-21
     settings = {
 
       info = {
