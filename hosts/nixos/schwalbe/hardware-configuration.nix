@@ -40,7 +40,12 @@
     "sd_mod"
   ];
   boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ pkgs.linuxKernel.packages.linux_6_6.gasket ];
+
+  boot.extraModulePackages = [
+    # Coral Gasket Driver allows usage of the Coral EdgeTPU; needed for Frigate
+    # Needs to be updated when the kernel is updated. For example at channel updates.
+    pkgs.linuxKernel.packages.linux_6_12.gasket
+  ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/7dfe4ec9-8818-436e-ab68-12b79462ce12";

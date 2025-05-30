@@ -25,6 +25,7 @@ in
     };
 
     # build linux hosts from darwin
+    # verify that it's running with `sudo launchctl list org.nixos.linux-builder`
     linux-builder = {
       enable = true;
       # ephemeral = true;

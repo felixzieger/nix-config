@@ -7,8 +7,13 @@
     };
 
     virtualisation.docker.enable = true;
+
+    virtualisation.docker.daemon.settings = {
+      data-root = "/data/docker/data-root";
+    };
     virtualisation.docker.autoPrune.enable = true;
     virtualisation.docker.autoPrune.flags = [ "--all" ];
+
     users.extraGroups.docker.members = [ "felix" ];
     virtualisation.oci-containers = {
       backend = "docker";

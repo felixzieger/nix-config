@@ -24,6 +24,14 @@ in
       quic = true;
     };
 
+    # The directory is not configurable so we create a bind mount instead
+    # I tried using a symlink but systemd failed with "Too many levels of symbolic links"
+    fileSystems."/var/lib/frigate" = {
+      device = "/data/frigate";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
     services.frigate = {
       enable = true;
       hostname = frigateHost;

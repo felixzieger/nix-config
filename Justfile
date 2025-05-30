@@ -25,6 +25,12 @@ switch target_host=hostname: (build target_host)
 
 [macos]
 switch-linux target_host:
+  # from https://paretosecurity.com/blog/being-a-happy-nixer-on-a-mac/
+  # Sometimes, after reinstalling nix-darwin, the linux-builder can't be reached. Fix this via
+  # sudo su -
+  # ssh linux-builder
+  # exit
+
   nixos-rebuild switch --fast --flake .#{{target_host}} --target-host {{target_host}} --use-remote-sudo --use-substitutes
 
 

@@ -4,25 +4,32 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    agenix.url = "github:ryantm/agenix";
 
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.home-manager.follows = "home-manager";
+
+    nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
+    nix-bitcoin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-bitcoin.inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.05";
+    simple-nixos-mailserver.inputs.nixpkgs-25_05.follows = "nixpkgs";
+    simple-nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    # Darwin inputs
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
     nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
-
-    nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
-
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
 
     mac-app-util.url = "github:hraban/mac-app-util"; # https://discourse.nixos.org/t/mac-applications-installed-by-nix-are-not-loaded-by-spotlight/14129/16
     mac-app-util.inputs.nixpkgs.follows = "nixpkgs-darwin";
 
     # Setup see https://github.com/zhaofengli/nix-homebrew
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-    nix-homebrew.inputs.nixpkgs.follows = "nixpkgs";
-    nix-homebrew.inputs.nix-darwin.follows = "nixpkgs-unstable";
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
       flake = false;
