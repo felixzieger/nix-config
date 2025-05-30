@@ -8,6 +8,10 @@
 
   networking.hostName = "schwalbe";
 
+  virtualisation.docker.daemon.settings = {
+    data-root = "/data/docker/data-root";
+  };
+
   programs.tmux = {
     enable = true;
     extraConfig = ''
