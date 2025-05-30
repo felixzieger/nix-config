@@ -73,7 +73,34 @@ in
           cmd = [ "--voice=en_US-lessac-medium" ];
           labels = {
             "io.containers.autoupdate" = "registry";
+            "com.centurylinklabs.watchtower.stop-signal" = "SIGHUP";
           };
+        };
+      };
+    };
+
+    # Example log entry with obfuscated IP
+    # Mai 30 11:08:07 schwalbe docker-homeassistant-start[2361020]: 2025-05-30 11:08:07.453 WARNING (MainThread) [homeassistant.components.http.ban] Login attempt or request with invalid authentication from XXX.XXX.XXX.XXX (XXX.XXX.XXX.XXX). Requested URL: '/auth/login_flow/815ce2fbc2ba7e1d5c9579697cd0ff42'. (Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:138.0) Gecko/20100101 Firefox/138.0)
+    environment.etc."fail2ban/filter.d/homeassistant.local".text = pkgs.lib.mkDefault (
+      pkgs.lib.mkAfter ''
+        [INCLUDES]
+        before = common.conf
+
+        [Definition]
+        failregex = ^.*Login attempt or request with invalid authentication from <ADDR>.*$
+        ignoreregex =
+      ''
+    );
+
+    services.fail2ban = {
+      enable = true;
+      jails = {
+        homeassistant.settings = {
+          enabled = true;
+          filter = "homeassistant[journalmatch='_SYSTEMD_UNIT=docker-homeassistant.service']";
+          backend = "systemd";
+          banaction = "%(banaction_allports)s";
+          maxretry = 5;
         };
       };
     };
