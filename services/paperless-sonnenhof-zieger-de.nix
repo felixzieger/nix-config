@@ -70,7 +70,8 @@ in
 
           backupPrepareCommand = ''
             mkdir -p ${tempBackupDir}
-            ${config.services.paperless.dataDir}/paperless-manage document_exporter ${tempBackupDir} --delete
+            chown ${config.services.paperless.user}:${config.services.paperless.user} ${tempBackupDir}
+            /run/current-system/sw/bin/paperless-manage document_exporter ${tempBackupDir} --delete
           '';
           paths = [ tempBackupDir ];
           backupCleanupCommand = "rm -rf ${tempBackupDir}";
