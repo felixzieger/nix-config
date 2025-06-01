@@ -33,9 +33,10 @@
       default = true;
       rejectSSL = true;
       extraConfig = ''
-        deny all; 
+        return 444;
       '';
     };
+
     services.fail2ban = {
       jails = {
         nginx-http-auth.settings = {
