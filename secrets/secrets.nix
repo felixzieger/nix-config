@@ -3,12 +3,9 @@ let
   users = [ felix ];
 
   blausieb = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB6l59mQ8I0u6laoKksbh1HcD/iHmjujta+XTBbPPiBb";
-
   schwalbe = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHunIW8dfsxIcafgHHG/lNBW55Tk6aS7Qy86x3TFQG3X";
   cameron = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMPgvfVIcLInSlxUxdU/X0roocVNzEu6FPSOvkhkiLnQ";
-  hedwig =
-    # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIBqSDXUVcrS7OnDVFfYdcnMU24m+6USTJRudXVV8aNK";
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILS4TPSLCkMkxXH+fhqXo1XgVBZhnpyJSbPqS2vPyiJI";
+  hedwig = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILS4TPSLCkMkxXH+fhqXo1XgVBZhnpyJSbPqS2vPyiJI";
 
   systems = [
     schwalbe
@@ -117,6 +114,10 @@ in
     schwalbe
     felix
   ];
+
+  "twenty-getdocsy-com-docker-environment.age".publicKeys = [ blausieb ];
+  "twenty-getdocsy-com-restic-environment.age".publicKeys = [ blausieb ];
+  "twenty-getdocsy-com-restic-password.age".publicKeys = [ blausieb ];
 
   "all-buckets-read-only-restic-environment.age".publicKeys = systems;
 }
