@@ -25,6 +25,9 @@ in
         settings = {
           PAPERLESS_OCR_LANGUAGE = "deu+eng";
           PAPERLESS_OCR_USER_ARGS = ''{"invalidate_digital_signatures": true}'';
+          PAPERLESS_CSRF_TRUSTED_ORIGINS = "https://${paperlessHost}";
+          PAPERLESS_URL = "https://${paperlessHost}";
+
         };
       };
     };
