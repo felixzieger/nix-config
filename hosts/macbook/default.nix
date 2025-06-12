@@ -206,6 +206,7 @@ in
 
     unstable.scooter
 
+    unstable.claude-code
     unstable.aider-chat
     (unstable.python3.withPackages (ps: [
       ps.llm
