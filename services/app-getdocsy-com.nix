@@ -56,31 +56,31 @@ in
             "com.centurylinklabs.watchtower.enable" = "false";
           }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
         };
-        docsy_dashboard = {
-          autoStart = true;
-          image = "ghcr.io/getdocsy/slack-bot:${docsyVersion}";
-          environment.TZ = "Europe/Berlin";
-          ports = [ "${builtins.toString docsyDashboardPort}:8050" ];
-          volumes = [ "${docsyDataDir}:/app/data" ];
-          login = {
-            registry = "ghcr.io";
-            username = "felixzieger";
-            passwordFile = config.age.secrets.ghcr-secret.path;
-          };
-          entrypoint = "poetry";
-          cmd = [
-            "run"
-            "gunicorn"
-            "-w"
-            "1"
-            "-b"
-            "0.0.0.0:8050"
-            "docsy.dashboard:flask_app"
-          ];
-          labels = {
-            "com.centurylinklabs.watchtower.enable" = "false";
-          }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
-        };
+        # docsy_dashboard = {
+        #   autoStart = true;
+        #   image = "ghcr.io/getdocsy/slack-bot:${docsyVersion}";
+        #   environment.TZ = "Europe/Berlin";
+        #   ports = [ "${builtins.toString docsyDashboardPort}:8050" ];
+        #   volumes = [ "${docsyDataDir}:/app/data" ];
+        #   login = {
+        #     registry = "ghcr.io";
+        #     username = "felixzieger";
+        #     passwordFile = config.age.secrets.ghcr-secret.path;
+        #   };
+        #   entrypoint = "poetry";
+        #   cmd = [
+        #     "run"
+        #     "gunicorn"
+        #     "-w"
+        #     "1"
+        #     "-b"
+        #     "0.0.0.0:8050"
+        #     "docsy.dashboard:flask_app"
+        #   ];
+        #   labels = {
+        #     "com.centurylinklabs.watchtower.enable" = "false";
+        #   }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
+        # };
         docsy_web = {
           autoStart = true;
           image = "ghcr.io/getdocsy/docsy:${docsyWebVersion}";
@@ -101,17 +101,19 @@ in
           labels = {
             "com.centurylinklabs.watchtower.enable" = "false";
           }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
+          extraOptions = [ "--network=docsy-bridge" ];
         };
-        redis = {
+        docsy_web_redis = {
           autoStart = true;
           image = "redis:alpine";
+          ports = [ "6379:6379" ];
           volumes = [ "${docsyWebDataDir}/redis:/data" ];
+          extraOptions = [ "--network=docsy-bridge" ];
         };
         docsy_web_worker = {
           autoStart = true;
           image = "ghcr.io/getdocsy/docsy:${docsyWebVersion}";
           environment.TZ = "Europe/Berlin";
-          ports = [ "${builtins.toString docsyWebPort}:8000" ];
           volumes = [ "${docsyWebDataDir}/src/data:/app/src/data" ];
           entrypoint = "sh";
           cmd = [
@@ -124,9 +126,13 @@ in
             passwordFile = config.age.secrets.ghcr-secret.path;
           };
           environmentFiles = [ config.age.secrets.app-getdocsy-com-env.path ];
+          environment = {
+            RQ_REDIS_HOST = "docsy_web_redis";
+          };
           labels = {
             "com.centurylinklabs.watchtower.enable" = "false";
           }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
+          extraOptions = [ "--network=docsy-bridge" ];
         };
       };
     };
@@ -160,6 +166,26 @@ in
           "--keep-monthly 12"
         ];
       };
+    };
+
+    systemd.services.init-docsy-network = {
+      description = "Create the network docsy-bridge for docsy.";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+
+      serviceConfig.Type = "oneshot";
+      script =
+        let
+          dockercli = "${config.virtualisation.docker.package}/bin/docker";
+        in
+        ''
+          check=$(${dockercli} network ls | grep "docsy-bridge" || true)
+          if [ -z "$check" ]; then
+            ${dockercli} network create docsy-bridge
+          else
+            echo "docsy-bridge already exists in docker"
+          fi
+        '';
     };
   };
 }
