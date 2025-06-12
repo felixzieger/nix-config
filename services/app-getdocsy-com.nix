@@ -6,7 +6,7 @@ let
   docsyDataDir = "/data/docsy/data";
   docsyVersion = "v0.7.16";
   docsyWebDataDir = "/data/docsy_web/data";
-  docsyWebVersion = "v0.0.62";
+  docsyWebVersion = "v0.0.63";
 in
 {
   config = {
@@ -101,6 +101,33 @@ in
           labels = {
             "com.centurylinklabs.watchtower.enable" = "false";
           }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
+        };
+        redis = {
+          autoStart = true;
+          image = "redis:alpine";
+          volumes = [ "${docsyWebDataDir}/redis:/data" ];
+        };
+        docsy_web_worker = {
+          autoStart = true;
+          image = "ghcr.io/getdocsy/docsy:${docsyWebVersion}";
+          environment.TZ = "Europe/Berlin";
+          ports = [ "${builtins.toString docsyWebPort}:8000" ];
+          volumes = [ "${docsyWebDataDir}/src/data:/app/src/data" ];
+          entrypoint = "sh";
+          cmd = [
+            "-c"
+            "uv sync --frozen && uv run python src/manage.py rqworker default"
+          ];
+          login = {
+            registry = "ghcr.io";
+            username = "felixzieger";
+            passwordFile = config.age.secrets.ghcr-secret.path;
+          };
+          environmentFiles = [ config.age.secrets.app-getdocsy-com-env.path ];
+          labels = {
+            "com.centurylinklabs.watchtower.enable" = "false";
+          }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
+
         };
 
       };
