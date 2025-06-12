@@ -14,7 +14,7 @@ in
     environment.systemPackages = with pkgs; [ litecli ];
 
     services.nginx = {
-      proxyTimeout = "360s"; # we are changing this for all servers running on; not ideal but okay for now
+      proxyTimeout = "360s"; # we are changing this for all servers running on the host; not ideal but okay for now
       virtualHosts."app.getdocsy.com" = {
         forceSSL = true;
         enableACME = true;
@@ -127,9 +127,7 @@ in
           labels = {
             "com.centurylinklabs.watchtower.enable" = "false";
           }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
-
         };
-
       };
     };
 
