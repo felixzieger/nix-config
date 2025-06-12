@@ -3,3 +3,132 @@ if test (ssh-add -L | grep "felix" | wc -l) -eq 0
 end
 
 set -U fish_greeting
+
+# Git worktree workflow functions for LLM development
+
+function git-worktree-llm
+    if test (count $argv) -eq 0
+        echo "Usage: git-worktree-llm <feature-name>"
+        return 1
+    end
+    
+    set feature_name $argv[1]
+    set main_branch (git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+    set worktree_dir "../$feature_name"
+    
+    # Create and switch to new worktree
+    git worktree add -b $feature_name $worktree_dir $main_branch
+    if test $status -ne 0
+        echo "Failed to create worktree"
+        return 1
+    end
+    
+    # Switch to the new worktree directory
+    cd $worktree_dir
+    
+    # Start Claude session if available
+    if command -v claude &> /dev/null
+        echo "Starting Claude session for feature: $feature_name"
+        claude &
+    else
+        echo "Claude not found in PATH. Please start Claude manually."
+    end
+    
+    echo "Worktree created and switched to: $worktree_dir"
+    echo "Feature branch: $feature_name"
+end
+
+function git-worktree-merge
+    set current_branch (git branch --show-current)
+    set main_branch (git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+    set current_dir (pwd)
+    set repo_root (git rev-parse --show-toplevel)
+    
+    if test "$current_branch" = "$main_branch"
+        echo "Already on main branch. Nothing to merge."
+        return 1
+    end
+    
+    echo "Finishing work on branch: $current_branch"
+    
+    # Check for uncommitted changes
+    if not git diff-index --quiet HEAD --
+        echo "You have uncommitted changes. Please commit them first."
+        return 1
+    end
+    
+    # Switch to main worktree
+    set main_worktree (git worktree list | head -1 | awk '{print $1}')
+    cd $main_worktree
+    
+    # Update main branch
+    git checkout $main_branch
+    git pull origin $main_branch
+    
+    # Rebase feature branch
+    git checkout $current_branch
+    git rebase $main_branch
+    
+    # Merge into main
+    git checkout $main_branch
+    git merge --no-ff $current_branch -m "Merge feature: $current_branch"
+    
+    # Push changes
+    git push origin $main_branch
+    
+    # Clean up
+    git branch -d $current_branch
+    git worktree remove $current_dir
+    
+    echo "Feature $current_branch merged and cleaned up successfully"
+end
+
+function git-worktree-create
+    if test (count $argv) -eq 0
+        echo "Usage: git-worktree-create <branch-name> [base-branch]"
+        return 1
+    end
+    
+    set branch_name $argv[1]
+    set base_branch $argv[2]
+    
+    if test -z "$base_branch"
+        set base_branch (git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+    end
+    
+    set worktree_dir "../$branch_name"
+    git worktree add -b $branch_name $worktree_dir $base_branch
+end
+
+function git-worktree-switch
+    if test (count $argv) -eq 0
+        git worktree list
+        return 0
+    end
+    
+    set worktree_name $argv[1]
+    set worktree_path (git worktree list | grep $worktree_name | awk '{print $1}')
+    
+    if test -z "$worktree_path"
+        echo "Worktree '$worktree_name' not found"
+        return 1
+    end
+    
+    cd $worktree_path
+end
+
+function git-commit-llm
+    set message $argv[1]
+    
+    if test -z "$message"
+        echo "Usage: git-commit-llm <commit-message>"
+        return 1
+    end
+    
+    # Add signature indicating AI assistance
+    set full_message "$message
+
+🤖 Generated with Claude Code assistance"
+    
+    git commit -m "$full_message"
+end
