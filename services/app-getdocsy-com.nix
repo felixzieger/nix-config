@@ -84,7 +84,6 @@ in
         docsy_web = {
           autoStart = true;
           image = "ghcr.io/getdocsy/docsy:${docsyWebVersion}";
-          environment.TZ = "Europe/Berlin";
           ports = [ "${builtins.toString docsyWebPort}:8000" ];
           volumes = [ "${docsyWebDataDir}/src/data:/app/src/data" ];
           entrypoint = "sh";
@@ -98,6 +97,10 @@ in
             passwordFile = config.age.secrets.ghcr-secret.path;
           };
           environmentFiles = [ config.age.secrets.app-getdocsy-com-env.path ];
+          environment = {
+            RQ_REDIS_HOST = "docsy_web_redis";
+            TZ = "Europe/Berlin";
+          };
           labels = {
             "com.centurylinklabs.watchtower.enable" = "false";
           }; # Private registry pulls fail for my watchtower config. Don't need them anyway right now.
@@ -113,7 +116,6 @@ in
         docsy_web_worker = {
           autoStart = true;
           image = "ghcr.io/getdocsy/docsy:${docsyWebVersion}";
-          environment.TZ = "Europe/Berlin";
           volumes = [ "${docsyWebDataDir}/src/data:/app/src/data" ];
           entrypoint = "sh";
           cmd = [
@@ -128,6 +130,7 @@ in
           environmentFiles = [ config.age.secrets.app-getdocsy-com-env.path ];
           environment = {
             RQ_REDIS_HOST = "docsy_web_redis";
+            TZ = "Europe/Berlin";
           };
           labels = {
             "com.centurylinklabs.watchtower.enable" = "false";
