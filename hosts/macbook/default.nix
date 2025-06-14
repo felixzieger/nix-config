@@ -268,7 +268,7 @@ in
       # "firefox"
       "slack"
       "nextcloud"
-      "zen-browser"
+      # "zen-browser" # fails to update via brew as of 2025-06-13
     ];
   };
 
