@@ -55,6 +55,7 @@ in
   "oauth2_proxy_key.age".publicKeys = systems;
 
   "ghcr-secret.age".publicKeys = systems;
+  "app-getdocsy-com-legacy-env.age".publicKeys = systems;
   "app-getdocsy-com-env.age".publicKeys = systems;
   "app-getdocsy-com-restic-password.age".publicKeys = systems;
   "app-getdocsy-com-restic-environment.age".publicKeys = systems;
