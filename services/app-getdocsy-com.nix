@@ -6,7 +6,7 @@ let
   docsyDataDir = "/data/docsy/data";
   docsyVersion = "v0.7.16";
   docsyWebDataDir = "/data/docsy_web/data";
-  docsyWebVersion = "v0.0.78";
+  docsyWebVersion = "v0.0.70";
 in
 {
   config = {
