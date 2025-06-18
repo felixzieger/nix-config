@@ -211,19 +211,6 @@ in
       ps.llm
       ps.llm-gemini
     ]))
-    (pkgs.python3Packages.buildPythonApplication {
-      pname = "shell_sage";
-      version = "0.1.0";
-
-      src = pkgs.fetchFromGitHub {
-        owner = "AnswerDotAI";
-        repo = "shell_sage";
-        rev = "80fb2afde8c507079ca0b0faec0951c99eb3d70d";
-        sha256 = "sha256-I7CWGU06kP5p8KCe6A+Syy1ZUssjjI0V+9cE3+Oro5g";
-      };
-
-      pypiDeps = true;
-    })
 
     # Landing page
     pkgs.pnpm
