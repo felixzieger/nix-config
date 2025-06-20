@@ -75,6 +75,21 @@
         config = builtins.readFile ./nvim-tree.lua;
       }
 
+      {
+        plugin = nvim-treesitter.withAllGrammars;
+        type = "lua";
+        config = ''
+          require'nvim-treesitter.configs'.setup {
+            highlight = {
+              enable = true,
+            },
+            indent = {
+              enable = true,
+            },
+          }
+        '';
+      }
+
     ];
     extraConfig = builtins.readFile ./neovim.vim;
   };

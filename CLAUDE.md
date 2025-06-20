@@ -5,7 +5,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Common Commands
 
 ### macOS Development
-- `just` or `just switch` - Build and switch to the new configuration
 - `just build [target_host]` - Build configuration without switching
 - `just trace [target_host]` - Build with --show-trace for debugging
 - `just switch-linux [target_host]` - Deploy to a Linux host from macOS
@@ -57,7 +56,7 @@ This is a Nix flake-based configuration for managing NixOS servers and macOS sys
 
 ### Important Conventions
 1. **Secret Management**: All secrets are encrypted using agenix. Never commit unencrypted secrets.
-2. **Service Organization**: Each service gets its own file in `/services/`
+2. **Service Organization**: Each service gets its own file in `/services/`. File name follows the url the service is reachable under.
 3. **Remote Deployment**: Use `just switch-linux [host]` from macOS to deploy to Linux hosts
 4. **Backup System**: Uses restic with Backblaze B2 backend
 5. **Module Pattern**: Common functionality is extracted into modules for reuse across hosts
