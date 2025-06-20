@@ -186,7 +186,6 @@ in
     # pkgs.slack
     # pkgs.opentofu
     pkgs.audacity
-    pkgs.espanso
 
     # Python development environment
     pkgs.uv
@@ -251,6 +250,7 @@ in
       "slack"
       "nextcloud"
       # "zen-browser" # fails to update via brew as of 2025-06-13
+      "espanso"
     ];
   };
 
