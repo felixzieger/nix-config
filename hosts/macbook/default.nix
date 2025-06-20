@@ -186,6 +186,7 @@ in
     # pkgs.slack
     # pkgs.opentofu
     pkgs.audacity
+    pkgs.espanso
 
     # Python development environment
     pkgs.uv

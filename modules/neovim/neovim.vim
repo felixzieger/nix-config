@@ -41,7 +41,3 @@ nmap <leader>w :w<CR>
 
 " Toggle line numbers
 nmap <leader>tl :set number!<CR>
-
-" AI shortcuts start with a
-nnoremap <leader>ae :Copilot enable<CR>
-nnoremap <leader>ad :Copilot disable<CR>
