@@ -122,12 +122,6 @@ in
           # Potential successor for copilot-vim: avante
           # https://github.com/yetone/avante.nvim
           copilot-vim
-          {
-            plugin = CopilotChat-nvim;
-            type = "lua";
-            config = builtins.readFile ./nvim-copilotchat.lua;
-          }
-          plenary-nvim # Dependency for CopilotChat-nvim
         ];
       };
 
