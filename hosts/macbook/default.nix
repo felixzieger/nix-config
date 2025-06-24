@@ -119,20 +119,14 @@ in
             config = builtins.readFile ./nvim-lspconfig.lua;
           }
 
-          # Potential successor for copilot-vim: avante
-          # https://github.com/yetone/avante.nvim
-          copilot-vim
-        ];
-      };
-
-      programs.helix = {
-        enable = true;
-
-        languages.language = [
           {
-            name = "nix";
-            auto-format = true;
-            formatter.command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
+            plugin = yazi-nvim;
+            type = "lua";
+            config = ''
+              vim.keymap.set("n", "<leader>-", function()
+                require("yazi").yazi()
+              end)
+            '';
           }
         ];
       };
@@ -178,6 +172,7 @@ in
     pkgs.fish
     pkgs.eternal-terminal
     pkgs.helix
+    pkgs.yazi
 
     pkgs.rectangle
     pkgs.monitorcontrol
