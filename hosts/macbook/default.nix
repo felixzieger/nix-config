@@ -105,8 +105,7 @@ in
         terraform-ls
         nodePackages.vscode-langservers-extracted
 
-        # disabled because it tried to pull in nodejs-20.19 which failed to build
-        # nodePackages.typescript-language-server # provides ts_ls for nvim lsp
+        nodePackages.typescript-language-server # provides ts_ls for nvim lsp
       ];
       programs.neovim = {
         plugins = with pkgs.vimPlugins; [

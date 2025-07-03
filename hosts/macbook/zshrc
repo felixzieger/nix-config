@@ -145,3 +145,6 @@ git-commit-llm() {
     
     git commit -m "$full_message"
 }
+
+export PNPM_HOME=/usr/local/bin/
+

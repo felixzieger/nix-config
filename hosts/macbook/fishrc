@@ -132,3 +132,6 @@ function git-commit-llm
     
     git commit -m "$full_message"
 end
+
+export PNPM_HOME=/usr/local/bin/
+
