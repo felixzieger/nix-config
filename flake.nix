@@ -38,6 +38,8 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    nix-search-tui.url = "github:misaelaguayo/nix-search-tui";
+    nix-search-tui.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs =
@@ -52,6 +54,7 @@
       nix-bitcoin,
       simple-nixos-mailserver,
       nix-homebrew,
+      nix-search-tui,
       ...
     }:
     {
