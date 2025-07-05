@@ -171,12 +171,12 @@ in
     pkgs.shellcheck
     pkgs.fish
     pkgs.eternal-terminal
-    pkgs.helix
     pkgs.yazi
 
     pkgs.rectangle
     pkgs.monitorcontrol
     pkgs.spotify
+    pkgs.ncspot
     pkgs.gimp
     # pkgs.slack
     # pkgs.opentofu
