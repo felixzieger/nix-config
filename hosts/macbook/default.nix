@@ -188,6 +188,7 @@ in
     pkgs.pyright
     pkgs.ngrok
     pkgs.litecli
+    pkgs.postgresql # includes psql CLI
     pkgs.oci-cli
     pkgs.gh
     pkgs.vale
