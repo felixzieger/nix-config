@@ -5,6 +5,11 @@ default: switch
 
 hostname := `hostname | cut -d "." -f 1`
 
+# Lint Nix files using statix
+lint:
+  @echo "Linting Nix files with statix..."
+  @statix check . || echo "Found $(statix check . 2>&1 | grep -c 'Warning:') warnings"
+
 ### macos
 # Build the nix-darwin system configuration without switching to it
 [macos]
