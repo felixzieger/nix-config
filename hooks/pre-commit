@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Pre-commit hook for nixpkgs repository
+# Runs linting checks before allowing commits
+
+set -e
+
+echo "Running pre-commit checks..."
+
+# Check if we're in the right directory
+if [[ ! -f "justfile" ]]; then
+    echo "Error: Not in nixpkgs repository root"
+    exit 1
+fi
+
+# Run the formatter
+echo "Running Nix formatter..."
+if ! nix fmt; then
+    echo "❌ Formatting failed. Please fix the issues before committing."
+    echo "Run 'nix fmt' to format your code."
+    exit 1
+fi
+
+# Run the linter
+echo "Running Nix linter..."
+if ! just lint; then
+    echo "❌ Linting failed. Please fix the warnings before committing."
+    echo "Run 'just lint' to see the issues."
+    exit 1
+fi
+
+echo "✅ All pre-commit checks passed!"
+exit 0

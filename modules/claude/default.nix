@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    unstable.claude-code
+    # unstable.claude-code # had problems building on train wifi due to connection issues
     fd # modern find
     ripgrep # modern grep (rg)
     bat # modern cat
