@@ -67,6 +67,7 @@ in
   home-manager = {
     sharedModules = [ mac-app-util.homeManagerModules.default ];
     backupFileExtension = "backup";
+    extraSpecialArgs = { inherit unstable; };
 
     users.felix = {
       home.username = lib.mkForce "felix";
@@ -75,6 +76,7 @@ in
       imports = [
         ./../../modules/fish
         ./../../modules/ssh
+        ./../../modules/claude
       ];
 
       programs.fish = {
@@ -196,7 +198,6 @@ in
 
     unstable.scooter
 
-    unstable.aider-chat
     (unstable.python3.withPackages (ps: [
       ps.llm
       ps.llm-gemini
