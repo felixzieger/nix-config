@@ -8,18 +8,18 @@ let
 in
 {
   config = {
-    services.nginx.virtualHosts."${paperlessHost}" = {
-      forceSSL = true;
-      enableACME = true;
-      http3 = true;
-      quic = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString config.services.paperless.port}";
-        proxyWebsockets = true;
-      };
-    };
-
     services = {
+      nginx.virtualHosts."${paperlessHost}" = {
+        forceSSL = true;
+        enableACME = true;
+        http3 = true;
+        quic = true;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString config.services.paperless.port}";
+          proxyWebsockets = true;
+        };
+      };
+
       paperless = {
         enable = true;
         settings = {
@@ -30,6 +30,52 @@ in
 
         };
       };
+
+      fail2ban = {
+        enable = true;
+        jails = {
+          paperless.settings = {
+            enabled = true;
+            filter = "paperless[journalmatch='_SYSTEMD_UNIT=paperless-web.service']";
+            backend = "systemd";
+            banaction = "%(banaction_allports)s";
+            maxretry = 10;
+          };
+        };
+      };
+
+      restic.backups =
+        let
+          tempBackupDir = "/tmp/paperless-backup";
+        in
+        {
+          paperless = {
+            initialize = true;
+
+            backupPrepareCommand = ''
+              mkdir -p ${tempBackupDir}
+              chown ${config.services.paperless.user}:${config.services.paperless.user} ${tempBackupDir}
+              /run/current-system/sw/bin/paperless-manage document_exporter ${tempBackupDir} --delete
+            '';
+            paths = [ tempBackupDir ];
+            backupCleanupCommand = "rm -rf ${tempBackupDir}";
+
+            repository = "b2:paperless-sonnenhof-zieger-de";
+            environmentFile = config.age.secrets.paperless-sonnenhof-zieger-de-restic-environment.path;
+            passwordFile = config.age.secrets.paperless-sonnenhof-zieger-de-restic-password.path;
+
+            timerConfig = {
+              OnCalendar = "16:00";
+              RandomizedDelaySec = "5min";
+            };
+
+            pruneOpts = [
+              "--keep-daily 7"
+              "--keep-weekly 5"
+              "--keep-monthly 12"
+            ];
+          };
+        };
     };
 
     # Example log entry
@@ -45,55 +91,9 @@ in
       ''
     );
 
-    services.fail2ban = {
-      enable = true;
-      jails = {
-        paperless.settings = {
-          enabled = true;
-          filter = "paperless[journalmatch='_SYSTEMD_UNIT=paperless-web.service']";
-          backend = "systemd";
-          banaction = "%(banaction_allports)s";
-          maxretry = 10;
-        };
-      };
-    };
-
     age.secrets = {
       paperless-sonnenhof-zieger-de-restic-environment.file = ../secrets/paperless-sonnenhof-zieger-de-restic-environment.age;
       paperless-sonnenhof-zieger-de-restic-password.file = ../secrets/paperless-sonnenhof-zieger-de-restic-password.age;
     };
-
-    services.restic.backups =
-      let
-        tempBackupDir = "/tmp/paperless-backup";
-      in
-      {
-        paperless = {
-          initialize = true;
-
-          backupPrepareCommand = ''
-            mkdir -p ${tempBackupDir}
-            chown ${config.services.paperless.user}:${config.services.paperless.user} ${tempBackupDir}
-            /run/current-system/sw/bin/paperless-manage document_exporter ${tempBackupDir} --delete
-          '';
-          paths = [ tempBackupDir ];
-          backupCleanupCommand = "rm -rf ${tempBackupDir}";
-
-          repository = "b2:paperless-sonnenhof-zieger-de";
-          environmentFile = config.age.secrets.paperless-sonnenhof-zieger-de-restic-environment.path;
-          passwordFile = config.age.secrets.paperless-sonnenhof-zieger-de-restic-password.path;
-
-          timerConfig = {
-            OnCalendar = "16:00";
-            RandomizedDelaySec = "5min";
-          };
-
-          pruneOpts = [
-            "--keep-daily 7"
-            "--keep-weekly 5"
-            "--keep-monthly 12"
-          ];
-        };
-      };
   };
 }

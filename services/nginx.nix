@@ -18,50 +18,52 @@
     # Use Nginx as reverse proxy.
     # Nginx supports Let's Encrypt certificates
     # See https://nixos.wiki/wiki/Nginx
-    services.nginx = {
-      enable = true;
-      package = pkgs.nginxQuic; # HTTP/3 support
+    services = {
+      nginx = {
+        enable = true;
+        package = pkgs.nginxQuic; # HTTP/3 support
 
-      recommendedGzipSettings = true;
-      recommendedOptimisation = true;
-      recommendedProxySettings = true;
-      recommendedTlsSettings = true;
-    };
+        recommendedGzipSettings = true;
+        recommendedOptimisation = true;
+        recommendedProxySettings = true;
+        recommendedTlsSettings = true;
 
-    # We force users to use proper server names
-    services.nginx.virtualHosts."_" = {
-      default = true;
-      rejectSSL = true;
-      extraConfig = ''
-        return 444;
-      '';
-    };
+        # We force users to use proper server names
+        virtualHosts."_" = {
+          default = true;
+          rejectSSL = true;
+          extraConfig = ''
+            return 444;
+          '';
+        };
+      };
 
-    services.fail2ban = {
-      jails = {
-        nginx-http-auth.settings = {
-          enabled = true;
-          port = "http,https";
-          logpath = "/var/log/nginx/access.log";
-          backend = "auto";
-        };
-        nginx-botsearch.settings = {
-          enabled = true;
-          port = "http,https";
-          logpath = "/var/log/nginx/access.log";
-          backend = "auto";
-        };
-        nginx-url-probe.settings = {
-          enabled = true;
-          filter = "nginx-url-probe";
-          logpath = "/var/log/nginx/access.log";
-          backend = "auto";
-        };
-        nginx-ip-host.settings = {
-          enabled = true;
-          filter = "nginx-ip-host";
-          logpath = "/var/log/nginx/access.log";
-          backend = "auto";
+      fail2ban = {
+        jails = {
+          nginx-http-auth.settings = {
+            enabled = true;
+            port = "http,https";
+            logpath = "/var/log/nginx/access.log";
+            backend = "auto";
+          };
+          nginx-botsearch.settings = {
+            enabled = true;
+            port = "http,https";
+            logpath = "/var/log/nginx/access.log";
+            backend = "auto";
+          };
+          nginx-url-probe.settings = {
+            enabled = true;
+            filter = "nginx-url-probe";
+            logpath = "/var/log/nginx/access.log";
+            backend = "auto";
+          };
+          nginx-ip-host.settings = {
+            enabled = true;
+            filter = "nginx-ip-host";
+            logpath = "/var/log/nginx/access.log";
+            backend = "auto";
+          };
         };
       };
     };

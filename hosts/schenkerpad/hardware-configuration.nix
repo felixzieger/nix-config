@@ -12,26 +12,29 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [
-    "ehci_pci"
-    "ahci"
-    "xhci_pci"
-    "usb_storage"
-    "sd_mod"
-    "sr_mod"
-    "sdhci_pci"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot = {
+    initrd = {
+      availableKernelModules = [
+        "ehci_pci"
+        "ahci"
+        "xhci_pci"
+        "usb_storage"
+        "sd_mod"
+        "sr_mod"
+        "sdhci_pci"
+      ];
+      kernelModules = [ ];
+      luks.devices."luks-326db574-8d3f-461d-a178-0ac45d8da7b7".device =
+        "/dev/disk/by-uuid/326db574-8d3f-461d-a178-0ac45d8da7b7";
+    };
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/4fdc7d5b-9d0c-4b95-9c8d-644b4c31e957";
     fsType = "ext4";
   };
-
-  boot.initrd.luks.devices."luks-326db574-8d3f-461d-a178-0ac45d8da7b7".device =
-    "/dev/disk/by-uuid/326db574-8d3f-461d-a178-0ac45d8da7b7";
 
   swapDevices = [ ];
 

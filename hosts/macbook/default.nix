@@ -11,7 +11,7 @@
 }:
 let
   unstable = import nixpkgs-unstable {
-    system = pkgs.system;
+    inherit (pkgs) system;
     config.allowUnfree = true;
   };
 in
@@ -70,8 +70,26 @@ in
     extraSpecialArgs = { inherit unstable; };
 
     users.felix = {
-      home.username = lib.mkForce "felix";
-      home.homeDirectory = lib.mkForce "/Users/felix";
+      home = {
+        username = lib.mkForce "felix";
+        homeDirectory = lib.mkForce "/Users/felix";
+        # Additional plugins for nvim
+        packages = with pkgs; [
+          terraform-ls
+          nodePackages.vscode-langservers-extracted
+
+          nodePackages.typescript-language-server # provides ts_ls for nvim lsp
+        ];
+        # This value determines the home Manager release that your
+        # configuration is compatible with. This helps avoid breakage
+        # when a new home Manager release introduces backwards
+        # incompatible changes.
+        #
+        # You can update home Manager without changing this value. See
+        # the home Manager release notes for a list of state version
+        # changes in each release.
+        stateVersion = "23.11";
+      };
 
       imports = [
         ./../../modules/fish
@@ -79,86 +97,75 @@ in
         ./../../modules/claude
       ];
 
-      programs.fish = {
-        shellInit = builtins.readFile ./fishrc;
-      };
-      programs.zsh = {
-        initContent = ''
-          if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
-          then
-              exec fish -l
-          fi
-        '';
-      };
-      programs.btop = {
-        enable = true;
-        settings = {
-          color_theme = "TTY";
+      programs = {
+        fish = {
+          shellInit = builtins.readFile ./fishrc;
+        };
+        zsh = {
+          initContent = ''
+            if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
+            then
+                exec fish -l
+            fi
+          '';
+        };
+        btop = {
+          enable = true;
+          settings = {
+            color_theme = "TTY";
+          };
+        };
+        tmux = {
+          plugins = [ pkgs.tmuxPlugins.fzf-tmux-url ]; # Open Hyperlink-Picker via CTRL+b u
+          extraConfig = ''
+            set -g @fzf-url-history-limit '2000'
+          '';
+        };
+        neovim = {
+          plugins = with pkgs.vimPlugins; [
+            vim-terraform
+
+            friendly-snippets
+            {
+              plugin = nvim-lspconfig;
+              type = "lua";
+              config = builtins.readFile ./nvim-lspconfig.lua;
+            }
+
+            {
+              plugin = yazi-nvim;
+              type = "lua";
+              config = ''
+                vim.keymap.set("n", "<leader>-", function()
+                  require("yazi").yazi()
+                end)
+              '';
+            }
+          ];
         };
       };
-
-      # Additional plugins for tmux
-      programs.tmux.plugins = [ pkgs.tmuxPlugins.fzf-tmux-url ]; # Open Hyperlink-Picker via CTRL+b u
-      programs.tmux.extraConfig = ''
-        set -g @fzf-url-history-limit '2000'
-      '';
-
-      # Additional plugins for nvim
-      home.packages = with pkgs; [
-        terraform-ls
-        nodePackages.vscode-langservers-extracted
-
-        nodePackages.typescript-language-server # provides ts_ls for nvim lsp
-      ];
-      programs.neovim = {
-        plugins = with pkgs.vimPlugins; [
-          vim-terraform
-
-          friendly-snippets
-          {
-            plugin = nvim-lspconfig;
-            type = "lua";
-            config = builtins.readFile ./nvim-lspconfig.lua;
-          }
-
-          {
-            plugin = yazi-nvim;
-            type = "lua";
-            config = ''
-              vim.keymap.set("n", "<leader>-", function()
-                require("yazi").yazi()
-              end)
-            '';
-          }
-        ];
-      };
-
-      # This value determines the home Manager release that your
-      # configuration is compatible with. This helps avoid breakage
-      # when a new home Manager release introduces backwards
-      # incompatible changes.
-      #
-      # You can update home Manager without changing this value. See
-      # the home Manager release notes for a list of state version
-      # changes in each release.
-      home.stateVersion = "23.11";
     };
   };
 
-  system.primaryUser = "felix";
-  system.defaults = {
-    finder = {
-      AppleShowAllExtensions = true;
-      ShowPathbar = true;
-      FXEnableExtensionChangeWarning = false;
+  system = {
+    primaryUser = "felix";
+    defaults = {
+      finder = {
+        AppleShowAllExtensions = true;
+        ShowPathbar = true;
+        FXEnableExtensionChangeWarning = false;
+      };
+      dock = {
+        autohide = true;
+        orientation = "bottom";
+        show-recents = false;
+        static-only = true;
+        show-process-indicators = false;
+      };
     };
-    dock = {
-      autohide = true;
-      orientation = "bottom";
-      show-recents = false;
-      static-only = true;
-      show-process-indicators = false;
-    };
+    # Used for backwards compatibility, please read the changelog before changing.
+    # $ darwin-rebuild changelog
+    stateVersion = 4;
   };
 
   environment.shells = [
@@ -167,7 +174,6 @@ in
   environment.systemPackages = [
     pkgs.nixos-rebuild # deploy to linux machines; https://nixcademy.com/posts/macos-linux-builder/
 
-    pkgs.doggo
     pkgs.wget
     pkgs.ripgrep
     pkgs.shellcheck
@@ -219,6 +225,7 @@ in
 
     unstable.nix-search-cli # dependency for nix-search-tui
     nix-search-tui.packages."${pkgs.system}".default
+    pkgs.statix
   ];
 
   nix-homebrew = {
@@ -253,8 +260,4 @@ in
       "espanso"
     ];
   };
-
-  # Used for backwards compatibility, please read the changelog before changing.
-  # $ darwin-rebuild changelog
-  system.stateVersion = 4;
 }

@@ -6,10 +6,13 @@
       watchtower-environment.file = ../secrets/watchtower-environment.age;
     };
 
-    virtualisation.docker.enable = true;
-
-    virtualisation.docker.autoPrune.enable = true;
-    virtualisation.docker.autoPrune.flags = [ "--all" ];
+    virtualisation.docker = {
+      enable = true;
+      autoPrune = {
+        enable = true;
+        flags = [ "--all" ];
+      };
+    };
 
     users.extraGroups.docker.members = [ "felix" ];
     virtualisation.oci-containers = {

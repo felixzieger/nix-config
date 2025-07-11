@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   # Following https://nixos.wiki/wiki/Laptop
   powerManagement.enable = true;
   services.thermald.enable = true;

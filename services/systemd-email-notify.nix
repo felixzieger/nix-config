@@ -38,44 +38,48 @@ let
 in
 {
   options = {
-    systemd.email-notify.mailTo = mkOption {
-      type = types.str;
-      default = null;
-      description = "Email address to which the service status will be mailed.";
-    };
+    systemd = {
+      email-notify.mailTo = mkOption {
+        type = types.str;
+        default = null;
+        description = "Email address to which the service status will be mailed.";
+      };
 
-    systemd.email-notify.mailFrom = mkOption {
-      type = types.str;
-      default = null;
-      description = "Email address from which the service status will be mailed.";
-    };
+      email-notify.mailFrom = mkOption {
+        type = types.str;
+        default = null;
+        description = "Email address from which the service status will be mailed.";
+      };
 
-    systemd.services = mkOption {
-      type =
-        with types;
-        attrsOf (submodule {
-          config.onFailure = [ "email@%n.service" ];
-        });
+      services = mkOption {
+        type =
+          with types;
+          attrsOf (submodule {
+            config.onFailure = [ "email@%n.service" ];
+          });
+      };
     };
   };
 
   config = {
-    systemd.services."email@" = {
-      description = "Sends a status mail via sendmail on service failures.";
-      onFailure = mkForce [ ];
-      unitConfig = {
-        StartLimitIntervalSec = "5m";
-        StartLimitBurst = 1;
+    systemd = {
+      services."email@" = {
+        description = "Sends a status mail via sendmail on service failures.";
+        onFailure = mkForce [ ];
+        unitConfig = {
+          StartLimitIntervalSec = "5m";
+          StartLimitBurst = 1;
+        };
+        serviceConfig = {
+          ExecCondition = "${checkConditions} %i";
+          ExecStart = "${sendmail} ${config.systemd.email-notify.mailTo} %i";
+          Type = "oneshot";
+        };
       };
-      serviceConfig = {
-        ExecCondition = "${checkConditions} %i";
-        ExecStart = "${sendmail} ${config.systemd.email-notify.mailTo} %i";
-        Type = "oneshot";
-      };
-    };
 
-    systemd.email-notify.mailTo = "alerts@felixzieger.de";
-    systemd.email-notify.mailFrom = "bot@sonnenhof-zieger.de";
+      email-notify.mailTo = "alerts@felixzieger.de";
+      email-notify.mailFrom = "bot@sonnenhof-zieger.de";
+    };
 
     age.secrets = {
       email-password-bot-sonnenhof-zieger = {

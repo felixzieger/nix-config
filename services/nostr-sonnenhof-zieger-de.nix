@@ -6,7 +6,7 @@
 }@args:
 let
   unstable = import nixpkgs-unstable {
-    system = pkgs.system;
+    inherit (pkgs) system;
     config.allowUnfree = true;
   };
 in

@@ -8,7 +8,7 @@
 let
   frigateHost = "frigate.sonnenhof-zieger.de";
   unstable = import nixpkgs-unstable {
-    system = pkgs.system;
+    inherit (pkgs) system;
     config.allowUnfree = true;
   };
 in
@@ -99,25 +99,27 @@ in
       };
     };
 
-    systemd.services.set-apex-permissions = {
-      description = "Set permissions for /dev/apex_0";
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = pkgs.writeShellScript "set-apex-permissions" ''
-          chown frigate:frigate /dev/apex_0
-          chmod 660 /dev/apex_0
-        '';
+    systemd.services = {
+      set-apex-permissions = {
+        description = "Set permissions for /dev/apex_0";
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = pkgs.writeShellScript "set-apex-permissions" ''
+            chown frigate:frigate /dev/apex_0
+            chmod 660 /dev/apex_0
+          '';
 
+        };
+        wantedBy = [ "multi-user.target" ];
       };
-      wantedBy = [ "multi-user.target" ];
-    };
-    systemd.services.frigate = {
-      wants = [ "set-apex-permissions.service" ];
+      frigate = {
+        wants = [ "set-apex-permissions.service" ];
+        environment.LIBVA_DRIVER_NAME = "radeonsi";
+      };
     };
 
     # Hardware accelleration for video decoding via VAAPI (on AMD GPU)
     # gives frigate access to /dev/dri/redner128
     users.users.frigate.extraGroups = [ "render" ];
-    systemd.services.frigate.environment.LIBVA_DRIVER_NAME = "radeonsi";
   };
 }

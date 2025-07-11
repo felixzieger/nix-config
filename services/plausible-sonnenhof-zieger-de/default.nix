@@ -11,36 +11,36 @@ in
 {
   config = {
 
-    services.nginx.virtualHosts."${plausibleHost}" = {
-      forceSSL = true;
-      enableACME = true;
-      http3 = true;
-      quic = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString plausiblePort}";
-        proxyWebsockets = true;
+    services.nginx.virtualHosts = {
+      "${plausibleHost}" = {
+        forceSSL = true;
+        enableACME = true;
+        http3 = true;
+        quic = true;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString plausiblePort}";
+          proxyWebsockets = true;
+        };
       };
-    };
-
-    services.nginx.virtualHosts."y.felixzieger.de" = {
-      forceSSL = true;
-      enableACME = true;
-      http3 = true;
-      quic = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString plausiblePort}";
-        proxyWebsockets = true;
+      "y.felixzieger.de" = {
+        forceSSL = true;
+        enableACME = true;
+        http3 = true;
+        quic = true;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString plausiblePort}";
+          proxyWebsockets = true;
+        };
       };
-    };
-
-    services.nginx.virtualHosts."y.sonnenhof-zieger.de" = {
-      forceSSL = true;
-      enableACME = true;
-      http3 = true;
-      quic = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString plausiblePort}";
-        proxyWebsockets = true;
+      "y.sonnenhof-zieger.de" = {
+        forceSSL = true;
+        enableACME = true;
+        http3 = true;
+        quic = true;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString plausiblePort}";
+          proxyWebsockets = true;
+        };
       };
     };
 

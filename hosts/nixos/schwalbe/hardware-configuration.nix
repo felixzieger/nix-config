@@ -31,35 +31,43 @@
 
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "ehci_pci"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
-  ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot = {
+    initrd = {
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "ehci_pci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
+      # For frigate hwaccell
+      kernelModules = [ "amdgpu" ];
+    };
+    kernelModules = [ "kvm-amd" ];
 
-  boot.extraModulePackages = [
-    # Coral Gasket Driver allows usage of the Coral EdgeTPU; needed for Frigate
-    # Needs to be updated when the kernel is updated. For example at channel updates.
-    pkgs.linuxKernel.packages.linux_6_12.gasket
-  ];
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/7dfe4ec9-8818-436e-ab68-12b79462ce12";
-    fsType = "ext4";
+    extraModulePackages = [
+      # Coral Gasket Driver allows usage of the Coral EdgeTPU; needed for Frigate
+      # Needs to be updated when the kernel is updated. For example at channel updates.
+      pkgs.linuxKernel.packages.linux_6_12.gasket
+    ];
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/BF5C-11EC";
-    fsType = "vfat";
-  };
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/7dfe4ec9-8818-436e-ab68-12b79462ce12";
+      fsType = "ext4";
+    };
 
-  fileSystems."/data" = {
-    device = "/dev/disk/by-uuid/9b69fad5-23b1-400f-8675-e135734e6a2c";
-    fsType = "ext4";
+    "/boot" = {
+      device = "/dev/disk/by-uuid/BF5C-11EC";
+      fsType = "vfat";
+    };
+
+    "/data" = {
+      device = "/dev/disk/by-uuid/9b69fad5-23b1-400f-8675-e135734e6a2c";
+      fsType = "ext4";
+    };
   };
 
   swapDevices = [ ];
@@ -74,8 +82,6 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  # For frigate hwaccell
-  boot.initrd.kernelModules = [ "amdgpu" ];
   hardware.graphics = {
     enable = true;
     enable32Bit = true;

@@ -8,17 +8,23 @@
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
-    agenix.inputs.home-manager.follows = "home-manager";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
 
-    nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
-    nix-bitcoin.inputs.nixpkgs.follows = "nixpkgs";
-    nix-bitcoin.inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+    nix-bitcoin = {
+      url = "github:fort-nix/nix-bitcoin/release";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+    };
 
-    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.05";
-    simple-nixos-mailserver.inputs.nixpkgs-25_05.follows = "nixpkgs";
-    simple-nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    simple-nixos-mailserver = {
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.05";
+      inputs.nixpkgs-25_05.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     # Darwin inputs
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";

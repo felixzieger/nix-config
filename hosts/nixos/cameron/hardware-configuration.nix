@@ -30,31 +30,35 @@
 
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "ehci_pci"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
-
-  fileSystems."/data" = {
-    device = "/dev/disk/by-uuid/184e89cc-6cb8-4c1b-827f-a01da39a9dbe";
-    fsType = "ext4";
+  boot = {
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "ahci"
+      "ehci_pci"
+      "usb_storage"
+      "usbhid"
+      "sd_mod"
+    ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
   };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/2539a422-914d-4e08-afc9-bf78c6f06495";
-    fsType = "ext4";
-  };
+  fileSystems = {
+    "/data" = {
+      device = "/dev/disk/by-uuid/184e89cc-6cb8-4c1b-827f-a01da39a9dbe";
+      fsType = "ext4";
+    };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/D26F-2D32";
-    fsType = "vfat";
+    "/" = {
+      device = "/dev/disk/by-uuid/2539a422-914d-4e08-afc9-bf78c6f06495";
+      fsType = "ext4";
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-uuid/D26F-2D32";
+      fsType = "vfat";
+    };
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

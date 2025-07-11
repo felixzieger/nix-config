@@ -9,22 +9,18 @@ let
 in
 {
   config = {
-    services.nginx.virtualHosts."${vaultwardenHost}" = {
-      forceSSL = true;
-      enableACME = true;
-      http3 = true;
-      quic = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
-        proxyWebsockets = true;
-      };
-    };
-
-    age.secrets = {
-      bitwarden-sonnenhof-zieger-de-environment.file = ../secrets/bitwarden-sonnenhof-zieger-de-environment.age;
-    };
-
     services = {
+      nginx.virtualHosts."${vaultwardenHost}" = {
+        forceSSL = true;
+        enableACME = true;
+        http3 = true;
+        quic = true;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
+          proxyWebsockets = true;
+        };
+      };
+
       vaultwarden = {
         enable = true;
         backupDir = "/data/vaultwarden/backup";
@@ -49,64 +45,65 @@ in
           SMTP_TIMEOUT = "15";
         };
       };
-    };
 
-    # Example log entry
-    # Feb 22 00:00:00 blausieb vaultwarden[583428]: [2025-02-22 00:00:00.000][vaultwarden::api::identity][ERROR] Username or password is incorrect. Try again. IP: 0.0.0.0. Username: hans@web.de.
-    environment.etc."fail2ban/filter.d/vaultwarden.local".text = pkgs.lib.mkDefault (
-      pkgs.lib.mkAfter ''
-        [INCLUDES]
-        before = common.conf
+      # Example log entry
+      # Feb 22 00:00:00 blausieb vaultwarden[583428]: [2025-02-22 00:00:00.000][vaultwarden::api::identity][ERROR] Username or password is incorrect. Try again. IP: 0.0.0.0. Username: hans@web.de.
+      environment.etc."fail2ban/filter.d/vaultwarden.local".text = pkgs.lib.mkDefault (
+        pkgs.lib.mkAfter ''
+          [INCLUDES]
+          before = common.conf
 
-        [Definition]
-        failregex = ^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$
-        ignoreregex =
-      ''
-    );
+          [Definition]
+          failregex = ^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$
+          ignoreregex =
+        ''
+      );
 
-    # I followed https://github.com/dani-garcia/vaultwarden/wiki/Fail2Ban-Setup
-    services.fail2ban = {
-      enable = true;
-      jails = {
-        vaultwarden.settings = {
-          enabled = true;
-          filter = "vaultwarden[journalmatch='_SYSTEMD_UNIT=vaultwarden.service']";
-          backend = "systemd";
-          banaction = "%(banaction_allports)s";
-          maxretry = 10;
+      # I followed https://github.com/dani-garcia/vaultwarden/wiki/Fail2Ban-Setup
+      fail2ban = {
+        enable = true;
+        jails = {
+          vaultwarden.settings = {
+            enabled = true;
+            filter = "vaultwarden[journalmatch='_SYSTEMD_UNIT=vaultwarden.service']";
+            backend = "systemd";
+            banaction = "%(banaction_allports)s";
+            maxretry = 10;
+          };
+        };
+      };
+
+      restic.backups = {
+        bitwarden = {
+          initialize = true;
+
+          paths = [ config.services.vaultwarden.backupDir ];
+
+          repository = "b2:schwalbe-vaultwarden";
+          environmentFile = config.age.secrets.bitwarden-sonnenhof-zieger-de-restic-environment.path;
+          passwordFile = config.age.secrets.bitwarden-sonnenhof-zieger-de-restic-password.path;
+
+          timerConfig = {
+            # Ideally, this would always run directly after systemd.services.backup-vaultwarden
+            # But I don't know how to set this up. The vaultwarden backup unit starts at 23:00, so this just starts a bit later
+            # See https://github.com/NixOS/nixpkgs/blob/2230a20f2b5a14f2db3d7f13a2dc3c22517e790b/nixos/modules/services/security/vaultwarden/default.nix#L225
+            OnCalendar = "23:30";
+            RandomizedDelaySec = "5min";
+          };
+
+          pruneOpts = [
+            "--keep-daily 7"
+            "--keep-weekly 5"
+            "--keep-monthly 12"
+          ];
         };
       };
     };
 
     age.secrets = {
+      bitwarden-sonnenhof-zieger-de-environment.file = ../secrets/bitwarden-sonnenhof-zieger-de-environment.age;
       bitwarden-sonnenhof-zieger-de-restic-environment.file = ../secrets/bitwarden-sonnenhof-zieger-de-restic-environment.age;
       bitwarden-sonnenhof-zieger-de-restic-password.file = ../secrets/bitwarden-sonnenhof-zieger-de-restic-password.age;
-    };
-
-    services.restic.backups = {
-      bitwarden = {
-        initialize = true;
-
-        paths = [ config.services.vaultwarden.backupDir ];
-
-        repository = "b2:schwalbe-vaultwarden";
-        environmentFile = config.age.secrets.bitwarden-sonnenhof-zieger-de-restic-environment.path;
-        passwordFile = config.age.secrets.bitwarden-sonnenhof-zieger-de-restic-password.path;
-
-        timerConfig = {
-          # Ideally, this would always run directly after systemd.services.backup-vaultwarden
-          # But I don't know how to set this up. The vaultwarden backup unit starts at 23:00, so this just starts a bit later
-          # See https://github.com/NixOS/nixpkgs/blob/2230a20f2b5a14f2db3d7f13a2dc3c22517e790b/nixos/modules/services/security/vaultwarden/default.nix#L225
-          OnCalendar = "23:30";
-          RandomizedDelaySec = "5min";
-        };
-
-        pruneOpts = [
-          "--keep-daily 7"
-          "--keep-weekly 5"
-          "--keep-monthly 12"
-        ];
-      };
     };
   };
 }

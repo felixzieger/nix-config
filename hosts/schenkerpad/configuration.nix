@@ -8,19 +8,22 @@
   ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
-
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
+  boot = {
+    loader.grub = {
+      enable = true;
+      device = "/dev/sda";
+      useOSProber = true;
+      enableCryptodisk = true;
+    };
+    
+    # Setup keyfile
+    initrd.secrets = {
+      "/crypto_keyfile.bin" = null;
+    };
+    
+    initrd.luks.devices."luks-326db574-8d3f-461d-a178-0ac45d8da7b7".keyFile =
+      "/crypto_keyfile.bin";
   };
-
-  boot.loader.grub.enableCryptodisk = true;
-
-  boot.initrd.luks.devices."luks-326db574-8d3f-461d-a178-0ac45d8da7b7".keyFile =
-    "/crypto_keyfile.bin";
   networking.hostName = "schenkerpad"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -46,12 +49,39 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.excludePackages = [ pkgs.xterm ];
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services = {
+    xserver = {
+      enable = true;
+      excludePackages = [ pkgs.xterm ];
+      
+      # Enable the GNOME Desktop Environment.
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+      
+      # Configure keymap in X11
+      xkb = {
+        layout = "de";
+        variant = "";
+      };
+    };
+    
+    # Enable CUPS to print documents.
+    printing.enable = false;
+    
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      #jack.enable = true;
+  
+      # use the example session manager (no others are packaged yet so this is enabled by default,
+      # no need to redefine it in your config for now)
+      #media-session.enable = true;
+    };
+  };
+  
   environment.gnome.excludePackages = [
     pkgs.gnome-photos
     pkgs.gnome-tour
@@ -68,13 +98,12 @@
     pkgs.atomix # puzzle game
   ];
 
-  security.sudo.enable = true;
-  security.sudo.wheelNeedsPassword = false;
-
-  # Configure keymap in X11
-  services.xserver = {
-    xkb.layout = "de";
-    xkb.variant = "";
+  security = {
+    sudo = {
+      enable = true;
+      wheelNeedsPassword = false;
+    };
+    rtkit.enable = true;
   };
 
   # Configure console keymap
@@ -86,23 +115,7 @@
   ];
   nix.optimise.automatic = true;
 
-  # Enable CUPS to print documents.
-  services.printing.enable = false;
-
   hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;

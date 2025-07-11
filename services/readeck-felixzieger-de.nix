@@ -4,21 +4,17 @@
   ...
 }:
 {
-  services.nginx.virtualHosts."readeck.felixzieger.de" = {
-    forceSSL = true;
-    enableACME = true;
-    http3 = true;
-    quic = true;
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:${toString config.services.readeck.settings.server.port}";
-    };
-  };
-
-  age.secrets = {
-    readeck-felixzieger-de-env.file = ../secrets/readeck-felixzieger-de-env.age;
-  };
-
   services = {
+    nginx.virtualHosts."readeck.felixzieger.de" = {
+      forceSSL = true;
+      enableACME = true;
+      http3 = true;
+      quic = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString config.services.readeck.settings.server.port}";
+      };
+    };
+
     readeck = {
       enable = true;
       settings = {
@@ -28,6 +24,23 @@
       };
       environmentFile = config.age.secrets.readeck-felixzieger-de-env.path;
     };
+
+    fail2ban = {
+      enable = true;
+      jails = {
+        readeck.settings = {
+          enabled = true;
+          filter = "readeck[journalmatch='_SYSTEMD_UNIT=readeck.service']";
+          backend = "systemd";
+          banaction = "%(banaction_allports)s";
+          maxretry = 10;
+        };
+      };
+    };
+  };
+
+  age.secrets = {
+    readeck-felixzieger-de-env.file = ../secrets/readeck-felixzieger-de-env.age;
   };
 
   # Example log entry for readeck
@@ -42,17 +55,4 @@
       ignoreregex =
     ''
   );
-
-  services.fail2ban = {
-    enable = true;
-    jails = {
-      readeck.settings = {
-        enabled = true;
-        filter = "readeck[journalmatch='_SYSTEMD_UNIT=readeck.service']";
-        backend = "systemd";
-        banaction = "%(banaction_allports)s";
-        maxretry = 10;
-      };
-    };
-  };
 }

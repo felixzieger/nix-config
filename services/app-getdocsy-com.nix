@@ -13,30 +13,54 @@ in
     # Inspect sqlite database
     environment.systemPackages = with pkgs; [ litecli ];
 
-    services.nginx = {
-      proxyTimeout = "360s"; # we are changing this for all servers running on the host; not ideal but okay for now
-      virtualHosts."app.getdocsy.com" = {
-        forceSSL = true;
-        enableACME = true;
-        http3 = true;
-        quic = true;
-        locations."/" = {
-          proxyPass = "http://localhost:${toString docsyWebPort}";
-        };
-        locations."/v1-dashboard" = {
-          proxyPass = "http://localhost:${toString docsyDashboardPort}/dashboard";
-        };
-        locations."/slack" = {
-          proxyPass = "http://localhost:${toString docsySlackPort}/slack";
-          proxyWebsockets = true;
+    services = {
+      nginx = {
+        proxyTimeout = "360s"; # we are changing this for all servers running on the host; not ideal but okay for now
+        virtualHosts."app.getdocsy.com" = {
+          forceSSL = true;
+          enableACME = true;
+          http3 = true;
+          quic = true;
+          locations = {
+            "/" = {
+              proxyPass = "http://localhost:${toString docsyWebPort}";
+            };
+            "/v1-dashboard" = {
+              proxyPass = "http://localhost:${toString docsyDashboardPort}/dashboard";
+            };
+            "/slack" = {
+              proxyPass = "http://localhost:${toString docsySlackPort}/slack";
+              proxyWebsockets = true;
+            };
+          };
         };
       };
-    };
 
-    age.secrets = {
-      ghcr-secret.file = ../secrets/ghcr-secret.age;
-      app-getdocsy-com-legacy-env.file = ../secrets/app-getdocsy-com-legacy-env.age;
-      app-getdocsy-com-env.file = ../secrets/app-getdocsy-com-env.age;
+      restic.backups = {
+        docsy = {
+          initialize = true;
+
+          paths = [
+            docsyDataDir
+            docsyWebDataDir
+          ];
+
+          repository = "b2:app-getdocsy-com";
+          environmentFile = config.age.secrets.app-getdocsy-com-restic-environment.path;
+          passwordFile = config.age.secrets.app-getdocsy-com-restic-password.path;
+
+          timerConfig = {
+            OnCalendar = "19:00";
+            RandomizedDelaySec = "5min";
+          };
+
+          pruneOpts = [
+            "--keep-daily 7"
+            "--keep-weekly 5"
+            "--keep-monthly 12"
+          ];
+        };
+      };
     };
 
     virtualisation.oci-containers = {
@@ -142,34 +166,11 @@ in
     };
 
     age.secrets = {
+      ghcr-secret.file = ../secrets/ghcr-secret.age;
+      app-getdocsy-com-legacy-env.file = ../secrets/app-getdocsy-com-legacy-env.age;
+      app-getdocsy-com-env.file = ../secrets/app-getdocsy-com-env.age;
       app-getdocsy-com-restic-environment.file = ../secrets/app-getdocsy-com-restic-environment.age;
       app-getdocsy-com-restic-password.file = ../secrets/app-getdocsy-com-restic-password.age;
-    };
-
-    services.restic.backups = {
-      docsy = {
-        initialize = true;
-
-        paths = [
-          docsyDataDir
-          docsyWebDataDir
-        ];
-
-        repository = "b2:app-getdocsy-com";
-        environmentFile = config.age.secrets.app-getdocsy-com-restic-environment.path;
-        passwordFile = config.age.secrets.app-getdocsy-com-restic-password.path;
-
-        timerConfig = {
-          OnCalendar = "19:00";
-          RandomizedDelaySec = "5min";
-        };
-
-        pruneOpts = [
-          "--keep-daily 7"
-          "--keep-weekly 5"
-          "--keep-monthly 12"
-        ];
-      };
     };
 
     systemd.services.init-docsy-network = {

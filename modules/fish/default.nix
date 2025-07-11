@@ -11,7 +11,6 @@
       ll = "ls -l";
       la = "ls -la";
       tree = "ls --tree";
-      dog = "doggo";
     };
   };
   programs.zoxide.enable = true;
