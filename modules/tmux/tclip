@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+#
+# tclip - Copies tmux pane history to clipboard
+#
+set -euo pipefail
+
+msg() {
+  echo >&2 "$@"
+}
+
+die() {
+  msg "ERROR: $1"
+  exit "${2:-1}"
+}
+
+capture_pane() {
+  tmux capture-pane -p -J -S - -E - -t "$1"
+}
+
+b64_encode() {
+  if base64 --version &>/dev/null 2>&1; then
+    base64 -w 0
+  else
+    base64
+  fi
+}
+
+main() {
+  [[ -n ${TMUX:-} ]] || die "Must be run from within tmux"
+
+  local target="${1:-$(tmux display-message -p '#{pane_id}')}"
+  
+  # Test if target is valid
+  if ! tmux display-message -p -t "$target" &>/dev/null; then
+    die "Invalid tmux target: $target"
+  fi
+
+  msg "Copying pane $target to clipboard..."
+
+  # Try clipboard tools in order of preference
+  local copiers=(
+    'command -v pbcopy &>/dev/null && capture_pane "$target" | pbcopy && msg "Copied via pbcopy" && exit 0'
+    'command -v wl-copy &>/dev/null && capture_pane "$target" | wl-copy && msg "Copied via wl-copy" && exit 0'
+    'command -v xclip &>/dev/null && [[ -n ${DISPLAY:-} ]] && capture_pane "$target" | xclip -selection clipboard && msg "Copied via xclip" && exit 0'
+  )
+
+  for copier in "${copiers[@]}"; do
+    eval "$copier" || true
+  done
+
+  # Fallback to OSC52 if available
+  if command -v base64 &>/dev/null; then
+    msg "Using OSC52 terminal sequence..."
+    local content_size
+    content_size=$(capture_pane "$target" | wc -c)
+    if [[ $content_size -gt 100000 ]]; then
+      msg "WARNING: Large content (${content_size} bytes) may exceed terminal limits"
+    fi
+    
+    local osc52_sequence
+    osc52_sequence="$(capture_pane "$target" | b64_encode)"
+    printf '\e]52;c;%s\a' "$osc52_sequence"
+    msg "OSC52 sequence sent"
+    exit 0
+  fi
+
+  # Final fallback to tmux buffer
+  msg "Loading into tmux buffer..."
+  local buf_name="tclip-$(date +%s)"
+  capture_pane "$target" | tmux load-buffer -b "$buf_name" -
+  msg "Content loaded into tmux buffer: $buf_name"
+  msg "Paste with: Ctrl+b ]"
+}
+
+main "$@"

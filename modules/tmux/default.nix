@@ -9,4 +9,10 @@
   programs.tmux.tmuxinator.enable = true;
   home.file.".config/tmuxinator/nixos.yml".source = ./tmuxinator.nixos.yml;
   home.file.".config/tmuxinator/macos.yml".source = ./tmuxinator.macos.yml;
+
+  # Install tclip script
+  home.file.".config/tmux/tclip" = {
+    source = ./tclip;
+    executable = true;
+  };
 }
