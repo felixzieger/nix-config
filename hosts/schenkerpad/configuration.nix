@@ -15,14 +15,13 @@
       useOSProber = true;
       enableCryptodisk = true;
     };
-    
+
     # Setup keyfile
     initrd.secrets = {
       "/crypto_keyfile.bin" = null;
     };
-    
-    initrd.luks.devices."luks-326db574-8d3f-461d-a178-0ac45d8da7b7".keyFile =
-      "/crypto_keyfile.bin";
+
+    initrd.luks.devices."luks-326db574-8d3f-461d-a178-0ac45d8da7b7".keyFile = "/crypto_keyfile.bin";
   };
   networking.hostName = "schenkerpad"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -53,21 +52,21 @@
     xserver = {
       enable = true;
       excludePackages = [ pkgs.xterm ];
-      
+
       # Enable the GNOME Desktop Environment.
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
-      
+
       # Configure keymap in X11
       xkb = {
         layout = "de";
         variant = "";
       };
     };
-    
+
     # Enable CUPS to print documents.
     printing.enable = false;
-    
+
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -75,13 +74,13 @@
       pulse.enable = true;
       # If you want to use JACK applications, uncomment this
       #jack.enable = true;
-  
+
       # use the example session manager (no others are packaged yet so this is enabled by default,
       # no need to redefine it in your config for now)
       #media-session.enable = true;
     };
   };
-  
+
   environment.gnome.excludePackages = [
     pkgs.gnome-photos
     pkgs.gnome-tour

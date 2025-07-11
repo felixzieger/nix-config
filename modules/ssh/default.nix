@@ -1,5 +1,4 @@
-_:
-{
+_: {
   # eternal terminal requires host config
   # https://mynixos.com/home-manager/option/programs.ssh.matchBlocks and
   # https://mynixos.com/home-manager/option/programs.ssh.extraConfig

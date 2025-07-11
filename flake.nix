@@ -63,6 +63,12 @@
       nix-search-tui,
       ...
     }:
+    let
+      # Create an overlay for custom packages
+      customPackages = final: prev: {
+        # Custom packages can be added here
+      };
+    in
     {
       nixosConfigurations = {
         "schwalbe" = nixpkgs.lib.nixosSystem {
@@ -70,6 +76,12 @@
 
           specialArgs = inputs;
           modules = [
+            (
+              { config, pkgs, ... }:
+              {
+                nixpkgs.overlays = [ customPackages ];
+              }
+            )
             home-manager.nixosModules.home-manager
             ./hosts/common
             ./hosts/nixos
@@ -96,6 +108,12 @@
 
           specialArgs = inputs;
           modules = [
+            (
+              { config, pkgs, ... }:
+              {
+                nixpkgs.overlays = [ customPackages ];
+              }
+            )
             home-manager.nixosModules.home-manager
             ./hosts/minimal
             ./hosts/nixos
@@ -114,6 +132,12 @@
 
           specialArgs = inputs;
           modules = [
+            (
+              { config, pkgs, ... }:
+              {
+                nixpkgs.overlays = [ customPackages ];
+              }
+            )
             home-manager.nixosModules.home-manager
             ./hosts/common
             ./hosts/nixos
@@ -138,6 +162,12 @@
 
           specialArgs = inputs;
           modules = [
+            (
+              { config, pkgs, ... }:
+              {
+                nixpkgs.overlays = [ customPackages ];
+              }
+            )
             home-manager.nixosModules.home-manager
             ./hosts/common
             ./hosts/schenkerpad
@@ -151,6 +181,12 @@
 
           specialArgs = inputs;
           modules = [
+            (
+              { config, pkgs, ... }:
+              {
+                nixpkgs.overlays = [ customPackages ];
+              }
+            )
             ./hosts/common
             ./hosts/macbook
             home-manager.darwinModules.home-manager
@@ -160,6 +196,54 @@
           ];
         };
       };
+
+      # Custom packages
+      packages = {
+        x86_64-linux =
+          let
+            pkgs = import nixpkgs {
+              system = "x86_64-linux";
+              overlays = [ customPackages ];
+            };
+          in
+          {
+            # inherit (pkgs) claude-code;
+          };
+
+        x86_64-darwin =
+          let
+            pkgs = import nixpkgs-darwin {
+              system = "x86_64-darwin";
+              overlays = [ customPackages ];
+            };
+          in
+          {
+            # inherit (pkgs) claude-code;
+          };
+
+        aarch64-linux =
+          let
+            pkgs = import nixpkgs {
+              system = "aarch64-linux";
+              overlays = [ customPackages ];
+            };
+          in
+          {
+            # inherit (pkgs) claude-code;
+          };
+
+        aarch64-darwin =
+          let
+            pkgs = import nixpkgs-darwin {
+              system = "aarch64-darwin";
+              overlays = [ customPackages ];
+            };
+          in
+          {
+            # inherit (pkgs) claude-code;
+          };
+      };
+
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
       formatter.x86_64-darwin = nixpkgs.legacyPackages.x86_64-darwin.nixfmt-rfc-style;
     };

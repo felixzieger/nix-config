@@ -15,7 +15,8 @@ fi
 
 # Run the formatter
 echo "Running Nix formatter..."
-if ! nix fmt; then
+# Run formatter with explicit system to avoid stdin issue
+if ! nix run .#formatter.$(nix eval --impure --expr builtins.currentSystem) -- $(find . -name "*.nix" -type f ! -path "./result/*" ! -path "./.git/*" | head -20); then
     echo "❌ Formatting failed. Please fix the issues before committing."
     echo "Run 'nix fmt' to format your code."
     exit 1
