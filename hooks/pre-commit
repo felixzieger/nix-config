@@ -13,20 +13,49 @@ if [[ ! -f "justfile" ]]; then
     exit 1
 fi
 
-# Run the formatter
-echo "Running Nix formatter..."
-# Run formatter with explicit system to avoid stdin issue
-if ! nix run .#formatter.$(nix eval --impure --expr builtins.currentSystem) -- $(find . -name "*.nix" -type f ! -path "./result/*" ! -path "./.git/*" | head -20); then
-    echo "❌ Formatting failed. Please fix the issues before committing."
-    echo "Run 'nix fmt' to format your code."
-    exit 1
-fi
+# Variables to track job status
+formatter_pid=""
+linter_pid=""
+formatter_status=0
+linter_status=0
 
-# Run the linter
-echo "Running Nix linter..."
-if ! just lint; then
-    echo "❌ Linting failed. Please fix the warnings before committing."
-    echo "Run 'just lint' to see the issues."
+# Run formatter in background
+{
+    echo "Running Nix formatter..."
+    # Run formatter with explicit system to avoid stdin issue
+    if nix run .#formatter.$(nix eval --impure --expr builtins.currentSystem) -- $(find . -name "*.nix" -type f ! -path "./result/*" ! -path "./.git/*" | head -20); then
+        echo "✅ Formatting completed"
+    else
+        echo "❌ Formatting failed. Please fix the issues before committing."
+        echo "Run 'nix fmt' to format your code."
+        exit 1
+    fi
+} &
+formatter_pid=$!
+
+# Run linter in background
+{
+    echo "Running Nix linter..."
+    if just lint; then
+        echo "✅ Linting completed"
+    else
+        echo "❌ Linting failed. Please fix the warnings before committing."
+        echo "Run 'just lint' to see the issues."
+        exit 1
+    fi
+} &
+linter_pid=$!
+
+# Wait for both jobs to complete
+wait $formatter_pid
+formatter_status=$?
+
+wait $linter_pid
+linter_status=$?
+
+# Check if any job failed
+if [[ $formatter_status -ne 0 || $linter_status -ne 0 ]]; then
+    echo "❌ Pre-commit checks failed!"
     exit 1
 fi
 
