@@ -46,19 +46,6 @@ in
         };
       };
 
-      # Example log entry
-      # Feb 22 00:00:00 blausieb vaultwarden[583428]: [2025-02-22 00:00:00.000][vaultwarden::api::identity][ERROR] Username or password is incorrect. Try again. IP: 0.0.0.0. Username: hans@web.de.
-      environment.etc."fail2ban/filter.d/vaultwarden.local".text = pkgs.lib.mkDefault (
-        pkgs.lib.mkAfter ''
-          [INCLUDES]
-          before = common.conf
-
-          [Definition]
-          failregex = ^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$
-          ignoreregex =
-        ''
-      );
-
       # I followed https://github.com/dani-garcia/vaultwarden/wiki/Fail2Ban-Setup
       fail2ban = {
         enable = true;
@@ -99,6 +86,19 @@ in
         };
       };
     };
+
+    # Example log entry
+    # Feb 22 00:00:00 blausieb vaultwarden[583428]: [2025-02-22 00:00:00.000][vaultwarden::api::identity][ERROR] Username or password is incorrect. Try again. IP: 0.0.0.0. Username: hans@web.de.
+    environment.etc."fail2ban/filter.d/vaultwarden.local".text = pkgs.lib.mkDefault (
+      pkgs.lib.mkAfter ''
+        [INCLUDES]
+        before = common.conf
+
+        [Definition]
+        failregex = ^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$
+        ignoreregex =
+      ''
+    );
 
     age.secrets = {
       bitwarden-sonnenhof-zieger-de-environment.file = ../secrets/bitwarden-sonnenhof-zieger-de-environment.age;
