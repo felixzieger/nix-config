@@ -15,6 +15,7 @@
     uv # fast Python package manager
     dogdns # modern dig (DNS client)
     tealdeer # fast tldr client for command examples
+    code-digest
   ];
 
   home.file.".claude/CLAUDE.md".text = builtins.readFile ./CLAUDE.md;

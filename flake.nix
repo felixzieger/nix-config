@@ -64,9 +64,9 @@
       ...
     }:
     let
-      # Create an overlay for custom packages
+      # Overlay for custom packages
       customPackages = final: prev: {
-        # Custom packages can be added here
+        code-digest = final.callPackage ./packages/code-digest.nix { };
       };
     in
     {
@@ -208,6 +208,7 @@
           in
           {
             # inherit (pkgs) claude-code;
+            inherit (pkgs) code-digest;
           };
 
         x86_64-darwin =
@@ -219,6 +220,7 @@
           in
           {
             # inherit (pkgs) claude-code;
+            inherit (pkgs) code-digest;
           };
 
         aarch64-linux =
@@ -230,6 +232,7 @@
           in
           {
             # inherit (pkgs) claude-code;
+            inherit (pkgs) code-digest;
           };
 
         aarch64-darwin =
@@ -241,6 +244,7 @@
           in
           {
             # inherit (pkgs) claude-code;
+            inherit (pkgs) code-digest;
           };
       };
 
