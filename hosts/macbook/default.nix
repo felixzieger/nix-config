@@ -212,6 +212,7 @@ in
     # Landing page
     pkgs.pnpm
     pkgs.bun
+    pkgs.deno
     pkgs.nodejs_22
     pkgs.typescript
 
