@@ -1,4 +1,15 @@
 { inputs, pkgs, ... }:
+let
+  modes-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "modes-nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "mvllow";
+      repo = "modes.nvim";
+      rev = "HEAD";
+      sha256 = "03c9l3lsfl5glkszc510f5dswskz2fh8n7x5vb04klj6hvvyikn0";
+    };
+  };
+in
 {
   home.packages = with pkgs; [
     fzf
@@ -61,6 +72,14 @@
       git-blame-nvim # Git blame with lualine-nvim integration
       vim-sleuth # Work out tabs vs spaces etc. automatically.
       vim-commentary # gcc
+
+      {
+        plugin = modes-nvim;
+        type = "lua";
+        config = ''
+          require('modes').setup()
+        '';
+      }
 
       {
         plugin = telescope-nvim; # <leader>f/b/g
