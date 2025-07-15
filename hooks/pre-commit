@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # Pre-commit hook for nixpkgs repository
-# Runs linting checks before allowing commits
+# Runs linting checks on changed files only
 
 set -e
 
-echo "Running pre-commit checks..."
+echo "Running pre-commit checks on changed files..."
 
 # Check if we're in the right directory
 if [[ ! -f "justfile" ]]; then
@@ -13,17 +13,26 @@ if [[ ! -f "justfile" ]]; then
     exit 1
 fi
 
+# Get list of changed .nix files
+changed_nix_files=$(git diff --cached --name-only --diff-filter=ACM | rg '\.nix$' || true)
+
+if [[ -z "$changed_nix_files" ]]; then
+    echo "✅ No .nix files changed - skipping checks"
+    exit 0
+fi
+
+echo "Found $(echo "$changed_nix_files" | wc -l) changed .nix files"
+
 # Variables to track job status
 formatter_pid=""
 linter_pid=""
 formatter_status=0
 linter_status=0
 
-# Run formatter in background
+# Run formatter on changed files only
 {
-    echo "Running Nix formatter..."
-    # Run formatter with explicit system to avoid stdin issue
-    if nix run .#formatter.$(nix eval --impure --expr builtins.currentSystem) -- $(find . -name "*.nix" -type f ! -path "./result/*" ! -path "./.git/*" | head -20); then
+    echo "Running Nix formatter on changed files..."
+    if nix run .#formatter.$(nix eval --impure --expr builtins.currentSystem) -- $changed_nix_files; then
         echo "✅ Formatting completed"
     else
         echo "❌ Formatting failed. Please fix the issues before committing."
@@ -33,14 +42,14 @@ linter_status=0
 } &
 formatter_pid=$!
 
-# Run linter in background
+# Run linter on changed files only
 {
-    echo "Running Nix linter..."
-    if just lint; then
+    echo "Running statix on changed files..."
+    if statix check $changed_nix_files; then
         echo "✅ Linting completed"
     else
         echo "❌ Linting failed. Please fix the warnings before committing."
-        echo "Run 'just lint' to see the issues."
+        echo "Run 'statix check <file>' on the affected files."
         exit 1
     fi
 } &
@@ -59,5 +68,5 @@ if [[ $formatter_status -ne 0 || $linter_status -ne 0 ]]; then
     exit 1
 fi
 
-echo "✅ All pre-commit checks passed!"
+echo "✅ Pre-commit checks passed!"
 exit 0

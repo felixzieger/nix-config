@@ -21,7 +21,7 @@
       alias ll='ls -l'
       alias la='ls -a'
       alias lla='ls -la'
-      
+
       # Modern CLI tool aliases
       alias find='fd'
       alias grep='rg'
