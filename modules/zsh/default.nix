@@ -18,9 +18,15 @@
       alias ...="cd ../.."
 
       alias l='ls'
-      alias l='ls -l'
+      alias ll='ls -l'
       alias la='ls -a'
       alias lla='ls -la'
+      
+      # Modern CLI tool aliases
+      alias find='fd'
+      alias grep='rg'
+      alias cat='bat'
+      alias dig='dog'
 
       # TODO fix for nix
       # alias zshconfig="$EDITOR ~/.zshrc"

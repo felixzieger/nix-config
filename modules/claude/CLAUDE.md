@@ -2,10 +2,6 @@
 
 When working on this system, always use these tools:
 
-- Use `fd` instead of `find`
-- Use `rg` instead of `grep`
-- Use `bat` instead of `cat`
-- Use `dog` instead of `dig`
 - Use `hyperfine` for benchmarking command-line programs
 - Use `tokei` for counting lines of code and getting code statistics
 - Use `code-digest --prompt '<Your question here>'` to consult other AI models
