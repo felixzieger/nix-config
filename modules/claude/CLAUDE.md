@@ -15,3 +15,4 @@ When not specified otherwise, default on using these tools:
 To understand how programs work
 - Pass the `--help` flag to CLI programs
 - Use `tldr` for getting command examples
+- Use context7 MCP for fetching library documentation
