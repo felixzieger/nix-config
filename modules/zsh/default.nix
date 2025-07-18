@@ -27,6 +27,7 @@
       alias grep='rg'
       alias cat='bat'
       alias dig='dog'
+      alias sed='sd'
 
       # TODO fix for nix
       # alias zshconfig="$EDITOR ~/.zshrc"

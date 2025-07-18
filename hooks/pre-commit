@@ -45,7 +45,15 @@ formatter_pid=$!
 # Run linter on changed files only
 {
     echo "Running statix on changed files..."
-    if statix check $changed_nix_files; then
+    # Run statix on each file individually
+    failed=0
+    for file in $changed_nix_files; do
+        if ! statix check "$file"; then
+            failed=1
+        fi
+    done
+    
+    if [[ $failed -eq 0 ]]; then
         echo "✅ Linting completed"
     else
         echo "❌ Linting failed. Please fix the warnings before committing."

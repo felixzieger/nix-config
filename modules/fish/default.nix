@@ -16,6 +16,7 @@
       grep = "rg";
       cat = "bat";
       dig = "dog";
+      sed = "sd";
     };
   };
   programs.zoxide.enable = true;
