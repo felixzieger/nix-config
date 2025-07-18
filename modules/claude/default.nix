@@ -16,7 +16,34 @@
     dogdns # modern dig (DNS client)
     tealdeer # fast tldr client for command examples
     code-digest
+    sd
+    terminal-notifier
   ];
 
-  home.file.".claude/CLAUDE.md".text = builtins.readFile ./CLAUDE.md;
+  home.file = {
+    ".claude/CLAUDE.md".text = builtins.readFile ./CLAUDE.md;
+
+    # Copy all command files to ~/.claude/commands/
+    ".claude/commands" = {
+      source = ./commands;
+      recursive = true;
+    };
+
+    # Claude Code hooks configuration
+    ".claude/settings.json".text = builtins.toJSON {
+      hooks = {
+        Stop = [
+          {
+            matcher = ".*";
+            hooks = [
+              {
+                type = "command";
+                command = ''${pkgs.terminal-notifier}/bin/terminal-notifier -title "Claude Code" -message "Task completed" -sound default -appIcon "${./claude.png}"'';
+              }
+            ];
+          }
+        ];
+      };
+    };
+  };
 }
