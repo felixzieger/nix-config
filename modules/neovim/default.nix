@@ -109,6 +109,14 @@ in
         '';
       }
 
+      {
+        plugin = supermaven-nvim;
+        type = "lua";
+        config = ''
+          require("supermaven-nvim").setup({})
+        '';
+      }
+
     ];
     extraConfig = builtins.readFile ./neovim.vim;
   };
