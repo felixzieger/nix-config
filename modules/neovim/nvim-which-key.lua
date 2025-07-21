@@ -1,6 +1,14 @@
+-- Defer which-key setup but load the module early to preserve functionality
 local wk = require("which-key")
 
-wk.setup {}
+-- Defer the actual setup to reduce startup time
+vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+        vim.defer_fn(function()
+            wk.setup {}
+        end, 1)
+    end
+})
 
 -- Register LSP keybindings with descriptions
 vim.api.nvim_create_autocmd('LspAttach', {
