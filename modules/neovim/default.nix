@@ -117,6 +117,12 @@ in
         '';
       }
 
+      {
+        plugin = lazygit-nvim;
+        type = "lua";
+        config = builtins.readFile ./nvim-lazygit.lua;
+      }
+
     ];
     extraConfig = builtins.readFile ./neovim.vim;
   };
