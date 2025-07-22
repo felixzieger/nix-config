@@ -31,6 +31,7 @@
         ./../../modules/fzf
         ./../../modules/tmux
         ./../../modules/neovim
+        ./../../modules/ghostty
       ];
 
       # Let home Manager install and manage itself.
