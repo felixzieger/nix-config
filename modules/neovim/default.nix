@@ -1,4 +1,8 @@
-{ inputs, pkgs, ... }:
+{
+  pkgs,
+  unstable,
+  ...
+}:
 let
   modes-nvim = pkgs.vimUtils.buildVimPlugin {
     name = "modes-nvim";
@@ -31,47 +35,47 @@ in
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    plugins = with pkgs.vimPlugins; [
+    plugins = [
       {
-        plugin = which-key-nvim;
+        plugin = pkgs.vimPlugins.which-key-nvim;
         type = "lua";
         config = builtins.readFile ./nvim-which-key.lua;
       }
 
       {
-        plugin = conform-nvim;
+        plugin = pkgs.vimPlugins.conform-nvim;
         type = "lua";
         config = builtins.readFile ./nvim-conform.lua;
       }
       # Languages
-      vim-nix
+      pkgs.vimPlugins.vim-nix
       # Completions
       {
-        plugin = nvim-cmp;
+        plugin = pkgs.vimPlugins.nvim-cmp;
         type = "lua";
         config = builtins.readFile ./nvim-cmp.lua;
       }
-      cmp-nvim-lsp
-      lspkind-nvim # icons in cmp dropwdown; requires nerdfont
-      luasnip
-      cmp_luasnip
-      friendly-snippets
+      pkgs.vimPlugins.cmp-nvim-lsp
+      pkgs.vimPlugins.lspkind-nvim # icons in cmp dropwdown; requires nerdfont
+      pkgs.vimPlugins.luasnip
+      pkgs.vimPlugins.cmp_luasnip
+      pkgs.vimPlugins.friendly-snippets
       {
-        plugin = nvim-lspconfig;
+        plugin = pkgs.vimPlugins.nvim-lspconfig;
         type = "lua";
         config = builtins.readFile ./nvim-lspconfig.lua;
       }
-      tokyonight-nvim
+      pkgs.vimPlugins.tokyonight-nvim
 
       {
-        plugin = lualine-nvim;
+        plugin = pkgs.vimPlugins.lualine-nvim;
         type = "lua";
         config = builtins.readFile ./nvim-lualine.lua;
       }
-      nvim-web-devicons
-      git-blame-nvim # Git blame with lualine-nvim integration
-      vim-sleuth # Work out tabs vs spaces etc. automatically.
-      vim-commentary # gcc
+      pkgs.vimPlugins.nvim-web-devicons
+      pkgs.vimPlugins.git-blame-nvim # Git blame with lualine-nvim integration
+      pkgs.vimPlugins.vim-sleuth # Work out tabs vs spaces etc. automatically.
+      pkgs.vimPlugins.vim-commentary # gcc
 
       {
         plugin = modes-nvim;
@@ -82,20 +86,20 @@ in
       }
 
       {
-        plugin = telescope-nvim; # <leader>f/b/g
+        plugin = pkgs.vimPlugins.telescope-nvim; # <leader>f/b/g
         type = "lua";
         config = builtins.readFile ./nvim-telescope.lua;
       }
-      plenary-nvim
+      pkgs.vimPlugins.plenary-nvim
 
       {
-        plugin = nvim-tree-lua; # <leader>n
+        plugin = pkgs.vimPlugins.nvim-tree-lua; # <leader>n
         type = "lua";
         config = builtins.readFile ./nvim-tree.lua;
       }
 
       {
-        plugin = nvim-treesitter.withAllGrammars;
+        plugin = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
         type = "lua";
         config = ''
           require'nvim-treesitter.configs'.setup {
@@ -110,7 +114,7 @@ in
       }
 
       {
-        plugin = supermaven-nvim;
+        plugin = pkgs.vimPlugins.supermaven-nvim;
         type = "lua";
         config = ''
           require("supermaven-nvim").setup({})
@@ -118,7 +122,7 @@ in
       }
 
       {
-        plugin = lazygit-nvim;
+        plugin = unstable.vimPlugins.lazygit-nvim;
         type = "lua";
         config = builtins.readFile ./nvim-lazygit.lua;
       }
