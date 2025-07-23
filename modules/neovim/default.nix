@@ -127,6 +127,12 @@ in
         config = builtins.readFile ./nvim-lazygit.lua;
       }
 
+      {
+        plugin = unstable.vimPlugins.multicursor-nvim;
+        type = "lua";
+        config = builtins.readFile ./nvim-multicursor.lua;
+      }
+
     ];
     extraConfig = builtins.readFile ./neovim.vim;
   };
