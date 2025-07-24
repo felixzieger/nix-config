@@ -3,9 +3,6 @@
 {
   home = {
     packages = [
-
-      unstable.claude-code # From nixpkgs
-
       pkgs.fd # modern find
       pkgs.ripgrep # modern grep (rg)
       pkgs.bat # modern cat
@@ -21,7 +18,7 @@
       pkgs.terminal-notifier
     ];
     sessionVariables = {
-      CLAUDE_CODE_MAX_OUTPUT_TOKENS = "360000";
+      PNPM_HOME = "/usr/local/bin/"; # I install claude code via PNPM for faster updates
     };
 
     file = {
@@ -34,21 +31,7 @@
       };
 
       # Claude Code hooks configuration
-      ".claude/settings.json".text = builtins.toJSON {
-        hooks = {
-          Stop = [
-            {
-              matcher = ".*";
-              hooks = [
-                {
-                  type = "command";
-                  command = ''${pkgs.terminal-notifier}/bin/terminal-notifier -title "Claude Code" -message "Task completed" -sound default -appIcon "${./claude.png}"'';
-                }
-              ];
-            }
-          ];
-        };
-      };
+      ".claude/settings.json".text = builtins.readFile ./settings.json;
     };
   };
 }

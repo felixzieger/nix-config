@@ -1,0 +1,72 @@
+{
+    "hooks": {
+        "Stop": [
+            {
+                "hooks": [
+                    {
+                        "command": "terminal-notifier -title \"Claude Code\" -message \"Task completed\" -sound default -appIcon \"/nix/store/dq9g1p7kskc0n10k38rac7c1wnx3792p-claude.png\"",
+                        "type": "command"
+                    }
+                ],
+                "matcher": ".*"
+            }
+        ]
+    },
+    "permissions": {
+        "additionalDirectories": [
+            "~/.claude",
+            "~/Projects"
+        ],
+        "allow": [
+            "Edit(~/code/**)",
+            "Grep(~/code/**)",
+            "Edit(~/sylva/**)",
+            "Grep(~/sylva/**)",
+            "Glob(**)",
+            "LS(**)",
+            "WebSearch(**)",
+            "Bash(git add:*)",
+            "Bash(git mv:*)",
+            "Bash(git rm:*)",
+            "Bash(git stash:*)",
+            "Bash(git diff:*)",
+            "Bash(git commit:*)",
+            "Bash(ls:*)",
+            "Bash(tree:*)",
+            "Bash(pwd:*)",
+            "Bash(find:*)",
+            "Bash(grep:*)",
+            "Bash(which:*)",
+            "mcp__ide__getDiagnostics"
+        ],
+        "deny": [
+            "Read(~/Nextcloud/**)",
+            "Edit(~/Nextcloud/**)",
+            "Read(//etc/**)",
+            "Edit(//etc/**)",
+            "Bash(su:*)",
+            "Bash(sudo:*)",
+            "Bash(env:*)",
+            "Bash(printenv:*)",
+            "Bash(passwd:*)",
+            "Bash(history:*)",
+            "Bash(curl:*)",
+            "Bash(wget:*)",
+            "Bash(rsync:*)",
+            "Bash(scp:*)",
+            "Bash(sftp:*)",
+            "Bash(socat:*)",
+            "Bash(ssh:*)",
+            "Bash(nc:*)",
+            "Bash(ncat:*)",
+            "Bash(netcat:*)",
+            "Bash(nmap:*)",
+            "Bash(git push:*)"
+        ]
+    },
+    "env": {
+        "DISABLE_BUG_COMMAND": "1",
+        "DISABLE_ERROR_REPORTING": "1",
+        "DISABLE_TELEMETRY": "1"
+    }
+}

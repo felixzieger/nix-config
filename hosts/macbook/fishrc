@@ -44,5 +44,3 @@ function open
   __lazy_load_brew
   command open $argv
 end
-
-export PNPM_HOME=/usr/local/bin/
