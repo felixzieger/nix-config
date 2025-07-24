@@ -3,17 +3,6 @@
   unstable,
   ...
 }:
-let
-  modes-nvim = pkgs.vimUtils.buildVimPlugin {
-    name = "modes-nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "mvllow";
-      repo = "modes.nvim";
-      rev = "HEAD";
-      sha256 = "03c9l3lsfl5glkszc510f5dswskz2fh8n7x5vb04klj6hvvyikn0";
-    };
-  };
-in
 {
   home.packages = with pkgs; [
     fzf
@@ -75,15 +64,7 @@ in
       pkgs.vimPlugins.nvim-web-devicons
       pkgs.vimPlugins.git-blame-nvim # Git blame with lualine-nvim integration
       pkgs.vimPlugins.vim-sleuth # Work out tabs vs spaces etc. automatically.
-      pkgs.vimPlugins.vim-commentary # gcc
-
-      {
-        plugin = modes-nvim;
-        type = "lua";
-        config = ''
-          require('modes').setup()
-        '';
-      }
+      # pkgs.vimPlugins.vim-commentary # gcc
 
       {
         plugin = pkgs.vimPlugins.telescope-nvim; # <leader>f/b/g
@@ -128,7 +109,7 @@ in
       }
 
       {
-        plugin = unstable.vimPlugins.multicursor-nvim;
+        plugin = unstable.vimPlugins.multicursor-nvim; # arrow keys / CTRL+left click
         type = "lua";
         config = builtins.readFile ./nvim-multicursor.lua;
       }
