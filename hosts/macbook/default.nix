@@ -215,6 +215,7 @@ in
     pkgs.deno
     pkgs.nodejs_22
     pkgs.typescript
+    pkgs.libwebp
 
     #esp32
     pkgs.ninja
