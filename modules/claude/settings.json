@@ -13,10 +13,6 @@
         ]
     },
     "permissions": {
-        "additionalDirectories": [
-            "~/.claude",
-            "~/Projects"
-        ],
         "allow": [
             "Edit(~/code/**)",
             "Grep(~/code/**)",

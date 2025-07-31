@@ -216,6 +216,8 @@ in
     pkgs.nodejs_22
     pkgs.typescript
     pkgs.libwebp
+    pkgs.imagemagick
+    pkgs.google-cloud-sdk
 
     #esp32
     pkgs.ninja
