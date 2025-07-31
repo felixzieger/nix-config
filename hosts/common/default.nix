@@ -3,8 +3,15 @@
   pkgs,
   agenix,
   config,
+  nixpkgs-unstable,
   ...
 }:
+let
+  unstable = import nixpkgs-unstable {
+    inherit (pkgs) system;
+    config.allowUnfree = true;
+  };
+in
 {
   environment.variables.EDITOR = "nvim";
   environment.systemPackages = with pkgs; [
@@ -36,6 +43,10 @@
 
       # Let home Manager install and manage itself.
       programs.home-manager.enable = true;
+    };
+
+    extraSpecialArgs = {
+      inherit unstable;
     };
   };
 
