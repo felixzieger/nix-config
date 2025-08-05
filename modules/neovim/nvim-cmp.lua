@@ -1,5 +1,7 @@
+vim.diagnostic.enable = true
 vim.diagnostic.config({
   signs = false,
+  virtual_lines = true,
 })
 
 local cmp = require("cmp")
