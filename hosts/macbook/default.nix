@@ -183,7 +183,7 @@ in
 
     pkgs.rectangle
     pkgs.monitorcontrol
-    pkgs.spotify
+    # pkgs.spotify # too far behind the latest version
     pkgs.ncspot
     pkgs.gimp
     # pkgs.slack
