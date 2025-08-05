@@ -49,11 +49,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>gh', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', '<leader>gj', vim.lsp.buf.signature_help, opts)
 
-    vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', '<leader>gD', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<leader>gi', '<cmd>Telescope lsp_implementations<cr>', opts)
+    vim.keymap.set('n', '<leader>gD', '<cmd>Telescope lsp_type_definitions<cr>', opts)
     vim.keymap.set('n', '<leader>gf', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<leader>gd', '<cmd>Telescope lsp_definitions<cr>', opts)
+    vim.keymap.set('n', '<leader>gr', '<cmd>Telescope lsp_references<cr>', opts)
 
     -- vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts) -- Makes <leader>r slow to appear
     vim.keymap.set('n', '<leader>F', function() vim.lsp.buf.format { async = true } end, opts)

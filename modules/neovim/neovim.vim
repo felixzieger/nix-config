@@ -28,6 +28,7 @@ nnoremap <leader>l <C-W>l
 nnoremap <leader>f <cmd>Telescope find_files<cr>
 nnoremap <leader>r <cmd>Telescope live_grep<cr>
 nnoremap <leader>b <cmd>Telescope buffers<cr>
+nnoremap <leader>s <cmd>Telescope lsp_document_symbols<cr>
 
 map <leader>n :NvimTreeFindFileToggle<CR>
 
