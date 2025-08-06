@@ -244,6 +244,7 @@ in
 
   homebrew = {
     onActivation.autoUpdate = true;
+    onActivation.upgrade = true;
     enable = true;
     casks = [
       # unstable.signal-desktop # not available on darwin as of 2025-4-22
