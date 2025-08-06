@@ -1,7 +1,8 @@
 # Defer SSH key loading until first git/ssh operation
 function __ensure_ssh_key
     if not set -q SSH_KEY_LOADED
-        if test (ssh-add -L 2>/dev/null | rg -c "felix") -eq 0
+        set -l key_count (ssh-add -L 2>/dev/null | rg -c "felix" || echo 0)
+        if test "$key_count" -eq 0
             ssh-add --apple-use-keychain ~/.ssh/id_ed25519
         end
         set -g SSH_KEY_LOADED 1
