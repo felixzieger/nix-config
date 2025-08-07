@@ -7,10 +7,10 @@ vim.api.nvim_create_autocmd("VimEnter", {
     callback = function()
         vim.defer_fn(function()
             local git_blame = require('gitblame')
-            
+
             require('lualine').setup({
                 options = {
-                    theme = 'powerline'
+                    theme = 'auto'
                 },
                 sections = {
                     lualine_c = {

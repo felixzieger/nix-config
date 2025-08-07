@@ -1,4 +1,4 @@
-colorscheme tokyonight-storm
+colorscheme bluloco
 syntax on
 set termguicolors
 
