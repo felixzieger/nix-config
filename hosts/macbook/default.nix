@@ -183,12 +183,12 @@ in
 
     pkgs.rectangle
     pkgs.monitorcontrol
-    # pkgs.spotify # too far behind the latest version
+    pkgs.spotify
     pkgs.ncspot
     pkgs.gimp
     # pkgs.slack
     # pkgs.opentofu
-    pkgs.audacity
+    # pkgs.audacity
 
     # Python development environment
     pkgs.uv
