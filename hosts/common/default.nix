@@ -13,6 +13,8 @@ let
   };
 in
 {
+  nix.settings.download-buffer-size = 524288000;
+  
   environment.variables.EDITOR = "nvim";
   environment.systemPackages = with pkgs; [
     git
