@@ -55,6 +55,7 @@
         config = builtins.readFile ./nvim-lspconfig.lua;
       }
       pkgs.vimPlugins.tokyonight-nvim
+      pkgs.vimPlugins.bluloco-nvim
 
       {
         plugin = pkgs.vimPlugins.lualine-nvim;

@@ -59,4 +59,3 @@ switch target_host=hostname:
 gc generations="5d":
   nix-env --delete-generations {{generations}}
   nix-collect-garbage --delete-older-than {{generations}}
-  nix-store --gc
