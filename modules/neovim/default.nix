@@ -9,14 +9,6 @@
     ripgrep
     fd
     bat
-
-    nil
-    nixfmt-rfc-style
-
-    lua-language-server
-    nodePackages.bash-language-server
-    nodePackages.vim-language-server
-    # nodePackages.yaml-language-server
   ];
 
   programs.neovim = {
@@ -31,13 +23,16 @@
         config = builtins.readFile ./nvim-which-key.lua;
       }
 
+      # Formatting
       {
         plugin = pkgs.vimPlugins.conform-nvim;
         type = "lua";
         config = builtins.readFile ./nvim-conform.lua;
       }
+
       # Languages
       pkgs.vimPlugins.vim-nix
+
       # Completions
       {
         plugin = pkgs.vimPlugins.nvim-cmp;
@@ -48,13 +43,8 @@
       pkgs.vimPlugins.lspkind-nvim # icons in cmp dropwdown; requires nerdfont
       pkgs.vimPlugins.luasnip
       pkgs.vimPlugins.cmp_luasnip
-      pkgs.vimPlugins.friendly-snippets
-      {
-        plugin = pkgs.vimPlugins.nvim-lspconfig;
-        type = "lua";
-        config = builtins.readFile ./nvim-lspconfig.lua;
-      }
-      pkgs.vimPlugins.tokyonight-nvim
+
+      # pkgs.vimPlugins.tokyonight-nvim
       pkgs.vimPlugins.bluloco-nvim
 
       {
@@ -65,7 +55,6 @@
       pkgs.vimPlugins.nvim-web-devicons
       pkgs.vimPlugins.git-blame-nvim # Git blame with lualine-nvim integration
       pkgs.vimPlugins.vim-sleuth # Work out tabs vs spaces etc. automatically.
-      # pkgs.vimPlugins.vim-commentary # gcc
 
       {
         plugin = pkgs.vimPlugins.telescope-nvim; # <leader>f/b/g
@@ -104,7 +93,7 @@
       }
 
       {
-        plugin = unstable.vimPlugins.lazygit-nvim;
+        plugin = unstable.vimPlugins.lazygit-nvim; # space+gg
         type = "lua";
         config = builtins.readFile ./nvim-lazygit.lua;
       }

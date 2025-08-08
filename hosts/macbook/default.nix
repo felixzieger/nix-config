@@ -73,12 +73,15 @@ in
       home = {
         username = lib.mkForce "felix";
         homeDirectory = lib.mkForce "/Users/felix";
-        # Additional plugins for nvim
-        packages = with pkgs; [
-          terraform-ls
-          nodePackages.vscode-langservers-extracted
-
-          nodePackages.typescript-language-server # provides ts_ls for nvim lsp
+        packages = [
+          pkgs.nodePackages.vscode-langservers-extracted
+          pkgs.nodePackages.typescript-language-server # provides ts_ls for nvim lsp
+          pkgs.nil
+          pkgs.nixfmt-rfc-style
+          pkgs.lua-language-server
+          pkgs.nodePackages.bash-language-server
+          pkgs.nodePackages.vim-language-server
+          pkgs.nodePackages.yaml-language-server
         ];
         # This value determines the home Manager release that your
         # configuration is compatible with. This helps avoid breakage
@@ -109,6 +112,9 @@ in
             fi
           '';
         };
+        direnv = {
+          enable = true;
+        };
         btop = {
           enable = true;
           settings = {
@@ -122,18 +128,15 @@ in
           '';
         };
         neovim = {
-          plugins = with pkgs.vimPlugins; [
-            vim-terraform
-
-            friendly-snippets
+          plugins = [
+            pkgs.vimPlugins.friendly-snippets
             {
-              plugin = nvim-lspconfig;
+              plugin = pkgs.vimPlugins.nvim-lspconfig;
               type = "lua";
               config = builtins.readFile ./nvim-lspconfig.lua;
             }
-
             {
-              plugin = yazi-nvim;
+              plugin = pkgs.vimPlugins.yazi-nvim;
               type = "lua";
               config = ''
                 vim.keymap.set("n", "<leader>-", function()
@@ -184,7 +187,6 @@ in
     pkgs.rectangle
     pkgs.monitorcontrol
     pkgs.spotify
-    pkgs.ncspot
     pkgs.gimp
     # pkgs.slack
     # pkgs.opentofu
@@ -211,7 +213,6 @@ in
 
     # Landing page
     pkgs.pnpm
-    pkgs.bun
     pkgs.deno
     pkgs.nodejs_22
     pkgs.typescript
@@ -220,10 +221,10 @@ in
     pkgs.google-cloud-sdk
 
     #esp32
-    pkgs.ninja
-    pkgs.dfu-util
-    pkgs.cmake
-    pkgs.esphome
+    # pkgs.ninja
+    # pkgs.dfu-util
+    # pkgs.cmake
+    # pkgs.esphome
 
     agenix.packages."${pkgs.system}".default
 
