@@ -1,12 +1,34 @@
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 lspconfig.html.setup { capabilities = capabilities }
-lspconfig.ts_ls.setup { capabilities = capabilities } -- typescript
 lspconfig.bashls.setup { capabilities = capabilities }
 lspconfig.yamlls.setup { capabilities = capabilities }
 lspconfig.jsonls.setup { capabilities = capabilities }
 lspconfig.terraformls.setup { capabilities = capabilities }
 lspconfig.rust_analyzer.setup { capabilities = capabilities }
+
+-- TypeScript/JavaScript configuration with Deno support
+lspconfig.denols.setup {
+  capabilities = capabilities,
+  root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+}
+
+lspconfig.ts_ls.setup {
+  capabilities = capabilities,
+  root_dir = lspconfig.util.root_pattern("package.json"),
+  single_file_support = false,
+  on_attach = function(client, bufnr)
+    -- Check if current buffer is in a Deno project
+    local fname = vim.api.nvim_buf_get_name(bufnr)
+    local deno_root = lspconfig.util.root_pattern("deno.json", "deno.jsonc")(fname)
+
+    if deno_root then
+      -- Detach ts_ls from this buffer if it's in a Deno project
+      vim.lsp.stop_client(client.id, true)
+    end
+  end
+}
+
 lspconfig.nil_ls.setup {
   settings = {
     ['nil'] = {
