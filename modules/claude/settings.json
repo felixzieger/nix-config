@@ -46,8 +46,6 @@
             "Bash(printenv:*)",
             "Bash(passwd:*)",
             "Bash(history:*)",
-            "Bash(curl:*)",
-            "Bash(wget:*)",
             "Bash(rsync:*)",
             "Bash(scp:*)",
             "Bash(sftp:*)",
