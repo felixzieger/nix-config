@@ -81,6 +81,7 @@ restic-uptime-kuma restore latest --target /
 
 - Impermanence https://lantian.pub/en/article/modify-computer/nixos-impermanence.lantian/
 - Nextcloud backup to Schwalbe
+- SSO via https://pocket-id.org/
 - Get rid of ../../ imports. Have a look at https://github.com/NotAShelf/nyx/ and https://github.com/yomaq/nix-config/
 - git mirror; systemd+git, gitea or https://github.com/charmbracelet/soft-serve
 - Move ghost to mysql to get rid of date error https://ghost.org/docs/reinstall
