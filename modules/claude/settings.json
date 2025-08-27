@@ -55,7 +55,13 @@
             "Bash(ncat:*)",
             "Bash(netcat:*)",
             "Bash(nmap:*)",
-            "Bash(git push:*)"
+            "Bash(git push:*)",
+            "Bash(pnpm supbase db push:*)",
+            "Bash(npx supbase db push:*)",
+            "Bash(supbase db push:*)",
+            "Bash(pnpm supbase functions deploy:*)",
+            "Bash(npx supbase functions deploy:*)",
+            "Bash(supbase functions deploy:*)"
         ]
     },
     "env": {
