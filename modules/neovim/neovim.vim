@@ -24,11 +24,11 @@ nnoremap <leader>j <C-W>j
 nnoremap <leader>k <C-W>k
 nnoremap <leader>l <C-W>l
 
-" Telescope
-nnoremap <leader>f <cmd>Telescope find_files<cr>
-nnoremap <leader>r <cmd>Telescope live_grep<cr>
-nnoremap <leader>b <cmd>Telescope buffers<cr>
-nnoremap <leader>s <cmd>Telescope lsp_document_symbols<cr>
+" fzf-lua
+nnoremap <leader>f <cmd>FzfLua files<cr>
+nnoremap <leader>r <cmd>FzfLua live_grep<cr>
+nnoremap <leader>b <cmd>FzfLua buffers<cr>
+nnoremap <leader>s <cmd>FzfLua lsp_document_symbols<cr>
 
 map <leader>n :NvimTreeFindFileToggle<CR>
 

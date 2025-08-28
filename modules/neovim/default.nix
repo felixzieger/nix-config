@@ -57,11 +57,10 @@
       pkgs.vimPlugins.vim-sleuth # Work out tabs vs spaces etc. automatically.
 
       {
-        plugin = pkgs.vimPlugins.telescope-nvim; # <leader>f/b/g
+        plugin = pkgs.vimPlugins.fzf-lua; # <leader>f/b/g
         type = "lua";
-        config = builtins.readFile ./nvim-telescope.lua;
+        config = builtins.readFile ./nvim-fzf-lua.lua;
       }
-      pkgs.vimPlugins.plenary-nvim
 
       {
         plugin = pkgs.vimPlugins.nvim-tree-lua; # <leader>n
