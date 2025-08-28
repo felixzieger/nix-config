@@ -35,14 +35,11 @@
 
       # Completions
       {
-        plugin = pkgs.vimPlugins.nvim-cmp;
+        plugin = pkgs.vimPlugins.blink-cmp;
         type = "lua";
-        config = builtins.readFile ./nvim-cmp.lua;
+        config = builtins.readFile ./nvim-blink.lua;
       }
-      pkgs.vimPlugins.cmp-nvim-lsp
-      pkgs.vimPlugins.lspkind-nvim # icons in cmp dropwdown; requires nerdfont
-      pkgs.vimPlugins.luasnip
-      pkgs.vimPlugins.cmp_luasnip
+      pkgs.vimPlugins.blink-compat # Compatibility layer for LSP
 
       # pkgs.vimPlugins.tokyonight-nvim
       pkgs.vimPlugins.bluloco-nvim

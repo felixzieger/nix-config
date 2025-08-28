@@ -1,5 +1,6 @@
 local lspconfig = require('lspconfig')
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- Blink provides LSP capabilities directly
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 lspconfig.html.setup { capabilities = capabilities }
 lspconfig.bashls.setup { capabilities = capabilities }
 lspconfig.yamlls.setup { capabilities = capabilities }
