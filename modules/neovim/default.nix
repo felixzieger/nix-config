@@ -66,6 +66,12 @@
       }
 
       {
+        plugin = pkgs.vimPlugins.oil-nvim; # - or <leader>e
+        type = "lua";
+        config = builtins.readFile ./nvim-oil.lua;
+      }
+
+      {
         plugin = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
         type = "lua";
         config = ''
