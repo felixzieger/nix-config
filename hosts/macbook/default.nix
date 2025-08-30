@@ -188,6 +188,7 @@ in
     pkgs.monitorcontrol
     pkgs.spotify
     pkgs.gimp
+    pkgs.localsend
     # pkgs.slack
     # pkgs.opentofu
     # pkgs.audacity
