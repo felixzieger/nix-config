@@ -7,10 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### macOS Development
 - `just build [target_host]` - Build configuration without switching
 - `just trace [target_host]` - Build with --show-trace for debugging
-- `just switch-linux [target_host]` - Deploy to a Linux host from macOS
 
 ### NixOS/Linux Development
-- `just switch [target_host]` - Build and switch configuration (uses sudo)
 - `just build [target_host]` - Build configuration without switching
 - `just trace [target_host]` - Build with --show-trace for debugging
 
@@ -18,6 +16,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `just gc [generations]` - Garbage collect old generations (default: 5d)
 - `nix flake check` - Validate the flake configuration
 - `nix flake update` - Update all flake inputs
+
+Do not try to switch to new configurations. The user will always do this themselves.
 
 ### Formatting
 - Linux: Automatically runs `nix fmt` before building

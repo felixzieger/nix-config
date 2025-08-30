@@ -20,7 +20,6 @@
             "Grep(~/sylva/**)",
             "Glob(**)",
             "LS(**)",
-            "WebSearch(**)",
             "Bash(git add:*)",
             "Bash(git mv:*)",
             "Bash(git rm:*)",
@@ -56,12 +55,12 @@
             "Bash(netcat:*)",
             "Bash(nmap:*)",
             "Bash(git push:*)",
-            "Bash(pnpm supbase db push:*)",
-            "Bash(npx supbase db push:*)",
-            "Bash(supbase db push:*)",
-            "Bash(pnpm supbase functions deploy:*)",
-            "Bash(npx supbase functions deploy:*)",
-            "Bash(supbase functions deploy:*)"
+            "Bash(pnpm supabase db:*)",
+            "Bash(npx supabase db:*)",
+            "Bash(supabase db:*)",
+            "Bash(pnpm supabase functions:*)",
+            "Bash(npx supabase functions:*)",
+            "Bash(supabase functions:*)"
         ]
     },
     "env": {
