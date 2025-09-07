@@ -1,4 +1,4 @@
-{ pkgs, unstable, ... }:
+{ pkgs, ... }:
 
 {
   home = {
@@ -13,7 +13,7 @@
       pkgs.uv # fast Python package manager
       pkgs.dogdns # modern dig (DNS client)
       pkgs.tealdeer # fast tldr client for command examples
-      pkgs.code-digest
+      pkgs.ast-grep
       pkgs.sd
       pkgs.terminal-notifier
     ];
