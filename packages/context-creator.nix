@@ -7,23 +7,23 @@
 }:
 
 rustPlatform.buildRustPackage rec {
-  pname = "code-digest";
-  version = "0.5.0";
+  pname = "context-creator";
+  version = "1.5.0";
 
   src = fetchFromGitHub {
     owner = "matiasvillaverde";
-    repo = "code-digest";
+    repo = "context-creator";
     rev = "v${version}";
-    hash = "sha256-GKbVyIfH2QJD4T2MBWmb3++/V2u8JaWN0SGPc5mV9iU=";
+    hash = "";
   };
 
   # Project doesn't include Cargo.lock, so we provide one
   cargoLock = {
-    lockFile = ./code-digest-Cargo.lock;
+    lockFile = ./context-creator-Cargo.lock;
   };
 
   postPatch = ''
-    ln -s ${./code-digest-Cargo.lock} Cargo.lock
+    ln -s ${./context-creator-Cargo.lock} Cargo.lock
   '';
 
   checkFlags = [
@@ -37,9 +37,9 @@ rustPlatform.buildRustPackage rec {
 
   meta = with lib; {
     description = "High-performance CLI tool to convert codebases to Markdown for LLM context";
-    homepage = "https://github.com/matiasvillaverde/code-digest";
+    homepage = "https://github.com/matiasvillaverde/context-creator";
     license = licenses.mit;
     maintainers = with maintainers; [ ];
-    mainProgram = "code-digest";
+    mainProgram = "context-creator";
   };
 }

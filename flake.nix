@@ -66,7 +66,7 @@
     let
       # Overlay for custom packages
       customPackages = final: prev: {
-        code-digest = final.callPackage ./packages/code-digest.nix { };
+        context-creator = final.callPackage ./packages/context-creator.nix { };
       };
     in
     {
@@ -209,7 +209,7 @@
           in
           {
             # inherit (pkgs) claude-code;
-            inherit (pkgs) code-digest;
+            inherit (pkgs) context-creator;
           };
 
         x86_64-darwin =
@@ -221,7 +221,7 @@
           in
           {
             # inherit (pkgs) claude-code;
-            inherit (pkgs) code-digest;
+            inherit (pkgs) context-creator;
           };
 
         aarch64-linux =
@@ -233,7 +233,7 @@
           in
           {
             # inherit (pkgs) claude-code;
-            inherit (pkgs) code-digest;
+            inherit (pkgs) context-creator;
           };
 
         aarch64-darwin =
@@ -245,7 +245,7 @@
           in
           {
             # inherit (pkgs) claude-code;
-            inherit (pkgs) code-digest;
+            inherit (pkgs) context-creator;
           };
       };
 
