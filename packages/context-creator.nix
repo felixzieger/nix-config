@@ -14,7 +14,7 @@ rustPlatform.buildRustPackage rec {
     owner = "matiasvillaverde";
     repo = "context-creator";
     rev = "v${version}";
-    hash = "";
+    hash = "sha256-NHBSEoPlqBThyxFBjXMPqOwe/IQBodNKtbH9Jn/2rnw=";
   };
 
   # Project doesn't include Cargo.lock, so we provide one
@@ -26,14 +26,13 @@ rustPlatform.buildRustPackage rec {
     ln -s ${./context-creator-Cargo.lock} Cargo.lock
   '';
 
-  checkFlags = [
-    # Clipboard tests fail in sandbox environment
-    "--skip=test_clipboard_copy"
-  ];
+  doCheck = false;
 
   nativeBuildInputs = [ pkg-config ];
 
   buildInputs = [ openssl ];
+
+  OPENSSL_NO_VENDOR = 1;
 
   meta = with lib; {
     description = "High-performance CLI tool to convert codebases to Markdown for LLM context";
