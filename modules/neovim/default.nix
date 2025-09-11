@@ -106,6 +106,16 @@
         config = builtins.readFile ./nvim-multicursor.lua;
       }
 
+      pkgs.vimPlugins.rainbow-delimiters-nvim
+
+      {
+        plugin = pkgs.vimPlugins.indent-blankline-nvim;
+        type = "lua";
+        config = ''
+          require("ibl").setup()
+        '';
+      }
+
     ];
     extraConfig = builtins.readFile ./neovim.vim;
   };
