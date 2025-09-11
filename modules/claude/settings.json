@@ -60,7 +60,8 @@
             "Bash(supabase db:*)",
             "Bash(pnpm supabase functions:*)",
             "Bash(npx supabase functions:*)",
-            "Bash(supabase functions:*)"
+            "Bash(supabase functions:*)",
+            "Bash(rm -rf:*)"
         ]
     },
     "env": {
