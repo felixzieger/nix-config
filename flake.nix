@@ -154,7 +154,6 @@
             ./services/tailscale.nix
             ./services/nostr-felixzieger-de.nix
             ./services/strfry-felixzieger-de.nix
-            ./services/waha.nix
             inputs.agenix.nixosModules.default
           ];
         };
