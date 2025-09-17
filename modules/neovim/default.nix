@@ -99,6 +99,7 @@
         type = "lua";
         config = builtins.readFile ./nvim-lazygit.lua;
       }
+      pkgs.vimPlugins.plenary-nvim # used for flaoting window management
 
       {
         plugin = unstable.vimPlugins.multicursor-nvim; # arrow keys / CTRL+left click
