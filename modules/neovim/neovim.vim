@@ -42,3 +42,7 @@ nmap <leader>w :w<CR>
 
 " Toggle line numbers
 nmap <leader>tl :set number!<CR>
+
+" disable because I use nvim-tree.lua
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1

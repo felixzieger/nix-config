@@ -76,7 +76,11 @@ require("nvim-tree").setup({
     always_show_folders = false,
   },
   view = {
-    adaptive_size = true,
+    width = {
+      min = 30,
+      max = 50,
+      padding = 1,
+    },
   },
   update_focused_file = { enable = true, },
   actions = {
