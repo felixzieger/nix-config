@@ -187,7 +187,7 @@ in
     pkgs.rectangle
     pkgs.monitorcontrol
     pkgs.spotify
-    pkgs.gimp
+    # pkgs.gimp # toolbar doesn't show as of 2025-09-18
     pkgs.localsend
     # pkgs.slack
     # pkgs.opentofu
@@ -265,6 +265,7 @@ in
       "nextcloud"
       # "zen-browser" # fails to update via brew as of 2025-06-13
       "espanso"
+      "gimp"
     ];
   };
 }
