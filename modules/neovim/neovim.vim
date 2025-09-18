@@ -1,4 +1,5 @@
 colorscheme bluloco
+lua vim.loader.enable()
 syntax on
 set termguicolors
 
