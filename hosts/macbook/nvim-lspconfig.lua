@@ -58,6 +58,11 @@ lspconfig.lua_ls.setup {
             library = {
               vim.env.VIMRUNTIME
             }
+          },
+          Lua = {
+            diagnostics = {
+              globals = { 'vim' },
+            },
           }
         }
       })
