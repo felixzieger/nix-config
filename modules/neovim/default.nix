@@ -157,6 +157,6 @@
       }
 
     ];
-    extraConfig = builtins.readFile ./neovim.vim;
+    extraLuaConfig = builtins.readFile ./neovim.lua;
   };
 }
