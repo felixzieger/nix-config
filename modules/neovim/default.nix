@@ -71,8 +71,22 @@
         config = builtins.readFile ./nvim-oil.lua;
       }
 
+      # Limit grammars to the languages used regularly to keep startup fast.
       {
-        plugin = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+        plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (
+          plugins: with plugins; [
+            tree-sitter-lua
+            tree-sitter-nix
+            tree-sitter-typescript
+            tree-sitter-javascript
+            tree-sitter-json
+            tree-sitter-yaml
+            tree-sitter-vim
+            tree-sitter-python
+            tree-sitter-bash
+            tree-sitter-query
+          ]
+        );
         type = "lua";
         config = ''
           require'nvim-treesitter.configs'.setup {
