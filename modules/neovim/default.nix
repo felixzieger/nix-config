@@ -95,9 +95,9 @@
       }
 
       {
-        plugin = unstable.vimPlugins.lazygit-nvim; # space+gg
+        plugin = pkgs.vimPlugins.toggleterm-nvim; # <leader>gg for lazygit
         type = "lua";
-        config = builtins.readFile ./nvim-lazygit.lua;
+        config = builtins.readFile ./nvim-toggleterm.lua;
       }
       pkgs.vimPlugins.plenary-nvim # used for flaoting window management
 
