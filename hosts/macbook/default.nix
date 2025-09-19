@@ -144,6 +144,13 @@ in
                 end)
               '';
             }
+            {
+              plugin = unstable.vimPlugins.render-markdown-nvim;
+              type = "lua";
+              config = ''
+                require('render-markdown').setup({})
+              '';
+            }
           ];
         };
       };
