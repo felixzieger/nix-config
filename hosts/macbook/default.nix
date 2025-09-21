@@ -213,6 +213,7 @@ in
     pkgs.opentofu
 
     unstable.scooter
+    pkgs.lazysql
 
     (unstable.python3.withPackages (ps: [
       ps.llm
