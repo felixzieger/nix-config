@@ -3,7 +3,7 @@ _: {
   # Using home.file instead to manage the config
 
   home.file.".config/ghostty/config".text = ''
-    macos-titlebar-style = native
+    # macos-titlebar-style = native
     keybind = shift+enter=text:\n
 
     # Split navigation with CMD+vim style keys
