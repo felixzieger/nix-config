@@ -144,7 +144,6 @@
             ./hosts/nixos/blausieb/configuration.nix
             ./services/nginx.nix
             ./services/docker.nix
-            ./services/domain-expiry-check.nix
             ./services/blog-felixzieger-de.nix
             ./services/app-getdocsy-com.nix
             ./services/plausible-sonnenhof-zieger-de
