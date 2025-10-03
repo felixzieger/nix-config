@@ -18,6 +18,7 @@ opt.mousescroll = 'ver:3,hor:0'
 opt.wrap = false
 opt.ignorecase = true
 opt.smartcase = true
+opt.autoread = true
 
 vim.g.mapleader = ' '
 
