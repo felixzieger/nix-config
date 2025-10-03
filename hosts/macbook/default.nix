@@ -128,6 +128,11 @@ in
           '';
         };
         neovim = {
+          extraLuaPackages = ps: [ ps.magick ];
+          extraPackages = [
+            pkgs.ueberzugpp
+            pkgs.imagemagick
+          ];
           plugins = [
             pkgs.vimPlugins.friendly-snippets
             {
@@ -149,6 +154,13 @@ in
               type = "lua";
               config = ''
                 require('render-markdown').setup({})
+              '';
+            }
+            {
+              plugin = pkgs.vimPlugins.image-nvim;
+              type = "lua";
+              config = ''
+                require("image").setup({})
               '';
             }
           ];
