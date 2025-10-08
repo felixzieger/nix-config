@@ -6,7 +6,6 @@
   nixpkgs-unstable,
   homebrew-core,
   homebrew-cask,
-  nix-search-tui,
   ...
 }:
 let
@@ -257,8 +256,6 @@ in
 
     agenix.packages."${pkgs.system}".default
 
-    unstable.nix-search-cli # dependency for nix-search-tui
-    nix-search-tui.packages."${pkgs.system}".default
     pkgs.statix
   ];
 

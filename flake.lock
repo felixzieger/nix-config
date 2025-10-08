@@ -383,26 +383,6 @@
         "type": "github"
       }
     },
-    "nix-search-tui": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1749522135,
-        "narHash": "sha256-Wod/HFpIlgJRk5sJDIXClEVVMit0w75rMs3zJGlhaLo=",
-        "owner": "misaelaguayo",
-        "repo": "nix-search-tui",
-        "rev": "591b642c541ed0dd7dc4c4fc073467f832688763",
-        "type": "github"
-      },
-      "original": {
-        "owner": "misaelaguayo",
-        "repo": "nix-search-tui",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1754340878,
@@ -477,7 +457,6 @@
         "nix-bitcoin": "nix-bitcoin",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
-        "nix-search-tui": "nix-search-tui",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-darwin": "nixpkgs-darwin",
         "nixpkgs-unstable": "nixpkgs-unstable",
