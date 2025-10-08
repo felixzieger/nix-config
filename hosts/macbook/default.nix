@@ -163,6 +163,14 @@ in
                 require("image").setup({})
               '';
             }
+
+            {
+              plugin = pkgs.vimPlugins.nvim-colorizer-lua;
+              type = "lua";
+              config = ''
+                require("colorizer").setup()
+              '';
+            }
           ];
         };
       };
