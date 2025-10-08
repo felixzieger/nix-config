@@ -13,7 +13,6 @@
       pkgs.uv # fast Python package manager
       pkgs.dogdns # modern dig (DNS client)
       pkgs.tealdeer # fast tldr client for command examples
-      pkgs.context-creator
       pkgs.ast-grep
       pkgs.sd
       pkgs.terminal-notifier
