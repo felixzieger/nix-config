@@ -126,7 +126,6 @@
             ./services/app-getdocsy-com.nix
             ./services/plausible-sonnenhof-zieger-de
             ./services/bitwarden-sonnenhof-zieger-de.nix
-            ./services/twenty-getdocsy-com.nix
             ./services/paperless-sonnenhof-zieger-de.nix
             ./services/readeck-felixzieger-de.nix
             ./services/tailscale.nix
