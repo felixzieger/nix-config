@@ -51,7 +51,10 @@ in
     };
   };
 
-  programs.fish.enable = true;
+  programs = {
+    fish.enable = true;
+    nix-index-database.comma.enable = true;
+  };
 
   users.users.felix.shell = pkgs.fish;
 
