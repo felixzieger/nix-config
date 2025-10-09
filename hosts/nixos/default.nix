@@ -32,6 +32,8 @@
 
   systemd.enableEmergencyMode = false;
 
+  programs.nano.enable = false;
+
   security.sudo.enable = true;
   security.sudo.wheelNeedsPassword = false; # allows user-level programs to silently obtain sudo permissions which is a risk; but it's very comfrotable
 
