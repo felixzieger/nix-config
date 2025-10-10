@@ -61,6 +61,7 @@
             "Bash(pnpm supabase functions:*)",
             "Bash(npx supabase functions:*)",
             "Bash(supabase functions:*)",
+            "Bash(modal deploy:*)",
             "Bash(rm -rf:*)"
         ]
     },

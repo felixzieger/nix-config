@@ -1,8 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, unstable, ... }:
 
 {
   home = {
     packages = [
+      unstable.claude-code
+
       pkgs.fd # modern find
       pkgs.ripgrep # modern grep (rg)
       pkgs.bat # modern cat
@@ -17,9 +19,6 @@
       pkgs.sd
       pkgs.terminal-notifier
     ];
-    sessionVariables = {
-      PNPM_HOME = "/usr/local/bin/"; # I install claude code via PNPM for faster updates
-    };
 
     file = {
       ".claude/CLAUDE.md".text = builtins.readFile ./CLAUDE.md;

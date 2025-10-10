@@ -11,12 +11,11 @@ When not specified otherwise, default on using these tools:
 
 - Use `pnpm` instead of `npm`
 - Use `uv` instead of `pip`
-- Use `oxlint` for linting JavaScript and TypeScript code
 
 To understand how programs work
 - Pass the `--help` flag to CLI programs
 - Use `tldr` for getting command examples
-- Use context7 MCP for fetching up-to-date documentation of APIs and libraries we use
+- Use `context7` MCP for fetching up-to-date documentation of APIs and libraries we use
 
 Devenv is used for managing development environments.
 - When devenv.nix doesn't exist and a command/tool is missing, create ad-hoc environment:
