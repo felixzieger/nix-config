@@ -219,7 +219,6 @@ in
     # pkgs.gimp # toolbar doesn't show as of 2025-09-18
     pkgs.localsend
     # pkgs.slack
-    # pkgs.opentofu
     # pkgs.audacity
 
     # Python development environment
@@ -229,10 +228,8 @@ in
     pkgs.ngrok
     pkgs.litecli
     pkgs.postgresql # includes psql CLI
-    pkgs.oci-cli
     pkgs.gh
     pkgs.vale
-    pkgs.opentofu
 
     unstable.scooter
     pkgs.lazysql

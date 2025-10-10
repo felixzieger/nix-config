@@ -5,7 +5,7 @@ lspconfig.html.setup { capabilities = capabilities }
 lspconfig.bashls.setup { capabilities = capabilities }
 lspconfig.yamlls.setup { capabilities = capabilities }
 lspconfig.jsonls.setup { capabilities = capabilities }
-lspconfig.terraformls.setup { capabilities = capabilities }
+-- lspconfig.terraformls.setup { capabilities = capabilities }
 lspconfig.rust_analyzer.setup { capabilities = capabilities }
 
 -- TypeScript/JavaScript configuration with Deno support
