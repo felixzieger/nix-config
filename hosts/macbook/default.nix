@@ -84,6 +84,7 @@ in
           pkgs.nodePackages.bash-language-server
           pkgs.nodePackages.vim-language-server
           pkgs.nodePackages.yaml-language-server
+          pkgs.ruff
         ];
         # This value determines the home Manager release that your
         # configuration is compatible with. This helps avoid breakage

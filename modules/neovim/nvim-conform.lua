@@ -8,6 +8,7 @@ require("conform").setup({
   },
   formatters_by_ft = {
     nix = { 'nixfmt' },
+    python = { 'ruff_format' },
 
     -- Fix common misspellings in source code on all filetypes
     -- ['*'] = { 'codespell' },

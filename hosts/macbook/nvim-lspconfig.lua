@@ -93,7 +93,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end
 })
 
--- python
+-- Python LSP setup
 local function find_python_executable()
   local current_dir = vim.fn.getcwd()
 
@@ -113,6 +113,7 @@ local function find_python_executable()
   return "python3"
 end
 
+-- Ruff LSP: diagnostics only
 lspconfig.ruff.setup {
   capabilities = capabilities,
   cmd = { "ruff", "server", "--preview" },
@@ -120,9 +121,21 @@ lspconfig.ruff.setup {
     settings = {
       interpreter = { find_python_executable() }
     }
-  }
+  },
+  on_attach = function(client, bufnr)
+    -- Disable all LSP features except diagnostics
+    client.server_capabilities.hoverProvider = false
+    client.server_capabilities.definitionProvider = false
+    client.server_capabilities.implementationProvider = false
+    client.server_capabilities.referencesProvider = false
+    client.server_capabilities.renameProvider = false
+    client.server_capabilities.codeActionProvider = false
+    client.server_capabilities.documentSymbolProvider = false
+    client.server_capabilities.documentFormattingProvider = false
+  end
 }
 
+-- Pyright LSP: full Python support
 lspconfig.pyright.setup {
   capabilities = capabilities,
   settings = {
@@ -136,18 +149,3 @@ lspconfig.pyright.setup {
     }
   }
 }
-
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client == nil then
-      return
-    end
-    if client.name == 'ruff' then
-      -- Disable hover in favor of Pyright
-      client.server_capabilities.hoverProvider = false
-    end
-  end,
-  desc = 'LSP: Disable hover capability from Ruff',
-})
