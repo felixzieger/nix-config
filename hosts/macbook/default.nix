@@ -117,6 +117,8 @@ in
         };
         direnv = {
           enable = true;
+          silent = true;
+          nix-direnv.enable = true;
         };
         btop = {
           enable = true;
@@ -218,42 +220,16 @@ in
     pkgs.monitorcontrol
     pkgs.spotify
     # pkgs.gimp # toolbar doesn't show as of 2025-09-18
-    pkgs.localsend
-    # pkgs.slack
-    # pkgs.audacity
+    # pkgs.localsend
 
     # Python development environment
-    pkgs.uv
-    pkgs.ruff
-    pkgs.pyright
-    pkgs.ngrok
-    pkgs.litecli
-    pkgs.postgresql # includes psql CLI
     pkgs.gh
     pkgs.vale
 
     unstable.scooter
     pkgs.lazysql
 
-    (unstable.python3.withPackages (ps: [
-      ps.llm
-      ps.llm-gemini
-    ]))
-
-    # Landing page
-    pkgs.pnpm
-    pkgs.deno
-    pkgs.nodejs_22
-    pkgs.typescript
-    pkgs.libwebp
-    pkgs.imagemagick
-    pkgs.google-cloud-sdk
-
-    #esp32
-    # pkgs.ninja
-    # pkgs.dfu-util
-    # pkgs.cmake
-    # pkgs.esphome
+    pkgs.devenv # automatically activated using direnv
 
     agenix.packages."${pkgs.system}".default
 
