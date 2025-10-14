@@ -39,6 +39,7 @@
 
     # Setup see https://github.com/zhaofengli/nix-homebrew
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+    nix-homebrew.inputs.nixpkgs.follows = "nixpkgs-darwin";
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
       flake = false;
