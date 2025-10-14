@@ -5,6 +5,8 @@
 }:
 
 {
+  devenv.warnOnNewVersion = false;
+
   claude.code.enable = true;
 
   git-hooks.hooks = {
