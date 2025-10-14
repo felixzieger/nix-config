@@ -33,5 +33,6 @@ require("oil").setup({
   use_default_keymaps = false,
 })
 
-vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open file explorer" })
+vim.keymap.set("n", "-", "<CMD>Oil --float<CR>", { desc = "Open parent directory" })
+vim.keymap.set("n", "<leader>e", "<CMD>Oil --float<CR>", { desc = "Open file explorer" })
+
