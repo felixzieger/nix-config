@@ -1,7 +1,7 @@
 -- ToggleTerm configuration
 require("toggleterm").setup{
   size = 20,
-  open_mapping = [[<c-\>]],
+  open_mapping = [[<c-`>]],
   hide_numbers = true,
   shade_terminals = true,
   shading_factor = -30,
@@ -29,7 +29,8 @@ require("toggleterm").setup{
 -- Terminal window mappings for easier navigation
 function _G.set_terminal_keymaps()
   local opts = {buffer = 0}
-  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+  -- Don't map ESC for lazygit and other TUI apps that need it
+  -- vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
   vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
   vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
   vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
