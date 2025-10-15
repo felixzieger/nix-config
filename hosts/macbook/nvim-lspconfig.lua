@@ -16,7 +16,17 @@ lspconfig.denols.setup {
 
 lspconfig.ts_ls.setup {
   capabilities = capabilities,
-  root_dir = lspconfig.util.root_pattern("package.json"),
+  -- For monorepos: Look for tsconfig.app.json (Vite projects) or tsconfig.json
+  -- This ensures path mappings from tsconfig.app.json are picked up
+  root_dir = function(fname)
+    -- First try to find tsconfig.app.json (Vite/project references setup)
+    local app_config_root = lspconfig.util.root_pattern("tsconfig.app.json")(fname)
+    if app_config_root then
+      return app_config_root
+    end
+    -- Fall back to tsconfig.json or package.json
+    return lspconfig.util.root_pattern("tsconfig.json", "package.json")(fname)
+  end,
   single_file_support = false,
   on_attach = function(client, bufnr)
     -- Check if current buffer is in a Deno project
