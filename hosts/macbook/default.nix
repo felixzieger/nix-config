@@ -226,10 +226,12 @@ in
     pkgs.gh
     pkgs.vale
 
+    pkgs.jujutsu
+    pkgs.jjui
+
     unstable.scooter
     pkgs.lazysql
-
-    pkgs.devenv # automatically activated using direnv
+    unstable.devenv # automatically activated using direnv
 
     agenix.packages."${pkgs.system}".default
 
@@ -263,10 +265,8 @@ in
       # "thunderbird"
       # pkgs.firefox # Not supported for x86_64-apple-darwin as of 2024-01-22
       # "firefox"
-      "slack"
       "nextcloud"
       # "zen-browser" # fails to update via brew as of 2025-06-13
-      "espanso"
       "gimp"
     ];
   };

@@ -10,15 +10,10 @@
   claude.code.enable = true;
 
   git-hooks.hooks = {
-    nixfmt-rfc-style = {
-      enable = true;
-      stages = [ "pre-commit" ];
-    };
-
-    statix = {
-      enable = true;
-      stages = [ "pre-commit" ];
-    };
+    flake-checker.enable = true;
+    deadnix.enable = true;
+    nixfmt-rfc-style.enable = true;
+    statix.enable = true;
 
     nixfmt-rfc-style-all = {
       enable = true;
