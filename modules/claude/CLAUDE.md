@@ -4,7 +4,6 @@ The following tools are available:
 
 - Use `hyperfine` for benchmarking command-line programs
 - Use `tokei` for counting lines of code and getting code statistics
-- Use `context-creator --prompt '<Your question here>'` to consult other AI models
 - Use `ast-grep` for searching code
 
 When not specified otherwise, default on using these tools:

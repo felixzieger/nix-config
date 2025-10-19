@@ -11,7 +11,6 @@
       pkgs.pnpm # modern npm
       pkgs.hyperfine # command-line benchmarking tool
       pkgs.tokei # displays statistics about code
-      pkgs.oxlint # linter for JavaScript and TypeScript
       pkgs.uv # fast Python package manager
       pkgs.dogdns # modern dig (DNS client)
       pkgs.tealdeer # fast tldr client for command examples
