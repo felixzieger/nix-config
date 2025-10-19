@@ -39,7 +39,6 @@
 
     # Setup see https://github.com/zhaofengli/nix-homebrew
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-    nix-homebrew.inputs.nixpkgs.follows = "nixpkgs-darwin";
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
       flake = false;
@@ -52,12 +51,9 @@
 
   outputs =
     inputs@{
-      self,
       nixpkgs,
       home-manager,
-      nixpkgs-darwin,
       nix-darwin,
-      nixpkgs-unstable,
       mac-app-util,
       nix-bitcoin,
       simple-nixos-mailserver,
