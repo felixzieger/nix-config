@@ -8,7 +8,6 @@
       pkgs.fd # modern find
       pkgs.ripgrep # modern grep (rg)
       pkgs.bat # modern cat
-      pkgs.pnpm # modern npm
       pkgs.hyperfine # command-line benchmarking tool
       pkgs.tokei # displays statistics about code
       pkgs.uv # fast Python package manager

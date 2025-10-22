@@ -226,6 +226,8 @@ in
     pkgs.gh
     pkgs.vale
 
+    unstable.pnpm
+
     pkgs.jujutsu
     pkgs.jjui
 
