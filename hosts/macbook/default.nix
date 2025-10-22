@@ -76,6 +76,8 @@ in
         username = lib.mkForce "felix";
         homeDirectory = lib.mkForce "/Users/felix";
         packages = [
+          unstable.bulletty
+
           pkgs.nodePackages.vscode-langservers-extracted
           pkgs.nodePackages.typescript-language-server # provides ts_ls for nvim lsp
           pkgs.nil
