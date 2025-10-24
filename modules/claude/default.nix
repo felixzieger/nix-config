@@ -30,5 +30,11 @@
       # Claude Code hooks configuration
       ".claude/settings.json".text = builtins.readFile ./settings.json;
     };
+
+    sessionVariables = {
+      DISABLE_ERROR_REPORTING = "1";
+      DISABLE_TELEMETRY = "1";
+      DISABLE_BUG_COMMAND = "1";
+    };
   };
 }

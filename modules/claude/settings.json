@@ -20,12 +20,6 @@
             "Grep(~/sylva/**)",
             "Glob(**)",
             "LS(**)",
-            "Bash(git add:*)",
-            "Bash(git mv:*)",
-            "Bash(git rm:*)",
-            "Bash(git stash:*)",
-            "Bash(git diff:*)",
-            "Bash(git commit:*)",
             "Bash(ls:*)",
             "Bash(tree:*)",
             "Bash(pwd:*)",
@@ -35,8 +29,6 @@
             "mcp__ide__getDiagnostics"
         ],
         "deny": [
-            "Read(~/Nextcloud/**)",
-            "Edit(~/Nextcloud/**)",
             "Read(//etc/**)",
             "Edit(//etc/**)",
             "Bash(su:*)",
@@ -55,11 +47,7 @@
             "Bash(netcat:*)",
             "Bash(nmap:*)",
             "Bash(git push:*)",
-            "Bash(pnpm supabase db:*)",
-            "Bash(npx supabase db:*)",
             "Bash(supabase db:*)",
-            "Bash(pnpm supabase functions:*)",
-            "Bash(npx supabase functions:*)",
             "Bash(supabase functions:*)",
             "Bash(modal deploy:*)",
             "Bash(rm -rf:*)"
@@ -83,7 +71,6 @@
             "type": "stdio",
             "command": "pnpx",
             "args": [
-                "-y",
                 "@upstash/context7-mcp"
             ],
             "env": {}
