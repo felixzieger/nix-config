@@ -26,6 +26,7 @@
             "Bash(find:*)",
             "Bash(grep:*)",
             "Bash(which:*)",
+            "Bash(supabase db diff -f:*)",
             "mcp__ide__getDiagnostics"
         ],
         "deny": [
