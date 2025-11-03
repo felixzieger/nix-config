@@ -39,7 +39,7 @@ in
 
         ghost = {
           autoStart = true;
-          image = "ghost:5-alpine";
+          image = "ghost:6-alpine";
           volumes = [
             "${ghostDataDir}:/var/lib/ghost/content"
             "/data/ghost/logs:/var/lib/ghost/content/logs"
