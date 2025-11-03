@@ -15,7 +15,6 @@
       grep = "rg";
       cat = "bat";
       dig = "dog";
-      sed = "sd";
     };
     shellInit = ''
       # Disable fish greeting
