@@ -42,21 +42,6 @@
   networking.firewall.allowedTCPPorts = config.services.openssh.ports;
   services.openssh.ports = [ 33111 ];
 
-  services.domainExpiryCheck = {
-    enable = true;
-    onCalendar = "daily";
-    randomizedDelaySec = "1h";
-    domains = [
-      { name = "felixzieger.de"; }
-      { name = "sonnenhof-zieger.de"; }
-      { name = "getdocsy.com"; }
-      { name = "think-in-sync.com"; }
-      { name = "zieger.de"; }
-      { name = "zieger.com"; }
-      { name = "sonnenhofzieger.de"; }
-    ];
-  };
-
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
   #
