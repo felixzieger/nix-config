@@ -1,4 +1,25 @@
 local lspconfig = require('lspconfig')
+local util = require('lspconfig.util')
+
+local function file_exists(path)
+  local stat = vim.loop.fs_stat(path)
+  return stat and stat.type == 'file'
+end
+
+local function deno_root_dir(fname)
+  -- First prefer an explicit deno.json/deno.jsonc in the ancestor tree
+  local root = util.root_pattern('deno.json', 'deno.jsonc')(fname)
+  if root then
+    return root
+  end
+
+  -- Supabase functions keep their own config inside supabase/functions/<name>/
+  local function_root = fname:match('(.*supabase/functions/[^/]+)')
+  if function_root and file_exists(util.path.join(function_root, 'deno.json')) then
+    return function_root
+  end
+end
+
 -- Blink provides LSP capabilities directly
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 lspconfig.html.setup { capabilities = capabilities }
@@ -11,7 +32,8 @@ lspconfig.rust_analyzer.setup { capabilities = capabilities }
 -- TypeScript/JavaScript configuration with Deno support
 lspconfig.denols.setup {
   capabilities = capabilities,
-  root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+  root_dir = deno_root_dir,
+  single_file_support = false,
 }
 
 lspconfig.ts_ls.setup {
@@ -19,19 +41,23 @@ lspconfig.ts_ls.setup {
   -- For monorepos: Look for tsconfig.app.json (Vite projects) or tsconfig.json
   -- This ensures path mappings from tsconfig.app.json are picked up
   root_dir = function(fname)
+    -- Skip starting tsserver inside Supabase function roots so Deno can handle them
+    if deno_root_dir(fname) then
+      return nil
+    end
     -- First try to find tsconfig.app.json (Vite/project references setup)
-    local app_config_root = lspconfig.util.root_pattern("tsconfig.app.json")(fname)
+    local app_config_root = util.root_pattern("tsconfig.app.json")(fname)
     if app_config_root then
       return app_config_root
     end
     -- Fall back to tsconfig.json or package.json
-    return lspconfig.util.root_pattern("tsconfig.json", "package.json")(fname)
+    return util.root_pattern("tsconfig.json", "package.json")(fname)
   end,
   single_file_support = false,
   on_attach = function(client, bufnr)
     -- Check if current buffer is in a Deno project
     local fname = vim.api.nvim_buf_get_name(bufnr)
-    local deno_root = lspconfig.util.root_pattern("deno.json", "deno.jsonc")(fname)
+    local deno_root = deno_root_dir(fname)
 
     if deno_root then
       -- Detach ts_ls from this buffer if it's in a Deno project
