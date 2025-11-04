@@ -1,10 +1,8 @@
-{ pkgs, unstable, ... }:
+{ pkgs, ... }:
 
 {
   home = {
     packages = [
-      unstable.claude-code
-
       pkgs.fd # modern find
       pkgs.ripgrep # modern grep (rg)
       pkgs.bat # modern cat
