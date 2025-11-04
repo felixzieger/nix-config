@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ config, ... }:
 let
   ghostHost = "blog.felixzieger.de";
   ghostPort = 2368;
@@ -129,4 +129,3 @@ in
     };
   };
 }
-
