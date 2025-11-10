@@ -75,6 +75,7 @@
       {
         plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (
           plugins: with plugins; [
+            tree-sitter-html
             tree-sitter-lua
             tree-sitter-nix
             tree-sitter-typescript
