@@ -31,8 +31,13 @@
     nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
 
-    mac-app-util.url = "github:hraban/mac-app-util"; # https://discourse.nixos.org/t/mac-applications-installed-by-nix-are-not-loaded-by-spotlight/14129/16
-    mac-app-util.inputs.nixpkgs.follows = "nixpkgs-darwin";
+    mac-app-util = {
+      url = "github:hraban/mac-app-util"; # https://discourse.nixos.org/t/mac-applications-installed-by-nix-are-not-loaded-by-spotlight/14129/16
+      inputs = {
+        nixpkgs.follows = "nixpkgs-darwin";
+        cl-nix-lite.url = "github:r4v3n6101/cl-nix-lite/url-fix";
+      };
+    };
 
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
