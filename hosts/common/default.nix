@@ -1,8 +1,6 @@
 {
-  self,
   pkgs,
   agenix,
-  config,
   nixpkgs-unstable,
   ...
 }:
@@ -19,9 +17,7 @@ in
   environment.systemPackages = with pkgs; [
     git
     btop
-    just
     dua
-    just
     which
     tree
     lsd # missing: icon support; https://github.com/Peltoche/lsd/issues/199
