@@ -1,0 +1,17 @@
+{
+    "amp.permissions": [
+        { "tool": "Bash", "matches": { "cmd": "*sudo*" }, "action": "reject" },
+        { "tool": "Bash", "matches": { "cmd": "*su *" }, "action": "reject" },
+        { "tool": "Bash", "matches": { "cmd": "*git push*" }, "action": "reject" },
+        { "tool": "Bash", "matches": { "cmd": "*supabase db*" }, "action": "reject" },
+        { "tool": "Bash", "matches": { "cmd": "*supabase functions*" }, "action": "reject" },
+        { "tool": "Bash", "matches": { "cmd": "*modal deploy*" }, "action": "reject" },
+        { "tool": "Bash", "matches": { "cmd": "*rm -rf*" }, "action": "reject" },
+        { "tool": "Read", "matches": { "path": "/etc/**" }, "action": "reject" },
+        { "tool": "Edit", "matches": { "path": "/etc/**" }, "action": "reject" },
+        { "tool": "Bash", "matches": { "cmd": ["*env*", "*printenv*", "*passwd*", "*history*"] }, "action": "reject" },
+        { "tool": "Bash", "matches": { "cmd": ["*rsync*", "*scp*", "*sftp*", "*socat*"] }, "action": "reject" },
+        { "tool": "Bash", "matches": { "cmd": ["*ssh*", "*nc*", "*ncat*", "*netcat*", "*nmap*"] }, "action": "reject" },
+        { "tool": "*", "action": "allow" }
+    ]
+}

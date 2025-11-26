@@ -101,6 +101,7 @@ in
         ./../../modules/fish
         ./../../modules/ssh
         ./../../modules/claude
+        ./../../modules/amp
       ];
 
       programs = {
@@ -140,6 +141,13 @@ in
           ];
           plugins = [
             pkgs.vimPlugins.friendly-snippets
+            {
+              plugin = unstable.vimPlugins.amp-nvim;
+              type = "lua";
+              config = ''
+                require('amp').setup({ auto_start = true, log_level = "info" })
+              '';
+            }
             {
               plugin = pkgs.vimPlugins.nvim-lspconfig;
               type = "lua";
